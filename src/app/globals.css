@@ -1,0 +1,204 @@
+/* src/app/globals.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Variables de diseño ─────────────────────────────────────── */
+@layer base {
+  :root {
+    /* Color de marca principal */
+    --color-marca: #7cc2e8;
+    --color-marca-oscuro: #3393c7;
+
+    /* Fondos */
+    --bg-base:       #f8fafc;
+    --bg-superficie: #ffffff;
+    --bg-sutil:      #f1f5f9;
+    --bg-hover:      #e2e8f0;
+
+    /* Textos */
+    --text-primario:   #0f172a;
+    --text-secundario: #475569;
+    --text-sutil:      #94a3b8;
+
+    /* Bordes */
+    --borde:       #e2e8f0;
+    --borde-focus: var(--color-marca);
+
+    /* Vidrio / glass */
+    --glass-bg:     rgba(255,255,255,0.7);
+    --glass-borde:  rgba(255,255,255,0.5);
+    --glass-sombra: 0 4px 32px rgba(0,0,0,0.06);
+
+    /* Scrollbar */
+    --scrollbar-thumb: #cbd5e1;
+    --scrollbar-track: transparent;
+  }
+
+  .dark {
+    --bg-base:       #0f172a;
+    --bg-superficie: #1e293b;
+    --bg-sutil:      #1e293b;
+    --bg-hover:      #334155;
+
+    --text-primario:   #f1f5f9;
+    --text-secundario: #94a3b8;
+    --text-sutil:      #64748b;
+
+    --borde:       #334155;
+    --borde-focus: var(--color-marca);
+
+    --glass-bg:     rgba(30,41,59,0.8);
+    --glass-borde:  rgba(255,255,255,0.1);
+    --glass-sombra: 0 4px 32px rgba(0,0,0,0.3);
+
+    --scrollbar-thumb: #475569;
+  }
+
+  * {
+    border-color: var(--borde);
+  }
+
+  body {
+    background-color: var(--bg-base);
+    color: var(--text-primario);
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  /* Transición de tema suave */
+  body,
+  .theme-transition * {
+    transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  }
+
+  /* Scrollbar personalizado */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--scrollbar-track);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb);
+    border-radius: 999px;
+  }
+
+  /* Foco accesible */
+  :focus-visible {
+    outline: 2px solid var(--color-marca);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  /* Texto de selección */
+  ::selection {
+    background-color: rgba(124, 194, 232, 0.25);
+  }
+}
+
+/* ─── Componentes base ─────────────────────────────────────────── */
+@layer components {
+
+  /* Superficie de tarjeta */
+  .card {
+    @apply bg-white dark:bg-slate-800 rounded-card shadow-card border border-slate-200 dark:border-slate-700;
+  }
+
+  /* Vidrio translúcido sobrio */
+  .glass {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-borde);
+    box-shadow: var(--glass-sombra);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  /* Botón principal */
+  .btn-primario {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg bg-marca-300 hover:bg-marca-400 active:bg-marca-500 text-white font-semibold px-5 py-2.5 text-base transition-all duration-150 disabled:opacity-50 disabled:cursor-not-allowed min-h-[44px] focus-visible:ring-2 focus-visible:ring-marca-300 focus-visible:ring-offset-2;
+  }
+
+  /* Botón secundario */
+  .btn-secundario {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-medium px-5 py-2.5 text-base transition-all duration-150 disabled:opacity-50 disabled:cursor-not-allowed min-h-[44px];
+  }
+
+  /* Botón destructivo */
+  .btn-peligro {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg bg-red-500 hover:bg-red-600 active:bg-red-700 text-white font-semibold px-5 py-2.5 text-base transition-all duration-150 disabled:opacity-50 min-h-[44px];
+  }
+
+  /* Campo de formulario */
+  .campo {
+    @apply w-full rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-3.5 py-2.5 text-base text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-marca-300 focus:border-transparent transition-all duration-150 min-h-[44px];
+  }
+
+  .campo-error {
+    @apply border-red-400 focus:ring-red-400;
+  }
+
+  /* Badge de etapa */
+  .badge {
+    @apply inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-medium;
+  }
+
+  /* Enlace de nombre clicable */
+  .nombre-cliente {
+    @apply font-medium text-slate-900 dark:text-slate-100 hover:text-marca-500 dark:hover:text-marca-300 underline-offset-2 hover:underline cursor-pointer transition-colors duration-150;
+  }
+
+  /* Skeleton de carga */
+  .skeleton {
+    @apply animate-pulse rounded-lg bg-slate-200 dark:bg-slate-700;
+  }
+
+  /* Empty state */
+  .empty-state {
+    @apply flex flex-col items-center justify-center py-16 text-center;
+  }
+
+  /* Página con header de sección */
+  .seccion-header {
+    @apply mb-6 flex items-start justify-between gap-4 flex-wrap;
+  }
+
+  .seccion-titulo {
+    @apply text-2xl font-bold text-slate-900 dark:text-slate-100;
+  }
+
+  .seccion-subtitulo {
+    @apply text-sm text-slate-500 dark:text-slate-400 mt-0.5;
+  }
+}
+
+/* ─── Utilidades custom ────────────────────────────────────────── */
+@layer utilities {
+  /* Área de toque mínima (accesibilidad móvil) */
+  .toque-seguro {
+    @apply min-h-[44px] min-w-[44px];
+  }
+
+  /* Texto sin selección (UI elements) */
+  .no-select {
+    @apply select-none;
+  }
+
+  /* Truncar texto en múltiples líneas */
+  .truncar-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* Reduce motion — deshabilita animaciones */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}

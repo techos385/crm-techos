@@ -1,0 +1,38 @@
+# ── Variables de entorno (NUNCA subir a GitHub) ──
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# ── Next.js ──
+/.next/
+/out/
+
+# ── Node.js ──
+/node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ── Build ──
+/build
+/dist
+
+# ── Sistema operativo ──
+.DS_Store
+*.pem
+Thumbs.db
+
+# ── TypeScript ──
+*.tsbuildinfo
+next-env.d.ts
+
+# ── Vercel ──
+.vercel
+
+# ── Base de datos local (si usas SQLite) ──
+*.db
+*.sqlite
+*.sqlite3
+prisma/*.db

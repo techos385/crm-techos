@@ -1,0 +1,24 @@
+{
+  "name": "Techos y Cubiertas CRM",
+  "short_name": "Techos CRM",
+  "description": "CRM de ventas para Techos y Cubiertas",
+  "start_url": "/dashboard",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#7cc2e8",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "categories": ["business", "productivity"],
+  "lang": "es-MX"
+}
