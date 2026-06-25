@@ -110,7 +110,7 @@ export async function POST(request: NextRequest) {
           titulo: datos.titulo,
           inicio,
           fin,
-          notas: datos.notas,
+          descripcion: datos.notas,
           vendedorId,
           lugar: datos.lugar,
         },
