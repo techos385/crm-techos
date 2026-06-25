@@ -112,7 +112,7 @@ export async function POST(request: NextRequest) {
           fin,
           descripcion: datos.notas,
           vendedorId,
-          lugar: datos.lugar,
+          
         },
         include: {
           cliente: { select: { id: true, nombre: true } },
