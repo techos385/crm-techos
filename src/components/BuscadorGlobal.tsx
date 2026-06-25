@@ -72,7 +72,7 @@ export function BuscadorGlobal({
 
   // Búsqueda con debounce
   const buscar = useCallback(
-    debounce(async (q: unknown) => {
+    debounce(async (q: any) => {
       if (q.length < 2) {
         setResultados([])
         setCargando(false)
