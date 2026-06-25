@@ -65,13 +65,7 @@ export async function POST(request: NextRequest) {
         },
       })
 
-      await registrarAuditoria( {
-        usuarioId: session.id,
-        accion: ACCIONES.ARCHIVO_BORRADO,
-        
-        entidadId: nuevo.id,
-        descripcion: `Subió archivo "${archivo.name}" al cliente ${cliente.nombre}`,
-      })
+      
 
       return nuevo
     })
