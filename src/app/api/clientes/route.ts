@@ -46,7 +46,7 @@ const ClienteSchema = z.object({
 
 export async function GET(request: NextRequest) {
   try {
-    const session = await requireAuth()
+    const session = await requireAuth('ver_cliente')
     const esAdmin = session.rol === 'ADMIN'
     const { searchParams } = new URL(request.url)
 
@@ -161,7 +161,7 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   try {
-    const session = await requireAuth()
+    const session = await requireAuth('ver_cliente')
     const body = await request.json()
     const datos = ClienteSchema.parse(body)
 
