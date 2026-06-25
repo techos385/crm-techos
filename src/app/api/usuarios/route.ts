@@ -1,143 +1,40 @@
-// src/app/api/usuarios/route.ts
 import { NextRequest, NextResponse } from 'next/server'
-import { requireAuth, apiError } from '@/lib/permisos'
+import { requireAuth } from '@/lib/permisos'
 import { prisma } from '@/lib/prisma'
-import { z } from 'zod'
 import bcrypt from 'bcryptjs'
-import { registrarAuditoria, ACCIONES } from '@/lib/auditoria'
 
-const UsuarioSchema = z.object({
-  nombre: z.string().min(2).max(100),
-  correo: z.string().email(),
-  contrasena: z.string().min(8, 'MÃ­nimo 8 caracteres'),
-  rol: z.enum(['ADMIN', 'VENDEDOR', 'SOLO_LECTURA']).default('VENDEDOR'),
-  metaMensual: z.number().optional().nullable(),
-  comision: z.number().min(0).max(100).optional().nullable(),
-})
-
-export async function GET(_req: NextRequest) {
+export async function GET(request: NextRequest) {
   try {
-    const session = await requireAuth('ver_cliente')
-    if (session.rol !== 'ADMIN') {
-      return NextResponse.json({ ok: false, mensaje: 'Solo administradores' }, { status: 403 })
+    const session = await requireAuth('ver_equipo')
+    const { searchParams } = new URL(request.url)
+    if (searchParams.get('bitacora')) {
+      const logs = await prisma.registroAuditoria.findMany({ include: { usuario: { select: { nombre: true } } }, orderBy: { creadoEn: 'desc' }, take: 100 })
+      return NextResponse.json({ ok: true, data: logs })
     }
-
-    const usuarios = await prisma.usuario.findMany({
-      where: { eliminadoEn: null },
-      select: {
-        id: true,
-        nombre: true,
-        correo: true,
-        rol: true,
-        activo: true,
-        metaMensual: true,
-        comision: true,
-        creadoEn: true,
-        onboardingCompletado: true,
-        slugAgenda: true,
-        _count: {
-          select: { clientes: true },
-        },
-      },
-      orderBy: { creadoEn: 'asc' },
-    })
-
+    const usuarios = await prisma.usuario.findMany({ orderBy: { creadoEn: 'asc' }, select: { id: true, nombre: true, correo: true, rol: true, activo: true, ultimoAcceso: true, creadoEn: true } })
     return NextResponse.json({ ok: true, data: usuarios })
-  } catch (error) {
-    return NextResponse.json({ ok: false, mensaje: "Error interno" }, { status: 500 })
-  }
+  } catch { return NextResponse.json({ ok: false, mensaje: 'Error interno' }, { status: 500 }) }
 }
 
 export async function POST(request: NextRequest) {
   try {
-    const session = await requireAuth('ver_cliente')
-    if (session.rol !== 'ADMIN') {
-      return NextResponse.json({ ok: false, mensaje: 'Solo administradores' }, { status: 403 })
-    }
-
-    const body = await request.json()
-    const datos = UsuarioSchema.parse(body)
-
-    // Verificar correo Ãºnico
-    const existe = await prisma.usuario.findFirst({ where: { correo: datos.correo, eliminadoEn: null } })
-    if (existe) {
-      return NextResponse.json({ ok: false, mensaje: 'Ya existe un usuario con ese correo' }, { status: 409 })
-    }
-
-    const hash = await bcrypt.hash(datos.contrasena, 12)
-    const slug = datos.nombre.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')
-
-    const usuario = await prisma.$transaction(async (tx) => {
-      const nuevo = await tx.usuario.create({
-        data: {
-          nombre: datos.nombre,
-          correo: datos.correo,
-          contrasena: hash,
-          rol: datos.rol as 'ADMIN' | 'VENDEDOR' | 'SOLO_LECTURA',
-          metaMensual: datos.metaMensual,
-          comision: datos.comision,
-          slugAgenda: slug,
-        },
-        select: {
-          id: true, nombre: true, correo: true, rol: true, activo: true,
-          metaMensual: true, comision: true, slugAgenda: true,
-        },
-      })
-
-      await registrarAuditoria(tx, {
-        usuarioId: session.id,
-        accion: ACCIONES.CREAR,
-        entidad: 'Usuario',
-        entidadId: nuevo.id,
-        descripcion: `CreÃ³ al usuario ${nuevo.nombre} con rol ${nuevo.rol}`,
-      })
-
-      return nuevo
-    })
-
+    await requireAuth('gestionar_usuarios')
+    const { nombre, correo, password, rol } = await request.json()
+    if (!nombre || !correo || !password) return NextResponse.json({ ok: false, mensaje: 'Faltan campos' }, { status: 400 })
+    const hash = await bcrypt.hash(password, 12)
+    const usuario = await prisma.usuario.create({ data: { nombre, correo, passwordHash: hash, rol } })
     return NextResponse.json({ ok: true, data: usuario }, { status: 201 })
-  } catch (error) {
-    return NextResponse.json({ ok: false, mensaje: "Error interno" }, { status: 500 })
-  }
+  } catch { return NextResponse.json({ ok: false, mensaje: 'Error interno' }, { status: 500 }) }
 }
 
 export async function PATCH(request: NextRequest) {
   try {
-    const session = await requireAuth('ver_cliente')
+    await requireAuth('gestionar_usuarios')
+    const { searchParams } = new URL(request.url)
+    const id = searchParams.get('id')
+    if (!id) return NextResponse.json({ ok: false, mensaje: 'id requerido' }, { status: 400 })
     const body = await request.json()
-    const { id, contrasena, activo, rol, metaMensual, comision, nombre } = body
-
-    // Solo admin puede editar otros usuarios
-    if (id !== session.id && session.rol !== 'ADMIN') {
-      return NextResponse.json({ ok: false, mensaje: 'Sin acceso' }, { status: 403 })
-    }
-
-    // Solo admin puede cambiar rol y activo
-    if ((rol !== undefined || activo !== undefined) && session.rol !== 'ADMIN') {
-      return NextResponse.json({ ok: false, mensaje: 'Solo administradores pueden cambiar el rol' }, { status: 403 })
-    }
-
-    const datos: Record<string, unknown> = {}
-    if (nombre) datos.nombre = nombre
-    if (activo !== undefined) datos.activo = activo
-    if (rol) datos.rol = rol
-    if (metaMensual !== undefined) datos.metaMensual = metaMensual
-    if (comision !== undefined) datos.comision = comision
-    if (contrasena) {
-      if (contrasena.length < 8) {
-        return NextResponse.json({ ok: false, mensaje: 'La contraseÃ±a debe tener al menos 8 caracteres' }, { status: 400 })
-      }
-      datos.contrasena = await bcrypt.hash(contrasena, 12)
-    }
-
-    const actualizado = await prisma.usuario.update({
-      where: { id },
-      data: datos,
-      select: { id: true, nombre: true, correo: true, rol: true, activo: true, metaMensual: true },
-    })
-
-    return NextResponse.json({ ok: true, data: actualizado })
-  } catch (error) {
-    return NextResponse.json({ ok: false, mensaje: "Error interno" }, { status: 500 })
-  }
+    const usuario = await prisma.usuario.update({ where: { id }, data: body })
+    return NextResponse.json({ ok: true, data: usuario })
+  } catch { return NextResponse.json({ ok: false, mensaje: 'Error interno' }, { status: 500 }) }
 }
