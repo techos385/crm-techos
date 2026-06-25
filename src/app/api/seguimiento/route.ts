@@ -16,13 +16,13 @@ const RecordatorioSchema = z.object({
 export async function GET(request: NextRequest) {
   try {
     const session = await requireAuth('ver_cliente')
-    const esAdmin = session.user.rol === 'ADMIN'
+    const esAdmin = session.rol === 'ADMIN'
     const { searchParams } = new URL(request.url)
     const vista = searchParams.get('vista') ?? 'hoy'
 
     const filtroVendedor = esAdmin && searchParams.get('vendedorId')
       ? { vendedorId: searchParams.get('vendedorId') as string }
-      : esAdmin ? {} : { vendedorId: session.user.id }
+      : esAdmin ? {} : { vendedorId: session.id }
 
     const ahora = new Date()
     const hoyInicio = startOfDay(ahora)
@@ -85,7 +85,7 @@ export async function GET(request: NextRequest) {
           ...filtroVendedor,
           eliminadoEn: null,
           estadoCartera: 'ACTIVO',
-          etapaEmbudo: 'Nuevo Prospecto',
+          etapa: 'Nuevo Prospecto',
           creadoEn: { lt: hace24h },
           ultimoContacto: null,
         },
@@ -105,7 +105,7 @@ export async function GET(request: NextRequest) {
       // Configuración del negocio para meta
       const config = await prisma.configNegocio.findFirst()
       const usuario = await prisma.usuario.findUnique({
-        where: { id: session.user.id },
+        where: { id: session.id },
         select: { metaMensual: true },
       })
 
@@ -146,7 +146,7 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json({ ok: false, mensaje: 'Vista no válida' }, { status: 400 })
   } catch (error) {
-    return apiError(error)
+    return NextResponse.json({ ok: false, mensaje: "Error interno" }, { status: 500 })
   }
 }
 
@@ -166,7 +166,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ ok: true, data: recordatorio }, { status: 201 })
   } catch (error) {
-    return apiError(error)
+    return NextResponse.json({ ok: false, mensaje: "Error interno" }, { status: 500 })
   }
 }
 
@@ -192,6 +192,6 @@ export async function PATCH(request: NextRequest) {
     const actualizado = await prisma.recordatorio.update({ where: { id }, data: datos })
     return NextResponse.json({ ok: true, data: actualizado })
   } catch (error) {
-    return apiError(error)
+    return NextResponse.json({ ok: false, mensaje: "Error interno" }, { status: 500 })
   }
 }

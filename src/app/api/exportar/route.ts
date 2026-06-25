@@ -145,6 +145,6 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json({ ok: false, mensaje: 'Tipo de exportación no válido' }, { status: 400 })
   } catch (error) {
-    return apiError(error)
+    return NextResponse.json({ ok: false, mensaje: "Error interno" }, { status: 500 })
   }
 }

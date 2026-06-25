@@ -121,10 +121,10 @@ export async function POST(request: NextRequest) {
       })
 
       // Actualizar etapa del cliente si está en etapas iniciales
-      if (['Nuevo Prospecto', 'Contactado', 'Información Recibida'].includes(cliente.etapaEmbudo ?? '')) {
+      if (['Nuevo Prospecto', 'Contactado', 'Información Recibida'].includes(cliente.etapa ?? '')) {
         await tx.cliente.update({
           where: { id: datos.clienteId },
-          data: { etapaEmbudo: 'Cita agendada' },
+          data: { etapa: 'Cita agendada' },
         })
       }
 

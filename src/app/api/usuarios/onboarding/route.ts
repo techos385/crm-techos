@@ -7,11 +7,11 @@ export async function POST() {
   try {
     const session = await requireAuth()
     await prisma.usuario.update({
-      where: { id: session.user.id },
+      where: { id: session.id },
       data: { onboardingCompletado: true },
     })
     return NextResponse.json({ ok: true })
   } catch (error) {
-    return apiError(error)
+    return NextResponse.json({ ok: false, mensaje: "Error interno" }, { status: 500 })
   }
 }

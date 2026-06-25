@@ -155,7 +155,7 @@ export async function GET(request: NextRequest) {
       },
     })
   } catch (error) {
-    return apiError(error)
+    return NextResponse.json({ ok: false, mensaje: "Error interno" }, { status: 500 })
   }
 }
 
@@ -254,6 +254,6 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ ok: true, data: cliente }, { status: 201 })
   } catch (error) {
-    return apiError(error)
+    return NextResponse.json({ ok: false, mensaje: "Error interno" }, { status: 500 })
   }
 }

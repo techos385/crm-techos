@@ -70,7 +70,7 @@ export async function POST(request: NextRequest) {
 
     const clienteNormalizado = {
       nombre: cliente.nombre,
-      etapaEmbudo: cliente.etapa as string | null,
+      etapa: cliente.etapa as string | null,
       temperatura: cliente.temperatura as string,
       objecionPrincipal: cliente.objecionPrincipal,
       valorEstimado: cliente.valorEstimado,

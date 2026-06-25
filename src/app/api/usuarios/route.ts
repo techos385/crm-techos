@@ -44,7 +44,7 @@ export async function GET(_req: NextRequest) {
 
     return NextResponse.json({ ok: true, data: usuarios })
   } catch (error) {
-    return apiError(error)
+    return NextResponse.json({ ok: false, mensaje: "Error interno" }, { status: 500 })
   }
 }
 
@@ -97,7 +97,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ ok: true, data: usuario }, { status: 201 })
   } catch (error) {
-    return apiError(error)
+    return NextResponse.json({ ok: false, mensaje: "Error interno" }, { status: 500 })
   }
 }
 
@@ -138,6 +138,6 @@ export async function PATCH(request: NextRequest) {
 
     return NextResponse.json({ ok: true, data: actualizado })
   } catch (error) {
-    return apiError(error)
+    return NextResponse.json({ ok: false, mensaje: "Error interno" }, { status: 500 })
   }
 }

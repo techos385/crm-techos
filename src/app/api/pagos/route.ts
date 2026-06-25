@@ -50,7 +50,7 @@ export async function GET(request: NextRequest) {
       data: { pagos, total, pagina, porPagina, totalPaginas: Math.ceil(total / porPagina) },
     })
   } catch (error) {
-    return apiError(error)
+    return NextResponse.json({ ok: false, mensaje: "Error interno" }, { status: 500 })
   }
 }
 
@@ -97,7 +97,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ ok: true, data: pago }, { status: 201 })
   } catch (error) {
-    return apiError(error)
+    return NextResponse.json({ ok: false, mensaje: "Error interno" }, { status: 500 })
   }
 }
 
@@ -129,7 +129,7 @@ export async function PATCH(request: NextRequest) {
 
     return NextResponse.json({ ok: true, data: actualizado })
   } catch (error) {
-    return apiError(error)
+    return NextResponse.json({ ok: false, mensaje: "Error interno" }, { status: 500 })
   }
 }
 
@@ -151,6 +151,6 @@ export async function DELETE(request: NextRequest) {
     await prisma.pago.update({ where: { id }, data: { eliminadoEn: new Date() } })
     return NextResponse.json({ ok: true })
   } catch (error) {
-    return apiError(error)
+    return NextResponse.json({ ok: false, mensaje: "Error interno" }, { status: 500 })
   }
 }
