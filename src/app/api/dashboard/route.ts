@@ -18,7 +18,7 @@ export async function GET() {
 
     // Filtro base por vendedor si no es admin
     const filtroVendedor = vendedorId ? { vendedorId } : {}
-    const filtroActivo = { estadoCartera: 'ACTIVO', eliminadoEn: null }
+    const filtroActivo = { estadoCartera: 'ACTIVO' as any, eliminadoEn: null }
     const filtroActivoVendedor = { ...filtroActivo, ...filtroVendedor }
 
     // Clientes activos totales
