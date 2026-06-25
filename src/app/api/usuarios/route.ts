@@ -11,7 +11,7 @@ export async function GET(request: NextRequest) {
       const logs = await prisma.registroAuditoria.findMany({ include: { usuario: { select: { nombre: true } } }, orderBy: { creadoEn: 'desc' }, take: 100 })
       return NextResponse.json({ ok: true, data: logs })
     }
-    const usuarios = await prisma.usuario.findMany({ orderBy: { creadoEn: 'asc' }, select: { id: true, nombre: true, correo: true, rol: true, activo: true, ultimoAcceso: true, creadoEn: true } })
+    const usuarios = await prisma.usuario.findMany({ orderBy: { creadoEn: 'asc' }, select: { id: true, nombre: true, correo: true, rol: true, activo: true, creadoEn: true } })
     return NextResponse.json({ ok: true, data: usuarios })
   } catch { return NextResponse.json({ ok: false, mensaje: 'Error interno' }, { status: 500 }) }
 }
