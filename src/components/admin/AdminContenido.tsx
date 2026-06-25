@@ -137,7 +137,7 @@ export function AdminContenido() {
     }
   }
 
-  const TABS: { key: Tab; label: string; icon: React.ComponentType<{ size?: number }> }[] = [
+  const TABS: { key: Tab; label: string; icon: any }[] = [
     { key: 'usuarios', label: 'Usuarios', icon: Users },
     { key: 'bitacora', label: 'Bitácora', icon: Shield },
     { key: 'respaldo', label: 'Respaldo', icon: Download },
