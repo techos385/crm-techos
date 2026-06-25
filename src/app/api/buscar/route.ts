@@ -56,7 +56,7 @@ export async function GET(request: NextRequest) {
         select: {
           id: true,
           titulo: true,
-          fechaInicio: true,
+          inicio: true,
           cliente: { select: { id: true, nombre: true } },
         },
       }),
