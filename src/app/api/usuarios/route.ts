@@ -22,7 +22,7 @@ export async function POST(request: NextRequest) {
     const { nombre, correo, password, rol } = await request.json()
     if (!nombre || !correo || !password) return NextResponse.json({ ok: false, mensaje: 'Faltan campos' }, { status: 400 })
     const hash = await bcrypt.hash(password, 12)
-    const usuario = await prisma.usuario.create({ data: { nombre, correo, passwordHash: hash, rol } })
+    const usuario = await prisma.usuario.create({ data: { nombre, correo, contrasenaHash: hash, rol } })
     return NextResponse.json({ ok: true, data: usuario }, { status: 201 })
   } catch { return NextResponse.json({ ok: false, mensaje: 'Error interno' }, { status: 500 }) }
 }
