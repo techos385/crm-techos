@@ -82,7 +82,7 @@ export async function POST(request: NextRequest) {
       },
     }, { status: 201 })
   } catch (error) {
-    return apiError(error)
+    return NextResponse.json({ ok: false, mensaje: String(error) }, { status: 500 })
   }
 }
 
@@ -122,7 +122,7 @@ export async function GET(request: NextRequest) {
       },
     })
   } catch (error) {
-    return apiError(error)
+    return NextResponse.json({ ok: false, mensaje: String(error) }, { status: 500 })
   }
 }
 
@@ -152,6 +152,6 @@ export async function DELETE(request: NextRequest) {
     await prisma.archivo.update({ where: { id: archivoId }, data: { eliminadoEn: new Date() } })
     return NextResponse.json({ ok: true })
   } catch (error) {
-    return apiError(error)
+    return NextResponse.json({ ok: false, mensaje: String(error) }, { status: 500 })
   }
 }
