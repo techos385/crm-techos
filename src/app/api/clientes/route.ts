@@ -17,7 +17,7 @@ export async function GET(request: NextRequest) {
     const where = {
       ...filtroVendedor,
       eliminadoEn: null,
-      estadoCartera: estado,
+      estadoCartera: estado as any,
       ...(buscar ? {
         OR: [
           { nombre: { contains: buscar, mode: 'insensitive' as const } },
