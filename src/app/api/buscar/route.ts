@@ -38,7 +38,7 @@ export async function GET(request: NextRequest) {
           telefono: true,
           correo: true,
           empresa: true,
-          etapaEmbudo: true,
+          etapa: true,
           estadoCartera: true,
           temperatura: true,
         },
