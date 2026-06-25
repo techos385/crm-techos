@@ -6,12 +6,12 @@ import { twMerge } from 'tailwind-merge'
 import { format, formatDistanceToNow, isToday, isYesterday, parseISO } from 'date-fns'
 import { es } from 'date-fns/locale'
 
-// ─── Combinar clases de Tailwind ───
+// â”€â”€â”€ Combinar clases de Tailwind â”€â”€â”€
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
-// ─── Formatear fechas en español humano ───
+// â”€â”€â”€ Formatear fechas en espaÃ±ol humano â”€â”€â”€
 export function formatearFecha(fecha: Date | string | null | undefined): string {
   if (!fecha) return 'Sin fecha'
   
@@ -35,25 +35,25 @@ export function formatearFecha(fecha: Date | string | null | undefined): string 
 }
 
 export function formatearFechaCorta(fecha: Date | string | null | undefined): string {
-  if (!fecha) return '—'
+  if (!fecha) return 'â€”'
   const f = typeof fecha === 'string' ? parseISO(fecha) : fecha
   return format(f, "d MMM yyyy", { locale: es })
 }
 
 export function formatearFechaHora(fecha: Date | string | null | undefined): string {
-  if (!fecha) return '—'
+  if (!fecha) return 'â€”'
   const f = typeof fecha === 'string' ? parseISO(fecha) : fecha
   return format(f, "d MMM yyyy, h:mm a", { locale: es })
 }
 
-// ─── Días desde última acción ───
+// â”€â”€â”€ DÃ­as desde Ãºltima acciÃ³n â”€â”€â”€
 export function diasSinContacto(ultimoContacto: Date | null | undefined): number {
   if (!ultimoContacto) return 999
   const ahora = new Date()
   return Math.floor((ahora.getTime() - new Date(ultimoContacto).getTime()) / (1000 * 60 * 60 * 24))
 }
 
-// ─── Formatear dinero ───
+// â”€â”€â”€ Formatear dinero â”€â”€â”€
 export function formatearMonto(
   monto: number | null | undefined,
   moneda: string = 'MXN'
@@ -67,37 +67,37 @@ export function formatearMonto(
   }).format(monto)
 }
 
-// ─── Temperatura ───
+// â”€â”€â”€ Temperatura â”€â”€â”€
 export const TEMPERATURA_CONFIG = {
-  CALIENTE: { emoji: '🔥', label: 'Caliente', color: 'text-red-500', bg: 'bg-red-50 dark:bg-red-950' },
-  TIBIO:    { emoji: '🟡', label: 'Tibio',    color: 'text-yellow-500', bg: 'bg-yellow-50 dark:bg-yellow-950' },
-  FRIO:     { emoji: '🔵', label: 'Frío',     color: 'text-blue-500', bg: 'bg-blue-50 dark:bg-blue-950' },
+  CALIENTE: { emoji: 'ðŸ”¥', label: 'Caliente', color: 'text-red-500', bg: 'bg-red-50 dark:bg-red-950' },
+  TIBIO:    { emoji: 'ðŸŸ¡', label: 'Tibio',    color: 'text-yellow-500', bg: 'bg-yellow-50 dark:bg-yellow-950' },
+  FRIO:     { emoji: 'ðŸ”µ', label: 'FrÃ­o',     color: 'text-blue-500', bg: 'bg-blue-50 dark:bg-blue-950' },
 }
 
-// ─── Etapas del embudo ───
+// â”€â”€â”€ Etapas del embudo â”€â”€â”€
 export const ETAPAS_EMBUDO: Record<string, { label: string; orden: number; esActiva: boolean }> = {
   NUEVO_PROSPECTO:     { label: 'Nuevo Prospecto',      orden: 1,  esActiva: true },
   CONTACTADO:          { label: 'Contactado',            orden: 2,  esActiva: true },
-  INFORMACION_RECIBIDA:{ label: 'Información Recibida',  orden: 3,  esActiva: true },
-  COTIZACION_ENVIADA:  { label: 'Cotización Enviada',    orden: 4,  esActiva: true },
+  INFORMACION_RECIBIDA:{ label: 'InformaciÃ³n Recibida',  orden: 3,  esActiva: true },
+  COTIZACION_ENVIADA:  { label: 'CotizaciÃ³n Enviada',    orden: 4,  esActiva: true },
   CITA_AGENDADA:       { label: 'Cita Agendada',         orden: 5,  esActiva: true },
   VISITA_PROGRAMADA:   { label: 'Visita Programada',     orden: 6,  esActiva: true },
   VISITA_REALIZADA:    { label: 'Visita Realizada',      orden: 7,  esActiva: true },
-  RECOTIZACION_ENVIADA:{ label: 'Recotización Enviada',  orden: 8,  esActiva: true },
+  RECOTIZACION_ENVIADA:{ label: 'RecotizaciÃ³n Enviada',  orden: 8,  esActiva: true },
   PROPUESTA_ENVIADA:   { label: 'Propuesta Enviada',     orden: 9,  esActiva: true },
   SEGUIMIENTO:         { label: 'Seguimiento',           orden: 10, esActiva: true },
-  NEGOCIACION:         { label: 'Negociación',           orden: 11, esActiva: true },
+  NEGOCIACION:         { label: 'NegociaciÃ³n',           orden: 11, esActiva: true },
   PROYECTO_GANADO:     { label: 'Proyecto Ganado',       orden: 12, esActiva: true },
   ANTICIPO_RECIBIDO:   { label: 'Anticipo Recibido',     orden: 13, esActiva: true },
-  PROYECTO_EN_EJECUCION:{ label: 'Proyecto en Ejecución', orden: 14, esActiva: true },
+  PROYECTO_EN_EJECUCION:{ label: 'Proyecto en EjecuciÃ³n', orden: 14, esActiva: true },
   PROYECTO_ENTREGADO:  { label: 'Proyecto Entregado',    orden: 15, esActiva: true },
   CLIENTE_RECURRENTE:  { label: 'Cliente Recurrente',    orden: 16, esActiva: true },
   PERDIDO:             { label: 'Perdido',               orden: 17, esActiva: false },
   PRECIO_ALTO:         { label: 'Precio Alto',           orden: 18, esActiva: false },
-  CANCELO_PROYECTO:    { label: 'Canceló Proyecto',      orden: 19, esActiva: false },
-  ELIGIO_COMPETENCIA:  { label: 'Eligió Competencia',    orden: 20, esActiva: false },
+  CANCELO_PROYECTO:    { label: 'CancelÃ³ Proyecto',      orden: 19, esActiva: false },
+  ELIGIO_COMPETENCIA:  { label: 'EligiÃ³ Competencia',    orden: 20, esActiva: false },
   SIN_PRESUPUESTO:     { label: 'Sin Presupuesto',       orden: 21, esActiva: false },
-  NO_RESPONDIO:        { label: 'No Respondió',          orden: 22, esActiva: false },
+  NO_RESPONDIO:        { label: 'No RespondiÃ³',          orden: 22, esActiva: false },
 }
 
 export const ETAPAS_ACTIVAS = Object.entries(ETAPAS_EMBUDO)
@@ -105,7 +105,7 @@ export const ETAPAS_ACTIVAS = Object.entries(ETAPAS_EMBUDO)
   .sort((a, b) => a[1].orden - b[1].orden)
   .map(([k, v]) => ({ key: k, ...v }))
 
-// ─── Estado de cartera badges ───
+// â”€â”€â”€ Estado de cartera badges â”€â”€â”€
 export const ESTADO_CARTERA_CONFIG = {
   ACTIVO:    { label: 'Activo',    color: 'bg-marca-300/20 text-marca-600 dark:text-marca-300', icon: 'Activity' },
   GANADO:    { label: 'Ganado',    color: 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400', icon: 'Trophy' },
@@ -113,40 +113,40 @@ export const ESTADO_CARTERA_CONFIG = {
   ARCHIVADO: { label: 'Archivado', color: 'bg-gray-100 text-gray-500 dark:bg-gray-800 dark:text-gray-400', icon: 'Archive' },
 }
 
-// ─── Origenes / canales ───
+// â”€â”€â”€ Origenes / canales â”€â”€â”€
 export const ORIGENES = [
   { value: 'landing', label: 'Landing web', utm: 'landing' },
   { value: 'instagram', label: 'Instagram', utm: 'instagram' },
   { value: 'facebook', label: 'Facebook', utm: 'facebook' },
   { value: 'whatsapp', label: 'WhatsApp', utm: 'whatsapp' },
-  { value: 'referido', label: 'Recomendación / Referido', utm: 'referido' },
+  { value: 'referido', label: 'RecomendaciÃ³n / Referido', utm: 'referido' },
   { value: 'visita', label: 'Visita directa', utm: 'visita' },
   { value: 'telefono', label: 'Llamada directa', utm: 'telefono' },
   { value: 'otro', label: 'Otro', utm: 'otro' },
 ]
 
-// ─── Métodos de pago ───
+// â”€â”€â”€ MÃ©todos de pago â”€â”€â”€
 export const METODOS_PAGO = [
   { value: 'TRANSFERENCIA', label: 'Transferencia' },
   { value: 'TARJETA', label: 'Tarjeta' },
   { value: 'EFECTIVO', label: 'Efectivo' },
-  { value: 'DEPOSITO_ANTICIPO', label: 'Depósito / Anticipo' },
+  { value: 'DEPOSITO_ANTICIPO', label: 'DepÃ³sito / Anticipo' },
 ]
 
-// ─── Generar URL de WhatsApp ───
+// â”€â”€â”€ Generar URL de WhatsApp â”€â”€â”€
 export function generarUrlWhatsApp(
   telefono: string,
   mensaje: string
 ): string {
-  // Limpiar teléfono: quitar todo lo que no sea número
+  // Limpiar telÃ©fono: quitar todo lo que no sea nÃºmero
   const telLimpio = telefono.replace(/\D/g, '')
-  // Asegurar código de país México si no tiene
+  // Asegurar cÃ³digo de paÃ­s MÃ©xico si no tiene
   const telIntl = telLimpio.startsWith('52') ? telLimpio : `52${telLimpio}`
   const mensajeCodificado = encodeURIComponent(mensaje)
   return `https://wa.me/${telIntl}?text=${mensajeCodificado}`
 }
 
-// ─── Sustituir variables en plantillas ───
+// â”€â”€â”€ Sustituir variables en plantillas â”€â”€â”€
 export function sustituirVariables(
   plantilla: string,
   datos: {
@@ -169,7 +169,7 @@ export function sustituirVariables(
   return resultado
 }
 
-// ─── Iniciales del avatar ───
+// â”€â”€â”€ Iniciales del avatar â”€â”€â”€
 export function obtenerIniciales(nombre: string): string {
   return nombre
     .split(' ')
@@ -179,7 +179,7 @@ export function obtenerIniciales(nombre: string): string {
     .toUpperCase()
 }
 
-// ─── Número de teléfono bonito ───
+// â”€â”€â”€ NÃºmero de telÃ©fono bonito â”€â”€â”€
 export function formatearTelefono(tel: string | null | undefined): string {
   if (!tel) return ''
   const limpio = tel.replace(/\D/g, '')
@@ -192,7 +192,7 @@ export function formatearTelefono(tel: string | null | undefined): string {
   return tel
 }
 
-// ─── Debounce ───
+// â”€â”€â”€ Debounce â”€â”€â”€
 export function debounce<T extends (...args: unknown[]) => unknown>(
   fn: T,
   delay: number
@@ -204,7 +204,7 @@ export function debounce<T extends (...args: unknown[]) => unknown>(
   }
 }
 
-// ─── Respuesta API estándar ───
+// â”€â”€â”€ Respuesta API estÃ¡ndar â”€â”€â”€
 export function apiOk<T>(data: T, status: number = 200) {
   return Response.json({ ok: true, data }, { status })
 }
@@ -213,7 +213,7 @@ export function apiError(mensaje: string, status: number = 400) {
   return Response.json({ ok: false, error: mensaje }, { status })
 }
 
-// ─── Normalizar texto para búsqueda (sin acentos) ───
+// â”€â”€â”€ Normalizar texto para bÃºsqueda (sin acentos) â”€â”€â”€
 export function normalizar(texto: string): string {
   return texto
     .toLowerCase()

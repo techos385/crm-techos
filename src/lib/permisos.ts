@@ -1,5 +1,5 @@
 // src/lib/permisos.ts
-// Función central de autorización — usada en TODAS las rutas de API
+// FunciÃ³n central de autorizaciÃ³n â€” usada en TODAS las rutas de API
 
 import { auth } from './auth'
 import { redirect } from 'next/navigation'
@@ -22,8 +22,8 @@ export type Accion =
   | 'ver_equipo'
 
 /**
- * Verifica si el usuario actual puede realizar una acción sobre un recurso.
- * SIEMPRE se llama en el servidor, nunca se confía en el cliente.
+ * Verifica si el usuario actual puede realizar una acciÃ³n sobre un recurso.
+ * SIEMPRE se llama en el servidor, nunca se confÃ­a en el cliente.
  */
 export async function puede(
   accion: Accion,
@@ -95,11 +95,11 @@ export async function puede(
   }
 
   if (permiso === false) {
-    return { autorizado: false, usuario, razon: 'Sin permiso para esta acción' }
+    return { autorizado: false, usuario, razon: 'Sin permiso para esta acciÃ³n' }
   }
 
   if (permiso === 'propio') {
-    // Si hay recurso con vendedorId, verificar que sea el dueño
+    // Si hay recurso con vendedorId, verificar que sea el dueÃ±o
     if (opciones?.recursoVendedorId !== undefined) {
       const esDueno = opciones.recursoVendedorId === usuario.id
       return {
@@ -108,7 +108,7 @@ export async function puede(
         razon: esDueno ? undefined : 'Solo puedes acceder a tus propios datos',
       }
     }
-    // Si no hay recursoVendedorId, se asume que la ruta manejará el filtro por vendedor
+    // Si no hay recursoVendedorId, se asume que la ruta manejarÃ¡ el filtro por vendedor
     return { autorizado: true, usuario }
   }
 
@@ -124,7 +124,7 @@ export interface SessionUsuario {
 }
 
 /**
- * Helper para rutas de API — responde 401/403 si no está autorizado
+ * Helper para rutas de API â€” responde 401/403 si no estÃ¡ autorizado
  */
 export async function requireAuth(
   accion: Accion,
@@ -154,7 +154,7 @@ export class ApiError extends Error {
 }
 
 /**
- * Envuelve un handler de API con manejo de errores estándar
+ * Envuelve un handler de API con manejo de errores estÃ¡ndar
  */
 export function apiHandler(
   handler: (req: Request, ctx?: Record<string, unknown>) => Promise<Response>
@@ -172,7 +172,7 @@ export function apiHandler(
 
       console.error('[API Error]', error)
       return Response.json(
-        { error: 'Ocurrió un error interno. Por favor intenta de nuevo.' },
+        { error: 'OcurriÃ³ un error interno. Por favor intenta de nuevo.' },
         { status: 500 }
       )
     }

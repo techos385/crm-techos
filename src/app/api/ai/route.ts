@@ -25,7 +25,7 @@ export async function POST(request: NextRequest) {
         return NextResponse.json({
           ok: true,
           sinLlave: true,
-          resultado: `Para respuestas personalizadas, configura tu ANTHROPIC_API_KEY.\n\nPreguntaste: "${mensaje}"\n\nTip: Las objeciones de precio se vencen mostrando ROI y garantía.`,
+          resultado: `Para respuestas personalizadas, configura tu ANTHROPIC_API_KEY.\n\nPreguntaste: "${mensaje}"\n\nTip: Las objeciones de precio se vencen mostrando ROI y garantÃ­a.`,
         })
       }
       const res = await fetch('https://api.anthropic.com/v1/messages', {
@@ -34,8 +34,8 @@ export async function POST(request: NextRequest) {
         body: JSON.stringify({
           model: MODEL,
           max_tokens: 600,
-          system: 'Eres el asistente de ventas de Techos y Cubiertas, empresa de arcotechos y estructuras metálicas en Ecatepec. Das consejos concretos y breves. Responde en español, máx 3 párrafos.',
-          messages: [{ role: 'user', content: mensaje || '¿Cómo puedo vender más?' }],
+          system: 'Eres el asistente de ventas de Techos y Cubiertas, empresa de arcotechos y estructuras metÃ¡licas en Ecatepec. Das consejos concretos y breves. Responde en espaÃ±ol, mÃ¡x 3 pÃ¡rrafos.',
+          messages: [{ role: 'user', content: mensaje || 'Â¿CÃ³mo puedo vender mÃ¡s?' }],
         }),
       })
       const data = await res.json()
@@ -87,14 +87,14 @@ export async function POST(request: NextRequest) {
       })
     }
 
-    const contexto = `Cliente: ${cliente.nombre}\nEtapa: ${cliente.etapa ?? 'No definida'}\nTemperatura: ${cliente.temperatura}\nObjeción: ${cliente.objecionPrincipal ?? 'Ninguna'}\nValor estimado: ${cliente.valorEstimado ? '$' + cliente.valorEstimado.toLocaleString('es-MX') : 'No definido'}`
+    const contexto = `Cliente: ${cliente.nombre}\nEtapa: ${cliente.etapa ?? 'No definida'}\nTemperatura: ${cliente.temperatura}\nObjeciÃ³n: ${cliente.objecionPrincipal ?? 'Ninguna'}\nValor estimado: ${cliente.valorEstimado ? '$' + cliente.valorEstimado.toLocaleString('es-MX') : 'No definido'}`
 
     const prompts: Record<string, string> = {
-      mensaje: `Redacta un mensaje de ${canal === 'whatsapp' ? 'WhatsApp' : 'correo'} para este cliente. Máx 150 palabras.\n\n${contexto}`,
+      mensaje: `Redacta un mensaje de ${canal === 'whatsapp' ? 'WhatsApp' : 'correo'} para este cliente. MÃ¡x 150 palabras.\n\n${contexto}`,
       temperatura: `Analiza y responde SOLO en JSON: {"temperatura":"CALIENTE|TIBIO|FRIO","razon":"frase corta"}\n\n${contexto}`,
-      proxima_accion: `Sugiere la próxima acción. Responde SOLO en JSON: {"accion":"acción concreta","diasSugeridos":número}\n\n${contexto}`,
-      resumen: `Resume en 3-5 líneas el estado de este cliente y qué hacer para cerrar.\n\n${contexto}`,
-      objecion: `Sugiere cómo vencer la objeción "${cliente.objecionPrincipal}" de este cliente.\n\n${contexto}`,
+      proxima_accion: `Sugiere la prÃ³xima acciÃ³n. Responde SOLO en JSON: {"accion":"acciÃ³n concreta","diasSugeridos":nÃºmero}\n\n${contexto}`,
+      resumen: `Resume en 3-5 lÃ­neas el estado de este cliente y quÃ© hacer para cerrar.\n\n${contexto}`,
+      objecion: `Sugiere cÃ³mo vencer la objeciÃ³n "${cliente.objecionPrincipal}" de este cliente.\n\n${contexto}`,
     }
 
     const response = await fetch('https://api.anthropic.com/v1/messages', {

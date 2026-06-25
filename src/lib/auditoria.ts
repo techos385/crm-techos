@@ -1,5 +1,5 @@
 // src/lib/auditoria.ts
-// Registro automático de auditoría para todas las acciones importantes
+// Registro automÃ¡tico de auditorÃ­a para todas las acciones importantes
 
 import { prisma } from './prisma'
 
@@ -27,8 +27,8 @@ export async function registrarAuditoria(params: AuditoriaParams): Promise<void>
       }
     })
   } catch (error) {
-    // La auditoría no debe romper el flujo principal
-    console.error('[Auditoría] Error al registrar:', error)
+    // La auditorÃ­a no debe romper el flujo principal
+    console.error('[AuditorÃ­a] Error al registrar:', error)
   }
 }
 
@@ -60,7 +60,7 @@ export const ACCIONES = {
   USUARIO_DESACTIVADO:'usuario_desactivado',
   ROL_CAMBIADO:      'rol_cambiado',
   
-  // Sesión
+  // SesiÃ³n
   INICIO_SESION:     'inicio_sesion',
   CIERRE_SESION:     'cierre_sesion',
   

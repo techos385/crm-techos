@@ -1,5 +1,5 @@
 // src/lib/prisma.ts
-// Singleton de Prisma para evitar conexiones múltiples en desarrollo
+// Singleton de Prisma para evitar conexiones mÃºltiples en desarrollo
 
 import { PrismaClient } from '@prisma/client'
 

@@ -1,16 +1,16 @@
 // src/middleware.ts
-// Protección de rutas — redirige a login si no hay sesión
+// ProtecciÃ³n de rutas â€” redirige a login si no hay sesiÃ³n
 
 import { auth } from '@/lib/auth'
 import { NextResponse } from 'next/server'
 
-// Rutas públicas que no requieren sesión
+// Rutas pÃºblicas que no requieren sesiÃ³n
 const RUTAS_PUBLICAS = [
   '/login',
   '/landing',
-  '/agenda/', // páginas públicas de agendamiento
+  '/agenda/', // pÃ¡ginas pÃºblicas de agendamiento
   '/api/auth',
-  '/api/citas/publica', // endpoint público para agendar
+  '/api/citas/publica', // endpoint pÃºblico para agendar
   '/_next',
   '/favicon.ico',
   '/manifest.json',
@@ -19,14 +19,14 @@ const RUTAS_PUBLICAS = [
 export default auth((req) => {
   const { pathname } = req.nextUrl
 
-  // Verificar si es ruta pública
+  // Verificar si es ruta pÃºblica
   const esPublica = RUTAS_PUBLICAS.some((ruta) => pathname.startsWith(ruta))
 
   if (esPublica) {
     return NextResponse.next()
   }
 
-  // Si no hay sesión, redirigir al login
+  // Si no hay sesiÃ³n, redirigir al login
   if (!req.auth) {
     const loginUrl = new URL('/login', req.url)
     loginUrl.searchParams.set('callbackUrl', pathname)

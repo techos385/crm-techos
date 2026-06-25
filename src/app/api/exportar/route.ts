@@ -29,7 +29,7 @@ export async function GET(request: NextRequest) {
     }
 
     if (tipo === 'clientes') {
-      const encabezados = ['Nombre', 'Teléfono', 'Correo', 'Etapa', 'Temperatura', 'Valor', 'Estado', 'Vendedor']
+      const encabezados = ['Nombre', 'TelÃ©fono', 'Correo', 'Etapa', 'Temperatura', 'Valor', 'Estado', 'Vendedor']
       const filas = clientes.map(c => [
         c.nombre,
         c.telefono ?? '',
@@ -55,7 +55,7 @@ export async function GET(request: NextRequest) {
         include: { cliente: { select: { nombre: true } } },
         orderBy: { creadoEn: 'desc' },
       })
-      const encabezados = ['Cliente', 'Monto', 'Estado', 'Método', 'Concepto', 'Fecha']
+      const encabezados = ['Cliente', 'Monto', 'Estado', 'MÃ©todo', 'Concepto', 'Fecha']
       const filas = pagos.map(p => [
         p.cliente?.nombre ?? '',
         p.monto,
@@ -73,7 +73,7 @@ export async function GET(request: NextRequest) {
       })
     }
 
-    return NextResponse.json({ ok: false, mensaje: 'Tipo no válido' }, { status: 400 })
+    return NextResponse.json({ ok: false, mensaje: 'Tipo no vÃ¡lido' }, { status: 400 })
   } catch {
     return NextResponse.json({ ok: false, mensaje: 'Error interno' }, { status: 500 })
   }

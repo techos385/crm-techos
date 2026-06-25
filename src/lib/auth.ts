@@ -1,5 +1,5 @@
 // src/lib/auth.ts
-// Configuración de autenticación con NextAuth v5
+// ConfiguraciÃ³n de autenticaciÃ³n con NextAuth v5
 
 import NextAuth from 'next-auth'
 import Credentials from 'next-auth/providers/credentials'
@@ -8,11 +8,11 @@ import { prisma } from './prisma'
 import { z } from 'zod'
 
 const LoginSchema = z.object({
-  correo: z.string().email('Correo inválido'),
-  contrasena: z.string().min(1, 'La contraseña es requerida'),
+  correo: z.string().email('Correo invÃ¡lido'),
+  contrasena: z.string().min(1, 'La contraseÃ±a es requerida'),
 })
 
-// Límite de intentos de login (5 intentos en 15 minutos)
+// LÃ­mite de intentos de login (5 intentos en 15 minutos)
 async function verificarRateLimit(correo: string, ip: string | null): Promise<boolean> {
   const hace15min = new Date(Date.now() - 15 * 60 * 1000)
   const intentos = await prisma.intentoLogin.count({
@@ -33,7 +33,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       name: 'credentials',
       credentials: {
         correo: { label: 'Correo', type: 'email' },
-        contrasena: { label: 'Contraseña', type: 'password' },
+        contrasena: { label: 'ContraseÃ±a', type: 'password' },
       },
       async authorize(credentials, request) {
         const ip = request?.headers?.get('x-forwarded-for') ?? null
@@ -62,7 +62,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           where: { correo }
         })
 
-        // IMPORTANTE: siempre hacer la comparación aunque no exista el usuario
+        // IMPORTANTE: siempre hacer la comparaciÃ³n aunque no exista el usuario
         // para no revelar si el correo existe o no
         const contrasenaDummy = '$2b$12$dummy.hash.that.never.matches.anything.real'
         const hashComparar = usuario?.contrasenaHash ?? contrasenaDummy
@@ -76,7 +76,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         }
 
         if (!usuario.activo) {
-          throw new Error('Esta cuenta está desactivada. Contacta al administrador.')
+          throw new Error('Esta cuenta estÃ¡ desactivada. Contacta al administrador.')
         }
 
         // Login exitoso
@@ -84,12 +84,12 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           data: { correo, ip, exitoso: true }
         })
 
-        // Registrar en auditoría
+        // Registrar en auditorÃ­a
         await prisma.registroAuditoria.create({
           data: {
             usuarioId: usuario.id,
             accion: 'inicio_sesion',
-            detalle: `${usuario.nombre} inició sesión`,
+            detalle: `${usuario.nombre} iniciÃ³ sesiÃ³n`,
             ip,
           }
         })
@@ -133,7 +133,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   secret: process.env.AUTH_SECRET,
 })
 
-// Extensión de tipos para TypeScript
+// ExtensiÃ³n de tipos para TypeScript
 declare module 'next-auth' {
   interface User {
     rol?: string

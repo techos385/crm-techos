@@ -1,5 +1,5 @@
 // src/app/api/archivos/route.ts
-// Subida y descarga de archivos â€” guardados en base de datos
+// Subida y descarga de archivos Ã¢â‚¬â€ guardados en base de datos
 
 import { NextRequest, NextResponse } from 'next/server'
 import { requireAuth, apiError } from '@/lib/permisos'
@@ -30,11 +30,11 @@ export async function POST(request: NextRequest) {
       }, { status: 400 })
     }
 
-    // Validar tamaÃ±o
+    // Validar tamaÃƒÂ±o
     if (archivo.size > TAMANO_MAXIMO) {
       return NextResponse.json({
         ok: false,
-        mensaje: `El archivo es muy grande. MÃ¡ximo ${TAMANO_MAXIMO / 1024 / 1024}MB`,
+        mensaje: `El archivo es muy grande. MÃƒÂ¡ximo ${TAMANO_MAXIMO / 1024 / 1024}MB`,
       }, { status: 400 })
     }
 
