@@ -73,7 +73,7 @@ export async function POST(request: NextRequest) {
       const nuevo = await tx.pago.create({
         data: {
           clienteId: datos.clienteId,
-          vendedorId: cliente.vendedorId ?? session.id,
+          
           monto: datos.monto,
           metodo: datos.metodo as any,
           estado: datos.estado as any,
