@@ -46,7 +46,7 @@ export async function GET(request: NextRequest) {
           const dias = c.ultimoContacto ? Math.floor((ahora.getTime() - new Date(c.ultimoContacto).getTime()) / 86400000) : 999
           return dias >= 14 || (c.proximaAccionFecha && new Date(c.proximaAccionFecha) < hoy)
         }).length,
-        recordatorios: recordatorios.map(r => ({ id: r.id, texto: r.titulo, fecha: r.fecha.toISOString(),  clienteId: r.clienteId, clienteNombre: r.cliente.nombre })),
+        recordatorios: recordatorios.map(r => ({ id: r.id, texto: r.titulo, fecha: r.fecha.toISOString(),  clienteId: r.clienteId, clienteNombre: r.cliente?.nombre ?? '' })),
       },
     })
   } catch {
