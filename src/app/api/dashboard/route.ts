@@ -216,7 +216,7 @@ export async function GET() {
         vendedores.map(async (v) => {
           const gV = await prisma.cliente.count({
             where: {
-              vendedorId: v.id,
+              cliente: { vendedorId: v.id },
               estadoCartera: 'GANADO',
               eliminadoEn: null,
               ganandoEn: { gte: inicioMes, lte: finMes },
@@ -224,7 +224,7 @@ export async function GET() {
           })
           const iV = await prisma.pago.aggregate({
             where: {
-              vendedorId: v.id,
+              cliente: { vendedorId: v.id },
               estado: 'PAGADO' as any,
               eliminadoEn: null,
               fechaPago: { gte: inicioMes, lte: finMes },
