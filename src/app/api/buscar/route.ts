@@ -8,7 +8,7 @@ import { prisma } from '@/lib/prisma'
 export async function GET(request: NextRequest) {
   try {
     const session = await requireAuth('ver_cliente')
-    const esAdmin = session.user.rol === 'ADMIN'
+    const esAdmin = session.rol === 'ADMIN'
     const { searchParams } = new URL(request.url)
     const q = searchParams.get('q')?.trim() ?? ''
 
@@ -16,7 +16,7 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ ok: true, data: { clientes: [], citas: [], pagos: [] } })
     }
 
-    const filtroVendedor = esAdmin ? {} : { vendedorId: session.user.id }
+    const filtroVendedor = esAdmin ? {} : { vendedorId: session.id }
 
     const [clientes, citas, pagos] = await Promise.all([
       prisma.cliente.findMany({
