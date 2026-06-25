@@ -1,197 +1,70 @@
-// src/app/api/seguimiento/route.ts
-// Seguimiento, recordatorios y "Hoy te toca"
-
 import { NextRequest, NextResponse } from 'next/server'
-import { requireAuth, apiError } from '@/lib/permisos'
+import { requireAuth } from '@/lib/permisos'
 import { prisma } from '@/lib/prisma'
-import { startOfDay, endOfDay } from 'date-fns'
-import { z } from 'zod'
-
-const RecordatorioSchema = z.object({
-  clienteId: z.string().optional(),
-  texto: z.string().min(2).max(500),
-  fechaVencimiento: z.string(),
-})
 
 export async function GET(request: NextRequest) {
   try {
     const session = await requireAuth('ver_cliente')
-    const esAdmin = session.rol === 'ADMIN'
-    const { searchParams } = new URL(request.url)
-    const vista = searchParams.get('vista') ?? 'hoy'
-
-    const filtroVendedor = esAdmin && searchParams.get('vendedorId')
-      ? { vendedorId: searchParams.get('vendedorId') as string }
-      : esAdmin ? {} : { vendedorId: session.id }
-
+    const filtroVendedor = session.rol === 'ADMIN' ? {} : { vendedorId: session.id }
     const ahora = new Date()
-    const hoyInicio = startOfDay(ahora)
-    const hoyFin = endOfDay(ahora)
+    const hoy = new Date(ahora); hoy.setHours(0,0,0,0)
+    const manana = new Date(hoy); manana.setDate(manana.getDate() + 1)
 
-    if (vista === 'hoy') {
-      // "Hoy te toca" Ã¢â‚¬â€ clientes con prÃƒÂ³xima acciÃƒÂ³n hoy o vencida
-      const clientesHoy = await prisma.cliente.findMany({
-        where: {
-          ...filtroVendedor,
-          eliminadoEn: null,
-          estadoCartera: 'ACTIVO',
-          OR: [
-            { proximaAccionFecha: { lte: hoyFin } },
-          ],
-        },
-        include: {
-          vendedor: { select: { id: true, nombre: true } },
-        },
-        orderBy: [
-          { temperatura: 'asc' }, // CALIENTE primero (C < F < T ordenado)
-          { proximaAccionFecha: 'asc' },
-        ],
-      })
-
-      // Citas de hoy
-      const citasHoy = await prisma.cita.findMany({
-        where: {
-          ...filtroVendedor,
-          eliminadoEn: null,
-          inicio: { gte: hoyInicio, lte: hoyFin },
-        },
-        include: {
-          cliente: { select: { id: true, nombre: true } },
-        },
-        orderBy: { inicio: 'asc' },
-      })
-
-      // Recordatorios vencidos o de hoy
-      const recordatoriosHoy = await prisma.recordatorio.findMany({
-        where: {
-          eliminadoEn: null,
-          completado: false,
-          OR: [
-            { clienteId: { not: null }, cliente: { ...filtroVendedor, eliminadoEn: null } },
-            { clienteId: null },
-          ],
-          fechaVencimiento: { lte: hoyFin },
-        },
-        include: {
-          cliente: { select: { id: true, nombre: true } },
-        },
-        orderBy: { fechaVencimiento: 'asc' },
-      })
-
-      // Leads frÃƒÂ­os (mÃƒÂ¡s de 24h en Nuevo Prospecto sin contacto)
-      const hace24h = new Date(ahora.getTime() - 24 * 60 * 60 * 1000)
-      const leadsFrios = await prisma.cliente.findMany({
-        where: {
-          ...filtroVendedor,
-          eliminadoEn: null,
-          estadoCartera: 'ACTIVO',
-          etapa: 'Nuevo Prospecto',
-          creadoEn: { lt: hace24h },
-          ultimoContacto: null,
-        },
-        select: { id: true, nombre: true, creadoEn: true, telefono: true },
-      })
-
-      // Sin prÃƒÂ³xima acciÃƒÂ³n
-      const sinSeguimiento = await prisma.cliente.count({
-        where: {
-          ...filtroVendedor,
-          eliminadoEn: null,
-          estadoCartera: 'ACTIVO',
-          proximaAccion: null,
-        },
-      })
-
-      // ConfiguraciÃƒÂ³n del negocio para meta
-      const config = await prisma.configNegocio.findFirst()
-      const usuario = await prisma.usuario.findUnique({
-        where: { id: session.id },
-        select: { metaMensual: true },
-      })
-
-      return NextResponse.json({
-        ok: true,
-        data: {
-          clientesHoy: clientesHoy.sort((a, b) => {
-            const orden = { CALIENTE: 0, TIBIO: 1, FRIO: 2 }
-            return (orden[a.temperatura as keyof typeof orden] ?? 1) - (orden[b.temperatura as keyof typeof orden] ?? 1)
-          }),
-          citasHoy,
-          recordatoriosHoy,
-          leadsFrios,
-          sinSeguimiento,
-          metaMes: usuario?.metaMensual ?? config?.metaMensual ?? 5,
-        },
-      })
-    }
-
-    if (vista === 'recordatorios') {
-      const recordatorios = await prisma.recordatorio.findMany({
-        where: {
-          eliminadoEn: null,
-          completado: false,
-          OR: [
-            { clienteId: { not: null }, cliente: { ...filtroVendedor, eliminadoEn: null } },
-            { clienteId: null },
-          ],
-        },
-        include: {
-          cliente: { select: { id: true, nombre: true } },
-        },
-        orderBy: { fechaVencimiento: 'asc' },
-      })
-
-      return NextResponse.json({ ok: true, data: recordatorios })
-    }
-
-    return NextResponse.json({ ok: false, mensaje: 'Vista no vÃƒÂ¡lida' }, { status: 400 })
-  } catch (error) {
-    return NextResponse.json({ ok: false, mensaje: "Error interno" }, { status: 500 })
-  }
-}
-
-export async function POST(request: NextRequest) {
-  try {
-    const session = await requireAuth('ver_cliente')
-    const body = await request.json()
-    const datos = RecordatorioSchema.parse(body)
-
-    const recordatorio = await prisma.recordatorio.create({
-      data: {
-        clienteId: datos.clienteId ?? null,
-        texto: datos.texto,
-        fechaVencimiento: new Date(datos.fechaVencimiento),
-      },
+    const clientesActivos = await prisma.cliente.findMany({
+      where: { estadoCartera: 'ACTIVO' as any, eliminadoEn: null, ...filtroVendedor },
+      select: { id: true, nombre: true, telefono: true, temperatura: true, etapa: true, proximaAccion: true, proximaAccionFecha: true, valorEstimado: true, ultimoContacto: true, creadoEn: true },
     })
 
-    return NextResponse.json({ ok: true, data: recordatorio }, { status: 201 })
-  } catch (error) {
-    return NextResponse.json({ ok: false, mensaje: "Error interno" }, { status: 500 })
+    const hoyToca = clientesActivos.filter(c => {
+      if (!c.proximaAccionFecha) return false
+      const f = new Date(c.proximaAccionFecha)
+      return f >= hoy && f < manana
+    }).map(c => ({ ...c, etapaEmbudo: c.etapa, diasSinContacto: null, esNuevo: false, horasDesdeCreacion: null }))
+
+    const vencidos = clientesActivos
+      .filter(c => c.proximaAccionFecha && new Date(c.proximaAccionFecha) < hoy)
+      .map(c => ({ ...c, etapaEmbudo: c.etapa, diasSinContacto: null, esNuevo: false, horasDesdeCreacion: null }))
+
+    const leadsFrios = clientesActivos.filter(c => {
+      const dias = c.ultimoContacto ? Math.floor((ahora.getTime() - new Date(c.ultimoContacto).getTime()) / 86400000) : 999
+      return dias >= 7
+    }).map(c => ({ ...c, etapaEmbudo: c.etapa, diasSinContacto: c.ultimoContacto ? Math.floor((ahora.getTime() - new Date(c.ultimoContacto).getTime()) / 86400000) : null, esNuevo: false, horasDesdeCreacion: null }))
+
+    const recordatorios = await prisma.recordatorio.findMany({
+      where: { completado: false, fecha: { lte: manana }, cliente: { eliminadoEn: null, ...filtroVendedor } },
+      include: { cliente: { select: { id: true, nombre: true } } },
+      orderBy: { fecha: 'asc' },
+      take: 20,
+    })
+
+    return NextResponse.json({
+      ok: true,
+      data: {
+        hoyToca, vencidos, leadsFrios,
+        sinAccion: clientesActivos.filter(c => !c.proximaAccion).length,
+        enRiesgo: clientesActivos.filter(c => {
+          const dias = c.ultimoContacto ? Math.floor((ahora.getTime() - new Date(c.ultimoContacto).getTime()) / 86400000) : 999
+          return dias >= 14 || (c.proximaAccionFecha && new Date(c.proximaAccionFecha) < hoy)
+        }).length,
+        recordatorios: recordatorios.map(r => ({ id: r.id, texto: r.texto, fecha: r.fecha.toISOString(), hora: r.hora, clienteId: r.clienteId, clienteNombre: r.cliente.nombre })),
+      },
+    })
+  } catch {
+    return NextResponse.json({ ok: false, mensaje: 'Error interno' }, { status: 500 })
   }
 }
 
 export async function PATCH(request: NextRequest) {
   try {
-    const session = await requireAuth('ver_cliente')
-    const body = await request.json()
-    const { id, completado, posponer } = body
-
-    if (!id) return NextResponse.json({ ok: false, mensaje: 'Falta el ID' }, { status: 400 })
-
-    const datos: Record<string, unknown> = {}
-    if (completado !== undefined) datos.completado = completado
-    if (posponer) {
-      const recordatorio = await prisma.recordatorio.findUnique({ where: { id } })
-      if (recordatorio) {
-        const nuevaFecha = new Date(recordatorio.fechaVencimiento)
-        nuevaFecha.setDate(nuevaFecha.getDate() + 1)
-        datos.fechaVencimiento = nuevaFecha
-      }
+    await requireAuth('ver_cliente')
+    const { searchParams } = new URL(request.url)
+    const recordatorioId = searchParams.get('recordatorioId')
+    if (recordatorioId) {
+      await prisma.recordatorio.update({ where: { id: recordatorioId }, data: { completado: true } })
+      return NextResponse.json({ ok: true })
     }
-
-    const actualizado = await prisma.recordatorio.update({ where: { id }, data: datos })
-    return NextResponse.json({ ok: true, data: actualizado })
-  } catch (error) {
-    return NextResponse.json({ ok: false, mensaje: "Error interno" }, { status: 500 })
+    return NextResponse.json({ ok: false, mensaje: 'Accion no reconocida' }, { status: 400 })
+  } catch {
+    return NextResponse.json({ ok: false, mensaje: 'Error interno' }, { status: 500 })
   }
 }
