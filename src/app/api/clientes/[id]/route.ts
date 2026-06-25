@@ -9,14 +9,13 @@ export async function GET(_req: NextRequest, { params }: { params: { id: string 
     const cliente = await prisma.cliente.findFirst({
       where: { ...where, eliminadoEn: null },
       include: {
-        notas: { where: { eliminadoEn: null }, orderBy: { creadoEn: 'desc' } },
         pagos: { orderBy: { creadoEn: 'desc' } },
         archivos: { where: { eliminadoEn: null }, include: { subidoPor: { select: { nombre: true } } } },
         vendedor: { select: { nombre: true } },
       },
     })
     if (!cliente) return NextResponse.json({ ok: false, mensaje: 'No encontrado' }, { status: 404 })
-    return NextResponse.json({ ok: true, data: cliente })
+    return NextResponse.json({ ok: true, data: { ...cliente, resumenPagos: { totalPagado: 0, totalPendiente: 0, totalValor: cliente.valorEstimado ?? 0 }, timeline: [] } })
   } catch {
     return NextResponse.json({ ok: false, mensaje: 'Error interno' }, { status: 500 })
   }
@@ -27,10 +26,7 @@ export async function PATCH(request: NextRequest, { params }: { params: { id: st
     const session = await requireAuth('ver_cliente')
     const body = await request.json()
     const where = session.rol === 'ADMIN' ? { id: params.id } : { id: params.id, vendedorId: session.id }
-    const cliente = await prisma.cliente.update({
-      where,
-      data: { ...body, ultimoContacto: new Date() },
-    })
+    const cliente = await prisma.cliente.update({ where, data: body })
     return NextResponse.json({ ok: true, data: cliente })
   } catch {
     return NextResponse.json({ ok: false, mensaje: 'Error interno' }, { status: 500 })
