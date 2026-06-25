@@ -60,7 +60,7 @@ export async function GET() {
     const pagosVencidos = await prisma.pago.aggregate({
       where: {
         ...filtroVendedor,
-        estatus: 'VENCIDO',
+        estado: 'VENCIDO' as any,
         eliminadoEn: null,
       },
       _sum: { monto: true },
