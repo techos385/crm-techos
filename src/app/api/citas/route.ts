@@ -8,8 +8,8 @@ import { registrarAuditoria, ACCIONES } from '@/lib/auditoria'
 const CitaSchema = z.object({
   clienteId: z.string(),
   titulo: z.string().min(2).max(200),
-  fechaInicio: z.string(),
-  fechaFin: z.string().optional(),
+  inicio: z.string(),
+  fin: z.string().optional(),
   notas: z.string().optional().nullable(),
   vendedorId: z.string().optional().nullable(),
   lugar: z.string().optional().nullable(),
@@ -35,10 +35,10 @@ export async function GET(request: NextRequest) {
       where.vendedorId = vendedorId
     }
 
-    if (desde) where.fechaInicio = { gte: new Date(desde) }
+    if (desde) where.inicio = { gte: new Date(desde) }
     if (hasta) {
-      where.fechaInicio = {
-        ...(where.fechaInicio as object ?? {}),
+      where.inicio = {
+        ...(where.inicio as object ?? {}),
         lte: new Date(hasta),
       }
     }
@@ -79,10 +79,10 @@ export async function POST(request: NextRequest) {
       ? datos.vendedorId
       : session.id
 
-    const fechaInicio = new Date(datos.fechaInicio)
-    const fechaFin = datos.fechaFin
-      ? new Date(datos.fechaFin)
-      : new Date(fechaInicio.getTime() + 30 * 60 * 1000) // +30 min default
+    const inicio = new Date(datos.inicio)
+    const fin = datos.fin
+      ? new Date(datos.fin)
+      : new Date(inicio.getTime() + 30 * 60 * 1000) // +30 min default
 
     // Verificar disponibilidad (no traslapar)
     const traslape = await prisma.cita.findFirst({
@@ -90,9 +90,9 @@ export async function POST(request: NextRequest) {
         vendedorId,
         eliminadoEn: null,
         OR: [
-          { fechaInicio: { gte: fechaInicio, lt: fechaFin } },
-          { fechaFin: { gt: fechaInicio, lte: fechaFin } },
-          { fechaInicio: { lte: fechaInicio }, fechaFin: { gte: fechaFin } },
+          { inicio: { gte: inicio, lt: fin } },
+          { fin: { gt: inicio, lte: fin } },
+          { inicio: { lte: inicio }, fin: { gte: fin } },
         ],
       },
     })
@@ -108,8 +108,8 @@ export async function POST(request: NextRequest) {
         data: {
           clienteId: datos.clienteId,
           titulo: datos.titulo,
-          fechaInicio,
-          fechaFin,
+          inicio,
+          fin,
           notas: datos.notas,
           vendedorId,
           lugar: datos.lugar,
@@ -133,7 +133,7 @@ export async function POST(request: NextRequest) {
         accion: ACCIONES.CREAR,
         entidad: 'Cita',
         entidadId: nueva.id,
-        descripcion: `Agendó cita con ${cliente.nombre} para ${fechaInicio.toLocaleDateString('es-MX')}`,
+        descripcion: `Agendó cita con ${cliente.nombre} para ${inicio.toLocaleDateString('es-MX')}`,
       })
 
       return nueva
@@ -165,8 +165,8 @@ export async function PATCH(request: NextRequest) {
       where: { id },
       data: {
         ...datos,
-        fechaInicio: datos.fechaInicio ? new Date(datos.fechaInicio) : undefined,
-        fechaFin: datos.fechaFin ? new Date(datos.fechaFin) : undefined,
+        inicio: datos.inicio ? new Date(datos.inicio) : undefined,
+        fin: datos.fin ? new Date(datos.fin) : undefined,
       },
     })
 
