@@ -25,7 +25,7 @@ export async function GET(request: NextRequest) {
       accion: ACCIONES.CLIENTE_CREADO,
       
       entidadId: 'exportacion',
-      descripcion: `ExportÃ³ datos en formato ${tipo}`,
+      
     })
 
     if (tipo === 'json') {
