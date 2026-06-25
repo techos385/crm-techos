@@ -49,8 +49,7 @@ export async function GET(request: NextRequest) {
           eliminadoEn: null,
           OR: [
             { titulo: { contains: q, mode: 'insensitive' } },
-            { notas: { contains: q, mode: 'insensitive' } },
-            { cliente: { nombre: { contains: q, mode: 'insensitive' } } },
+                       { cliente: { nombre: { contains: q, mode: 'insensitive' } } },
           ],
         },
         take: 5,
