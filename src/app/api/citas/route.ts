@@ -124,7 +124,7 @@ export async function POST(request: NextRequest) {
       if (['Nuevo Prospecto', 'Contactado', 'Información Recibida'].includes(cliente.etapa ?? '')) {
         await tx.cliente.update({
           where: { id: datos.clienteId },
-          data: { etapa: 'Cita agendada' },
+          data: { etapa: 'CITA_AGENDADA' },
         })
       }
 
