@@ -53,12 +53,12 @@ export async function GET(request: NextRequest) {
         where: {
           ...filtroVendedor,
           eliminadoEn: null,
-          fechaInicio: { gte: hoyInicio, lte: hoyFin },
+          inicio: { gte: hoyInicio, lte: hoyFin },
         },
         include: {
           cliente: { select: { id: true, nombre: true } },
         },
-        orderBy: { fechaInicio: 'asc' },
+        orderBy: { inicio: 'asc' },
       })
 
       // Recordatorios vencidos o de hoy
