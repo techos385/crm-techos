@@ -49,7 +49,7 @@ export async function GET() {
     const pagosEsteMes = await prisma.pago.aggregate({
       where: {
         ...filtroVendedor,
-        estatus: 'PAGADO',
+        estado: 'PAGADO' as any,
         eliminadoEn: null,
         fechaPago: { gte: inicioMes, lte: finMes },
       },
@@ -143,7 +143,7 @@ export async function GET() {
         const ingresos = await prisma.pago.aggregate({
           where: {
             ...filtroVendedor,
-            estatus: 'PAGADO',
+            estado: 'PAGADO' as any,
             eliminadoEn: null,
             fechaPago: { gte: mes.inicio, lte: mes.fin },
           },
@@ -173,7 +173,7 @@ export async function GET() {
     const ingresosMesAnterior = await prisma.pago.aggregate({
       where: {
         ...filtroVendedor,
-        estatus: 'PAGADO',
+        estado: 'PAGADO' as any,
         eliminadoEn: null,
         fechaPago: { gte: inicioMesAnterior, lte: finMesAnterior },
       },
@@ -225,7 +225,7 @@ export async function GET() {
           const iV = await prisma.pago.aggregate({
             where: {
               vendedorId: v.id,
-              estatus: 'PAGADO',
+              estado: 'PAGADO' as any,
               eliminadoEn: null,
               fechaPago: { gte: inicioMes, lte: finMes },
             },
