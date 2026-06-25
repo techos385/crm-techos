@@ -114,7 +114,7 @@ export async function GET() {
       where: {
         ...filtroVendedor,
         eliminadoEn: null,
-        etapa: 'Nuevo Prospecto',
+        etapa: 'NUEVO_PROSPECTO' as any,
         creadoEn: { lt: hace24h },
         ultimoContacto: null,
       },
