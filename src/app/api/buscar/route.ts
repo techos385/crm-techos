@@ -73,7 +73,7 @@ export async function GET(request: NextRequest) {
         select: {
           id: true,
           monto: true,
-          estatus: true,
+          estado: true,
           concepto: true,
           fechaPago: true,
           cliente: { select: { id: true, nombre: true } },
