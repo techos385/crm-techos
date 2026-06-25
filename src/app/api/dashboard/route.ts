@@ -209,7 +209,7 @@ export async function GET() {
     }> = []
     if (esAdmin) {
       const vendedores = await prisma.usuario.findMany({
-        where: { activo: true, eliminadoEn: null },
+        where: { activo: true },
         select: { id: true, nombre: true, metaMensual: true },
       })
       rankingEquipo = await Promise.all(
