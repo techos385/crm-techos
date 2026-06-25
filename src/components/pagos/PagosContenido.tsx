@@ -1,6 +1,6 @@
 'use client'
 // src/components/pagos/PagosContenido.tsx
-// Lista de todos los pagos con filtros, vencidos resaltados y estadísticas
+// Lista de todos los pagos con filtros, vencidos resaltados y estadÃ­sticas
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
@@ -87,11 +87,11 @@ export function PagosContenido() {
           <tr><td><strong>Folio</strong></td><td>${pago.id.slice(-8).toUpperCase()}</td></tr>
           <tr><td><strong>Cliente</strong></td><td>${pago.cliente?.nombre || 'N/A'}</td></tr>
           <tr><td><strong>Concepto</strong></td><td>${pago.concepto || 'Pago de proyecto'}</td></tr>
-          <tr><td><strong>Método</strong></td><td>${pago.metodo}</td></tr>
+          <tr><td><strong>MÃ©todo</strong></td><td>${pago.metodo}</td></tr>
           <tr><td><strong>Fecha</strong></td><td>${pago.fechaPago ? new Date(pago.fechaPago).toLocaleDateString('es-MX') : 'N/A'}</td></tr>
           <tr><td><strong>Monto</strong></td><td class="total">$${pago.monto.toLocaleString('es-MX')}</td></tr>
         </table>
-        <p>Gracias por su preferencia. Techos y Cubiertas — Más de 20 años de experiencia.</p>
+        <p>Gracias por su preferencia. Techos y Cubiertas â€” MÃ¡s de 20 aÃ±os de experiencia.</p>
         <button class="no-print" onclick="window.print()">Imprimir / Guardar PDF</button>
       </body>
       </html>
@@ -100,7 +100,7 @@ export function PagosContenido() {
   }
 
   const ESTATUSES = ['', 'PAGADO', 'PENDIENTE', 'VENCIDO']
-  const METODOS = ['', 'Transferencia', 'Tarjeta', 'Efectivo', 'Depósito']
+  const METODOS = ['', 'Transferencia', 'Tarjeta', 'Efectivo', 'DepÃ³sito']
 
   const iconEstatus = (e: string) => {
     if (e === 'PAGADO') return <CheckCircle size={14} className="text-green-500" />
@@ -134,7 +134,7 @@ export function PagosContenido() {
       {resumen.countVencidos > 0 && (
         <div className="flex items-center gap-3 p-3 rounded-xl text-sm bg-red-500/10 text-red-500">
           <AlertTriangle size={16} />
-          <span><strong>{resumen.countVencidos} cobros vencidos</strong> — Cobrar esto es la venta más fácil. Hazlo hoy.</span>
+          <span><strong>{resumen.countVencidos} cobros vencidos</strong> â€” Cobrar esto es la venta mÃ¡s fÃ¡cil. Hazlo hoy.</span>
         </div>
       )}
 
@@ -147,25 +147,25 @@ export function PagosContenido() {
             onChange={e => { setFiltroEstatus(e.target.value); setPagina(1) }}
           >
             <option value="">Todos los estatus</option>
-            <option value="PAGADO">✅ Pagados</option>
-            <option value="PENDIENTE">⏳ Pendientes</option>
-            <option value="VENCIDO">⚠️ Vencidos</option>
+            <option value="PAGADO">âœ… Pagados</option>
+            <option value="PENDIENTE">â³ Pendientes</option>
+            <option value="VENCIDO">âš ï¸ Vencidos</option>
           </select>
           <select
             className="campo text-sm py-2"
             value={filtroMetodo}
             onChange={e => { setFiltroMetodo(e.target.value); setPagina(1) }}
           >
-            <option value="">Todos los métodos</option>
+            <option value="">Todos los mÃ©todos</option>
             <option value="Transferencia">Transferencia</option>
             <option value="Tarjeta">Tarjeta</option>
             <option value="Efectivo">Efectivo</option>
-            <option value="Depósito">Depósito</option>
+            <option value="DepÃ³sito">DepÃ³sito</option>
           </select>
           {(filtroEstatus || filtroMetodo) && (
             <button onClick={() => { setFiltroEstatus(''); setFiltroMetodo(''); setPagina(1) }}
               className="text-sm px-3 py-2 rounded-xl hover:opacity-70 transition-opacity" style={{ color: 'var(--text-secundario)' }}>
-              ✕ Limpiar
+              âœ• Limpiar
             </button>
           )}
         </div>
@@ -184,7 +184,7 @@ export function PagosContenido() {
         <div className="card p-8 text-center">
           <DollarSign size={32} className="mx-auto mb-3 opacity-30" />
           <p className="font-semibold">Sin pagos con estos filtros</p>
-          <p className="text-sm mt-1" style={{ color: 'var(--text-secundario)' }}>Prueba quitar algún filtro o registra un pago nuevo.</p>
+          <p className="text-sm mt-1" style={{ color: 'var(--text-secundario)' }}>Prueba quitar algÃºn filtro o registra un pago nuevo.</p>
         </div>
       ) : (
         <div className="space-y-2">
@@ -211,7 +211,7 @@ export function PagosContenido() {
                   {pago.concepto && <span>{pago.concepto}</span>}
                   {pago.fechaPago && <span>{formatearFechaCorta(pago.fechaPago)}</span>}
                   {pago.estatus === 'VENCIDO' && pago.fechaVencimiento && (
-                    <span className="text-red-500">Venció: {formatearFechaCorta(pago.fechaVencimiento)}</span>
+                    <span className="text-red-500">VenciÃ³: {formatearFechaCorta(pago.fechaVencimiento)}</span>
                   )}
                 </div>
               </div>
@@ -227,13 +227,13 @@ export function PagosContenido() {
         </div>
       )}
 
-      {/* Paginación */}
+      {/* PaginaciÃ³n */}
       {total > POR_PAGINA && (
         <div className="flex items-center justify-between text-sm">
-          <span style={{ color: 'var(--text-secundario)' }}>Mostrando {Math.min((pagina - 1) * POR_PAGINA + 1, total)}–{Math.min(pagina * POR_PAGINA, total)} de {total}</span>
+          <span style={{ color: 'var(--text-secundario)' }}>Mostrando {Math.min((pagina - 1) * POR_PAGINA + 1, total)}â€“{Math.min(pagina * POR_PAGINA, total)} de {total}</span>
           <div className="flex gap-2">
-            <button onClick={() => setPagina(p => Math.max(1, p - 1))} disabled={pagina === 1} className="btn-secundario py-1.5 px-3 disabled:opacity-40">← Anterior</button>
-            <button onClick={() => setPagina(p => p + 1)} disabled={pagina * POR_PAGINA >= total} className="btn-secundario py-1.5 px-3 disabled:opacity-40">Siguiente →</button>
+            <button onClick={() => setPagina(p => Math.max(1, p - 1))} disabled={pagina === 1} className="btn-secundario py-1.5 px-3 disabled:opacity-40">â† Anterior</button>
+            <button onClick={() => setPagina(p => p + 1)} disabled={pagina * POR_PAGINA >= total} className="btn-secundario py-1.5 px-3 disabled:opacity-40">Siguiente â†’</button>
           </div>
         </div>
       )}

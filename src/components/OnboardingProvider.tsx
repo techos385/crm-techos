@@ -1,7 +1,7 @@
 'use client'
 
 // src/components/OnboardingProvider.tsx
-// Tour de bienvenida por usuario — adaptado al rol
+// Tour de bienvenida por usuario â€” adaptado al rol
 
 import { createContext, useContext, useState, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -20,66 +20,66 @@ interface Paso {
 
 const PASOS_ADMIN: Paso[] = [
   {
-    titulo: '👋 Bienvenido a tu CRM de ventas',
-    descripcion: 'Este sistema tiene un solo objetivo: que cierres más ventas y no se te caiga ningún cliente. Te mostramos lo esencial en 6 pasos rápidos.',
+    titulo: 'ðŸ‘‹ Bienvenido a tu CRM de ventas',
+    descripcion: 'Este sistema tiene un solo objetivo: que cierres mÃ¡s ventas y no se te caiga ningÃºn cliente. Te mostramos lo esencial en 6 pasos rÃ¡pidos.',
   },
   {
-    titulo: '📋 Tu menú — aquí está todo',
-    descripcion: 'En la barra de la izquierda (o abajo en celular) tienes acceso a todo: clientes, embudo, citas, pagos, tareas y más. Cada sección tiene su propio color para que sepas de un vistazo dónde estás.',
+    titulo: 'ðŸ“‹ Tu menÃº â€” aquÃ­ estÃ¡ todo',
+    descripcion: 'En la barra de la izquierda (o abajo en celular) tienes acceso a todo: clientes, embudo, citas, pagos, tareas y mÃ¡s. Cada secciÃ³n tiene su propio color para que sepas de un vistazo dÃ³nde estÃ¡s.',
     elemento: '[data-tour="nav"]',
   },
   {
-    titulo: '🔥 "Hoy te toca" — ábrelo cada mañana',
-    descripcion: 'Esta es la pantalla más importante del día. Te lista a quién contactar hoy, ordenado por los más calientes primero. Si abres esto cada mañana y haces un seguimiento, las ventas llegan.',
+    titulo: 'ðŸ”¥ "Hoy te toca" â€” Ã¡brelo cada maÃ±ana',
+    descripcion: 'Esta es la pantalla mÃ¡s importante del dÃ­a. Te lista a quiÃ©n contactar hoy, ordenado por los mÃ¡s calientes primero. Si abres esto cada maÃ±ana y haces un seguimiento, las ventas llegan.',
     elemento: '[data-tour="seguimiento"]',
   },
   {
-    titulo: '🔍 El buscador — encuentra cualquier cliente al instante',
-    descripcion: 'Presiona "/" o Ctrl+K desde cualquier pantalla para buscar por nombre, teléfono, correo, nota o empresa. Lo que buscas, lo encuentra.',
+    titulo: 'ðŸ” El buscador â€” encuentra cualquier cliente al instante',
+    descripcion: 'Presiona "/" o Ctrl+K desde cualquier pantalla para buscar por nombre, telÃ©fono, correo, nota o empresa. Lo que buscas, lo encuentra.',
     elemento: '[data-tour="buscador"]',
   },
   {
-    titulo: '➕ "+ Nuevo" — agrega un cliente en segundos',
-    descripcion: 'Este botón siempre está a la mano. Crea un cliente, una cita o un pago sin ir a buscar en el menú.',
+    titulo: 'âž• "+ Nuevo" â€” agrega un cliente en segundos',
+    descripcion: 'Este botÃ³n siempre estÃ¡ a la mano. Crea un cliente, una cita o un pago sin ir a buscar en el menÃº.',
     elemento: '[data-tour="nuevo"]',
   },
   {
-    titulo: '📁 Expediente completo al hacer clic en el nombre',
-    descripcion: 'En cualquier lista, al hacer clic en el nombre de un cliente abres su expediente completo: historial, pagos, citas, archivos y más. ¡Todo en un solo lugar!',
+    titulo: 'ðŸ“ Expediente completo al hacer clic en el nombre',
+    descripcion: 'En cualquier lista, al hacer clic en el nombre de un cliente abres su expediente completo: historial, pagos, citas, archivos y mÃ¡s. Â¡Todo en un solo lugar!',
   },
   {
-    titulo: '🎉 ¡Listo para vender!',
-    descripcion: 'Ya tienes todo lo que necesitas. Puedes volver a ver este tutorial en cualquier momento desde el botón "Ayuda" en la parte de arriba. ¡A cerrar ventas! 🚀',
+    titulo: 'ðŸŽ‰ Â¡Listo para vender!',
+    descripcion: 'Ya tienes todo lo que necesitas. Puedes volver a ver este tutorial en cualquier momento desde el botÃ³n "Ayuda" en la parte de arriba. Â¡A cerrar ventas! ðŸš€',
   },
 ]
 
 const PASOS_VENDEDOR: Paso[] = [
   {
-    titulo: '👋 Bienvenido a Techos y Cubiertas CRM',
-    descripcion: 'Este sistema tiene un solo objetivo: que cierres más ventas. Te mostramos lo esencial en 5 pasos.',
+    titulo: 'ðŸ‘‹ Bienvenido a Techos y Cubiertas CRM',
+    descripcion: 'Este sistema tiene un solo objetivo: que cierres mÃ¡s ventas. Te mostramos lo esencial en 5 pasos.',
   },
   {
-    titulo: '🔥 "Hoy te toca" — tu rutina diaria',
-    descripcion: 'Cada mañana empieza aquí: te dice exactamente a quién contactar hoy, ordenado por los más calientes (🔥) primero. Empieza siempre por los calientes.',
+    titulo: 'ðŸ”¥ "Hoy te toca" â€” tu rutina diaria',
+    descripcion: 'Cada maÃ±ana empieza aquÃ­: te dice exactamente a quiÃ©n contactar hoy, ordenado por los mÃ¡s calientes (ðŸ”¥) primero. Empieza siempre por los calientes.',
     elemento: '[data-tour="seguimiento"]',
   },
   {
-    titulo: '🔍 Busca cualquier cliente al instante',
-    descripcion: 'Presiona "/" o Ctrl+K para buscar por nombre, teléfono, empresa o nota. Nunca más buscando en listas largas.',
+    titulo: 'ðŸ” Busca cualquier cliente al instante',
+    descripcion: 'Presiona "/" o Ctrl+K para buscar por nombre, telÃ©fono, empresa o nota. Nunca mÃ¡s buscando en listas largas.',
     elemento: '[data-tour="buscador"]',
   },
   {
-    titulo: '➕ Agrega clientes y citas rápido',
-    descripcion: 'Con este botón creas clientes, citas o pagos en segundos. Siempre está visible.',
+    titulo: 'âž• Agrega clientes y citas rÃ¡pido',
+    descripcion: 'Con este botÃ³n creas clientes, citas o pagos en segundos. Siempre estÃ¡ visible.',
     elemento: '[data-tour="nuevo"]',
   },
   {
-    titulo: '📱 Los botones de WhatsApp y correo',
-    descripcion: 'Dentro de cada expediente hay botones para mandar WhatsApp y correo con el mensaje ya armado según la etapa del cliente. Un clic y listo.',
+    titulo: 'ðŸ“± Los botones de WhatsApp y correo',
+    descripcion: 'Dentro de cada expediente hay botones para mandar WhatsApp y correo con el mensaje ya armado segÃºn la etapa del cliente. Un clic y listo.',
   },
   {
-    titulo: '🎯 ¡A vender!',
-    descripcion: 'Ya sabes lo esencial. El botón "Ayuda" en la parte de arriba te trae de vuelta a este tutorial cuando quieras. ¡Mucho éxito! 🚀',
+    titulo: 'ðŸŽ¯ Â¡A vender!',
+    descripcion: 'Ya sabes lo esencial. El botÃ³n "Ayuda" en la parte de arriba te trae de vuelta a este tutorial cuando quieras. Â¡Mucho Ã©xito! ðŸš€',
   },
 ]
 
@@ -108,7 +108,7 @@ export function OnboardingProvider({ children }: { children: React.ReactNode }) 
   const esAdmin = session?.user?.rol === 'ADMIN'
   const pasos = esAdmin ? PASOS_ADMIN : PASOS_VENDEDOR
 
-  // Verificar si el usuario ya completó el onboarding
+  // Verificar si el usuario ya completÃ³ el onboarding
   useEffect(() => {
     if (status !== 'authenticated' || !session?.user?.id) return
     
@@ -127,11 +127,11 @@ export function OnboardingProvider({ children }: { children: React.ReactNode }) 
     const key = `onboarding_${session.user.id}`
     localStorage.setItem(key, 'true')
     
-    // También guardar en la base
+    // TambiÃ©n guardar en la base
     try {
       await fetch('/api/usuarios/onboarding', { method: 'POST' })
     } catch {
-      // No crítico si falla
+      // No crÃ­tico si falla
     }
   }, [session?.user?.id])
 
@@ -218,7 +218,7 @@ export function OnboardingProvider({ children }: { children: React.ReactNode }) 
                   {paso.descripcion}
                 </p>
 
-                {/* Navegación */}
+                {/* NavegaciÃ³n */}
                 <div className="flex items-center justify-between mt-6 gap-3">
                   <button
                     onClick={ocultarTour}
@@ -234,7 +234,7 @@ export function OnboardingProvider({ children }: { children: React.ReactNode }) 
                         className="btn-secundario py-2 px-4 text-sm"
                       >
                         <ChevronLeft className="w-4 h-4" />
-                        Atrás
+                        AtrÃ¡s
                       </button>
                     )}
                     <button
@@ -247,7 +247,7 @@ export function OnboardingProvider({ children }: { children: React.ReactNode }) 
                           <ChevronRight className="w-4 h-4" />
                         </>
                       ) : (
-                        '¡Listo! 🚀'
+                        'Â¡Listo! ðŸš€'
                       )}
                     </button>
                   </div>

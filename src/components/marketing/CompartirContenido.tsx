@@ -13,12 +13,12 @@ interface Vendedor {
 }
 
 const BASES_UTM = [
-  { canal: 'WhatsApp', utm: 'whatsapp', icono: '💬', color: '#25D366' },
-  { canal: 'Facebook', utm: 'facebook', icono: '📘', color: '#1877F2' },
-  { canal: 'Instagram', utm: 'instagram', icono: '📸', color: '#E4405F' },
-  { canal: 'Google', utm: 'google_ads', icono: '🔍', color: '#4285F4' },
-  { canal: 'Volante / QR', utm: 'impreso', icono: '📄', color: '#6B7280' },
-  { canal: 'Referido', utm: 'referido', icono: '🤝', color: '#7cc2e8' },
+  { canal: 'WhatsApp', utm: 'whatsapp', icono: 'ðŸ’¬', color: '#25D366' },
+  { canal: 'Facebook', utm: 'facebook', icono: 'ðŸ“˜', color: '#1877F2' },
+  { canal: 'Instagram', utm: 'instagram', icono: 'ðŸ“¸', color: '#E4405F' },
+  { canal: 'Google', utm: 'google_ads', icono: 'ðŸ”', color: '#4285F4' },
+  { canal: 'Volante / QR', utm: 'impreso', icono: 'ðŸ“„', color: '#6B7280' },
+  { canal: 'Referido', utm: 'referido', icono: 'ðŸ¤', color: '#7cc2e8' },
 ]
 
 export function CompartirContenido() {
@@ -58,7 +58,7 @@ export function CompartirContenido() {
     await navigator.clipboard.writeText(texto)
     setCopiados(prev => ({ ...prev, [key]: true }))
     setTimeout(() => setCopiados(prev => ({ ...prev, [key]: false })), 2000)
-    agregar({ tipo: 'exito', titulo: 'Enlace copiado ✓', mensaje: '' })
+    agregar({ tipo: 'exito', titulo: 'Enlace copiado âœ“', mensaje: '' })
   }
 
   const generarQr = async (url: string) => {
@@ -132,7 +132,7 @@ export function CompartirContenido() {
           <div className="card p-4 space-y-3">
             <h3 className="font-semibold flex items-center gap-2">
               <QrCode size={18} style={{ color: 'var(--color-marca)' }} />
-              Código QR para imprimir
+              CÃ³digo QR para imprimir
             </h3>
             <p className="text-sm" style={{ color: 'var(--text-secundario)' }}>
               Imprime o comparte este QR en volantes, tarjetas o WhatsApp.
@@ -152,7 +152,7 @@ export function CompartirContenido() {
                 {qrUrl && (
                   <a href={qrUrl} download={`qr-${vendedorSel.slug}.png`}
                     className="btn-primario text-xs py-2 px-4 inline-flex items-center gap-1.5">
-                    ↓ Descargar QR
+                    â†“ Descargar QR
                   </a>
                 )}
               </div>
@@ -161,9 +161,9 @@ export function CompartirContenido() {
 
           {/* Links con UTM por canal */}
           <div className="card p-4 space-y-3">
-            <h3 className="font-semibold">Links por canal de captación</h3>
+            <h3 className="font-semibold">Links por canal de captaciÃ³n</h3>
             <p className="text-sm" style={{ color: 'var(--text-secundario)' }}>
-              Usa links diferentes por canal para saber de dónde vienen tus leads.
+              Usa links diferentes por canal para saber de dÃ³nde vienen tus leads.
             </p>
             <div className="space-y-2">
               {BASES_UTM.map(canal => {
@@ -187,23 +187,23 @@ export function CompartirContenido() {
 
           {/* Mensaje de WhatsApp listo */}
           <div className="card p-4 space-y-3">
-            <h3 className="font-semibold">💬 Mensaje de WhatsApp listo</h3>
+            <h3 className="font-semibold">ðŸ’¬ Mensaje de WhatsApp listo</h3>
             <p className="text-sm" style={{ color: 'var(--text-secundario)' }}>
-              Copia este mensaje y mándalo a tus grupos o contactos:
+              Copia este mensaje y mÃ¡ndalo a tus grupos o contactos:
             </p>
             <div className="p-3 rounded-xl text-sm whitespace-pre-wrap" style={{ background: 'var(--bg-hover)' }}>
-              {`¡Hola! 👋 Soy ${vendedorSel.nombre} de Techos y Cubiertas.
+              {`Â¡Hola! ðŸ‘‹ Soy ${vendedorSel.nombre} de Techos y Cubiertas.
 
-Instalamos arcotechos y estructuras metálicas en Ecatepec y zona norte del EdoMex. ✅
+Instalamos arcotechos y estructuras metÃ¡licas en Ecatepec y zona norte del EdoMex. âœ…
 
-Si quieres una cotización gratis o tienes dudas, agenda una visita aquí:
+Si quieres una cotizaciÃ³n gratis o tienes dudas, agenda una visita aquÃ­:
 ${urlAgenda(vendedorSel)}
 
-¡Respondemos rápido! 🚀`}
+Â¡Respondemos rÃ¡pido! ðŸš€`}
             </div>
             <button
               onClick={() => copiar(
-                `¡Hola! 👋 Soy ${vendedorSel.nombre} de Techos y Cubiertas.\n\nInstalamos arcotechos y estructuras metálicas en Ecatepec y zona norte del EdoMex. ✅\n\nSi quieres una cotización gratis o tienes dudas, agenda una visita aquí:\n${urlAgenda(vendedorSel)}\n\n¡Respondemos rápido! 🚀`,
+                `Â¡Hola! ðŸ‘‹ Soy ${vendedorSel.nombre} de Techos y Cubiertas.\n\nInstalamos arcotechos y estructuras metÃ¡licas en Ecatepec y zona norte del EdoMex. âœ…\n\nSi quieres una cotizaciÃ³n gratis o tienes dudas, agenda una visita aquÃ­:\n${urlAgenda(vendedorSel)}\n\nÂ¡Respondemos rÃ¡pido! ðŸš€`,
                 'mensaje-wa'
               )}
               className="btn-primario w-full flex items-center justify-center gap-2"

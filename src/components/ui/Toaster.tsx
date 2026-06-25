@@ -18,7 +18,7 @@ export interface Toast {
   accion?: { label: string; fn: () => void }
 }
 
-// Store global simple (sin Zustand para mantener dependencias mínimas)
+// Store global simple (sin Zustand para mantener dependencias mÃ­nimas)
 type Listener = (toasts: Toast[]) => void
 const listeners: Set<Listener> = new Set()
 let toastsActivos: Toast[] = []

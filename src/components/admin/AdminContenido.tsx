@@ -75,7 +75,7 @@ export function AdminContenido() {
 
   const crearUsuario = async () => {
     if (!form.nombre || !form.correo || !form.password) {
-      agregar({ tipo: 'error', titulo: 'Faltan campos', mensaje: 'Nombre, correo y contraseña son requeridos' })
+      agregar({ tipo: 'error', titulo: 'Faltan campos', mensaje: 'Nombre, correo y contraseÃ±a son requeridos' })
       return
     }
     setGuardando(true)
@@ -87,7 +87,7 @@ export function AdminContenido() {
       })
       const data = await res.json()
       if (data.ok) {
-        agregar({ tipo: 'exito', titulo: 'Usuario creado ✓', mensaje: '' })
+        agregar({ tipo: 'exito', titulo: 'Usuario creado âœ“', mensaje: '' })
         setMostrarForm(false)
         setForm({ nombre: '', correo: '', password: '', rol: 'VENDEDOR' })
         cargarUsuarios()
@@ -116,7 +116,7 @@ export function AdminContenido() {
       body: JSON.stringify({ restaurar: true }),
     })
     if ((await res.json()).ok) {
-      agregar({ tipo: 'exito', titulo: 'Cliente restaurado ✓', mensaje: '' })
+      agregar({ tipo: 'exito', titulo: 'Cliente restaurado âœ“', mensaje: '' })
       cargarPapelera()
     }
   }
@@ -131,7 +131,7 @@ export function AdminContenido() {
       a.download = `techos-${tipo}-${new Date().toISOString().slice(0, 10)}.${tipo === 'json' ? 'json' : 'csv'}`
       a.click()
       URL.revokeObjectURL(url)
-      agregar({ tipo: 'exito', titulo: 'Archivo descargado ✓', mensaje: '' })
+      agregar({ tipo: 'exito', titulo: 'Archivo descargado âœ“', mensaje: '' })
     } catch {
       agregar({ tipo: 'error', titulo: 'Error al exportar', mensaje: '' })
     }
@@ -139,13 +139,13 @@ export function AdminContenido() {
 
   const TABS: { key: Tab; label: string; icon: any }[] = [
     { key: 'usuarios', label: 'Usuarios', icon: Users },
-    { key: 'bitacora', label: 'Bitácora', icon: Shield },
+    { key: 'bitacora', label: 'BitÃ¡cora', icon: Shield },
     { key: 'respaldo', label: 'Respaldo', icon: Download },
     { key: 'papelera', label: 'Papelera', icon: Trash2 },
   ]
 
   const ROLES = ['ADMIN', 'VENDEDOR', 'SOLO_LECTURA']
-  const ROL_LABEL: Record<string, string> = { ADMIN: '⚡ Admin', VENDEDOR: '👤 Vendedor', SOLO_LECTURA: '👁 Solo lectura' }
+  const ROL_LABEL: Record<string, string> = { ADMIN: 'âš¡ Admin', VENDEDOR: 'ðŸ‘¤ Vendedor', SOLO_LECTURA: 'ðŸ‘ Solo lectura' }
 
   return (
     <div className="space-y-4">
@@ -194,7 +194,7 @@ export function AdminContenido() {
                       <span className="badge text-xs">{ROL_LABEL[u.rol] || u.rol}</span>
                       {u.ultimoAcceso && (
                         <span className="text-xs" style={{ color: 'var(--text-secundario)' }}>
-                          Último acceso: {formatearFecha(u.ultimoAcceso)}
+                          Ãšltimo acceso: {formatearFecha(u.ultimoAcceso)}
                         </span>
                       )}
                     </div>
@@ -223,16 +223,16 @@ export function AdminContenido() {
                 <div className="space-y-3">
                   <div>
                     <label className="text-sm font-medium block mb-1">Nombre completo</label>
-                    <input className="campo w-full" placeholder="María García" value={form.nombre} onChange={e => setForm(p => ({ ...p, nombre: e.target.value }))} />
+                    <input className="campo w-full" placeholder="MarÃ­a GarcÃ­a" value={form.nombre} onChange={e => setForm(p => ({ ...p, nombre: e.target.value }))} />
                   </div>
                   <div>
                     <label className="text-sm font-medium block mb-1">Correo</label>
                     <input className="campo w-full" type="email" placeholder="maria@techosycubiertas.mx" value={form.correo} onChange={e => setForm(p => ({ ...p, correo: e.target.value }))} />
                   </div>
                   <div>
-                    <label className="text-sm font-medium block mb-1">Contraseña inicial</label>
+                    <label className="text-sm font-medium block mb-1">ContraseÃ±a inicial</label>
                     <div className="relative">
-                      <input className="campo w-full pr-10" type={verPass ? 'text' : 'password'} placeholder="Mín. 8 caracteres" value={form.password} onChange={e => setForm(p => ({ ...p, password: e.target.value }))} />
+                      <input className="campo w-full pr-10" type={verPass ? 'text' : 'password'} placeholder="MÃ­n. 8 caracteres" value={form.password} onChange={e => setForm(p => ({ ...p, password: e.target.value }))} />
                       <button onClick={() => setVerPass(v => !v)} className="absolute right-3 top-1/2 -translate-y-1/2 opacity-60">
                         {verPass ? <EyeOff size={16} /> : <Eye size={16} />}
                       </button>
@@ -257,7 +257,7 @@ export function AdminContenido() {
                 <div className="flex gap-3 pt-2">
                   <button onClick={() => setMostrarForm(false)} className="btn-secundario flex-1">Cancelar</button>
                   <button onClick={crearUsuario} disabled={guardando} className="btn-primario flex-1">
-                    {guardando ? 'Creando…' : 'Crear usuario'}
+                    {guardando ? 'Creandoâ€¦' : 'Crear usuario'}
                   </button>
                 </div>
               </div>
@@ -266,7 +266,7 @@ export function AdminContenido() {
         </div>
       )}
 
-      {/* BITÁCORA */}
+      {/* BITÃCORA */}
       {tab === 'bitacora' && (
         <div className="space-y-3">
           <div className="flex items-center justify-between">
@@ -287,7 +287,7 @@ export function AdminContenido() {
                   <div className="flex-1 min-w-0">
                     <p className="text-sm">
                       <span className="font-medium">{l.usuario?.nombre || 'Sistema'}</span>
-                      {' — '}
+                      {' â€” '}
                       <span className="badge text-xs">{l.accion}</span>
                       {' en '}
                       <span className="opacity-70">{l.tabla}</span>
@@ -310,21 +310,21 @@ export function AdminContenido() {
             <div className="flex items-start gap-3 p-3 rounded-xl" style={{ background: 'var(--bg-hover)' }}>
               <AlertTriangle size={16} className="mt-0.5 shrink-0 text-orange-500" />
               <p className="text-sm" style={{ color: 'var(--text-secundario)' }}>
-                Exporta tus datos regularmente como respaldo. Los archivos se generan al momento y contienen toda la información sin filtros.
+                Exporta tus datos regularmente como respaldo. Los archivos se generan al momento y contienen toda la informaciÃ³n sin filtros.
               </p>
             </div>
           </div>
           <div className="grid sm:grid-cols-3 gap-3">
             {[
-              { tipo: 'json' as const, label: '📦 Respaldo completo', desc: 'Todos los datos en JSON (importable)', color: 'text-blue-500' },
-              { tipo: 'clientes' as const, label: '👥 Clientes CSV', desc: 'Lista de todos los clientes en Excel', color: 'text-green-500' },
-              { tipo: 'pagos' as const, label: '💰 Pagos CSV', desc: 'Historial de cobros en Excel', color: 'text-yellow-500' },
+              { tipo: 'json' as const, label: 'ðŸ“¦ Respaldo completo', desc: 'Todos los datos en JSON (importable)', color: 'text-blue-500' },
+              { tipo: 'clientes' as const, label: 'ðŸ‘¥ Clientes CSV', desc: 'Lista de todos los clientes en Excel', color: 'text-green-500' },
+              { tipo: 'pagos' as const, label: 'ðŸ’° Pagos CSV', desc: 'Historial de cobros en Excel', color: 'text-yellow-500' },
             ].map(e => (
               <button key={e.tipo} onClick={() => exportar(e.tipo)}
                 className="card p-5 text-left hover:opacity-80 transition-opacity space-y-1">
                 <p className={cn('font-semibold', e.color)}>{e.label}</p>
                 <p className="text-xs" style={{ color: 'var(--text-secundario)' }}>{e.desc}</p>
-                <p className="text-xs font-medium mt-2" style={{ color: 'var(--color-marca)' }}>↓ Descargar</p>
+                <p className="text-xs font-medium mt-2" style={{ color: 'var(--color-marca)' }}>â†“ Descargar</p>
               </button>
             ))}
           </div>
@@ -340,8 +340,8 @@ export function AdminContenido() {
           ) : clientesEliminados.length === 0 ? (
             <div className="card p-8 text-center">
               <Trash2 size={32} className="mx-auto mb-3 opacity-30" />
-              <p className="font-semibold">Papelera vacía</p>
-              <p className="text-sm mt-1" style={{ color: 'var(--text-secundario)' }}>Los clientes eliminados aparecen aquí y pueden restaurarse.</p>
+              <p className="font-semibold">Papelera vacÃ­a</p>
+              <p className="text-sm mt-1" style={{ color: 'var(--text-secundario)' }}>Los clientes eliminados aparecen aquÃ­ y pueden restaurarse.</p>
             </div>
           ) : (
             <div className="space-y-2">
@@ -352,7 +352,7 @@ export function AdminContenido() {
                     <p className="text-xs" style={{ color: 'var(--text-secundario)' }}>Eliminado: {formatearFecha(c.eliminadoEn)}</p>
                   </div>
                   <button onClick={() => restaurarCliente(c.id)} className="btn-secundario text-xs py-1.5 px-3">
-                    ↩ Restaurar
+                    â†© Restaurar
                   </button>
                 </div>
               ))}

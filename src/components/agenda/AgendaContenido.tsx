@@ -87,7 +87,7 @@ export function AgendaContenido() {
 
   const guardarCita = async () => {
     if (!form.titulo || !form.fechaInicio) {
-      agregar({ tipo: 'error', titulo: 'Faltan datos', mensaje: 'Pon título y fecha' })
+      agregar({ tipo: 'error', titulo: 'Faltan datos', mensaje: 'Pon tÃ­tulo y fecha' })
       return
     }
     setGuardando(true)
@@ -101,9 +101,9 @@ export function AgendaContenido() {
       if (data.ok) {
         setMostrarForm(false)
         cargar()
-        agregar({ tipo: 'exito', titulo: 'Cita agendada ✓', mensaje: '' })
+        agregar({ tipo: 'exito', titulo: 'Cita agendada âœ“', mensaje: '' })
         if (data.data?.meetUrl) {
-          agregar({ tipo: 'exito', titulo: '🎥 Google Meet creado', mensaje: data.data.meetUrl })
+          agregar({ tipo: 'exito', titulo: 'ðŸŽ¥ Google Meet creado', mensaje: data.data.meetUrl })
         }
       } else {
         agregar({ tipo: 'error', titulo: data.mensaje || 'Error al guardar', mensaje: '' })
@@ -113,7 +113,7 @@ export function AgendaContenido() {
     }
   }
 
-  // Generación del calendario mensual
+  // GeneraciÃ³n del calendario mensual
   const diasDelMes = () => {
     const anio = fechaBase.getFullYear()
     const mes = fechaBase.getMonth()
@@ -180,16 +180,16 @@ export function AgendaContenido() {
       ) : vista === 'mes' ? (
         // Vista mensual
         <div className="card overflow-hidden">
-          {/* Días de la semana */}
+          {/* DÃ­as de la semana */}
           <div className="grid grid-cols-7 border-b" style={{ borderColor: 'var(--border)' }}>
-            {['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'].map(d => (
+            {['Lun', 'Mar', 'MiÃ©', 'Jue', 'Vie', 'SÃ¡b', 'Dom'].map(d => (
               <div key={d} className="py-2 text-center text-xs font-semibold" style={{ color: 'var(--text-secundario)' }}>
                 {d}
               </div>
             ))}
           </div>
 
-          {/* Días */}
+          {/* DÃ­as */}
           <div className="grid grid-cols-7">
             {diasDelMes().map((dia, i) => {
               if (!dia) return <div key={i} className="border-r border-b min-h-[80px]" style={{ borderColor: 'var(--border)', background: 'var(--bg-primario)' }} />
@@ -222,7 +222,7 @@ export function AgendaContenido() {
                       </div>
                     ))}
                     {citasDia.length > 2 && (
-                      <p className="text-xs" style={{ color: 'var(--text-secundario)' }}>+{citasDia.length - 2} más</p>
+                      <p className="text-xs" style={{ color: 'var(--text-secundario)' }}>+{citasDia.length - 2} mÃ¡s</p>
                     )}
                   </div>
                 </div>
@@ -237,7 +237,7 @@ export function AgendaContenido() {
             <div className="card p-8 text-center">
               <Calendar size={32} className="mx-auto mb-3 opacity-30" />
               <p className="font-semibold">Sin citas este mes</p>
-              <p className="text-sm mt-1" style={{ color: 'var(--text-secundario)' }}>Agenda la primera con el botón de arriba.</p>
+              <p className="text-sm mt-1" style={{ color: 'var(--text-secundario)' }}>Agenda la primera con el botÃ³n de arriba.</p>
             </div>
           ) : (
             citas
@@ -271,7 +271,7 @@ export function AgendaContenido() {
                     {c.meetUrl && (
                       <a href={c.meetUrl} target="_blank" rel="noopener noreferrer"
                         className="btn-secundario text-xs py-1.5 px-3 whitespace-nowrap">
-                        🎥 Meet
+                        ðŸŽ¥ Meet
                       </a>
                     )}
                   </div>
@@ -289,7 +289,7 @@ export function AgendaContenido() {
 
             <div className="space-y-3">
               <div>
-                <label className="text-sm font-medium block mb-1">Título</label>
+                <label className="text-sm font-medium block mb-1">TÃ­tulo</label>
                 <input className="campo w-full" value={form.titulo} onChange={e => set('titulo', e.target.value)} />
               </div>
               <div className="grid grid-cols-2 gap-3">
@@ -327,7 +327,7 @@ export function AgendaContenido() {
             <div className="flex gap-3 pt-2">
               <button onClick={() => setMostrarForm(false)} className="btn-secundario flex-1">Cancelar</button>
               <button onClick={guardarCita} disabled={guardando} className="btn-primario flex-1">
-                {guardando ? 'Guardando…' : 'Agendar cita'}
+                {guardando ? 'Guardandoâ€¦' : 'Agendar cita'}
               </button>
             </div>
           </div>

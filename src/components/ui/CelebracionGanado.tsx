@@ -55,7 +55,7 @@ export function CelebracionGanado({ nombre, valor }: Props) {
             </div>
           )}
 
-          {/* Mensaje de celebración */}
+          {/* Mensaje de celebraciÃ³n */}
           <motion.div
             initial={prefersMenos ? { opacity: 0 } : { scale: 0.5, opacity: 0 }}
             animate={prefersMenos ? { opacity: 1 } : { scale: 1, opacity: 1 }}
@@ -63,15 +63,15 @@ export function CelebracionGanado({ nombre, valor }: Props) {
             transition={{ type: 'spring', damping: 12 }}
             className="card p-8 text-center max-w-sm mx-4 shadow-2xl"
           >
-            <div className="text-5xl mb-3">🎉</div>
-            <h2 className="text-2xl font-bold mb-1">¡Cerraste a {nombre}!</h2>
+            <div className="text-5xl mb-3">ðŸŽ‰</div>
+            <h2 className="text-2xl font-bold mb-1">Â¡Cerraste a {nombre}!</h2>
             {valor && (
               <p className="text-xl font-semibold" style={{ color: 'var(--color-marca)' }}>
                 +${valor.toLocaleString('es-MX')}
               </p>
             )}
             <p className="text-sm mt-2" style={{ color: 'var(--text-secundario)' }}>
-              Excelente trabajo. ¡Sigue así! 🚀
+              Excelente trabajo. Â¡Sigue asÃ­! ðŸš€
             </p>
           </motion.div>
         </motion.div>

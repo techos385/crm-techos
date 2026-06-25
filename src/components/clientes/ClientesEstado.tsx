@@ -15,17 +15,17 @@ const CONFIG = {
     icono: Trophy,
     color: 'text-green-500',
     bg: 'bg-green-500/10',
-    badge: 'Completado ✅',
-    vacio: 'Aún no tienes clientes completados — cierra tu primera venta y aparecerá aquí 🎉',
+    badge: 'Completado âœ…',
+    vacio: 'AÃºn no tienes clientes completados â€” cierra tu primera venta y aparecerÃ¡ aquÃ­ ðŸŽ‰',
   },
   PERDIDO: {
     titulo: 'Clientes Perdidos',
-    subtitulo: 'Aprende por qué y reactiva',
+    subtitulo: 'Aprende por quÃ© y reactiva',
     icono: XCircle,
     color: 'text-gray-500',
     bg: 'bg-gray-500/10',
-    badge: 'Perdido ✗',
-    vacio: 'No hay clientes perdidos — ¡sigue así!',
+    badge: 'Perdido âœ—',
+    vacio: 'No hay clientes perdidos â€” Â¡sigue asÃ­!',
   },
   ARCHIVADO: {
     titulo: 'Clientes Archivados',
@@ -33,7 +33,7 @@ const CONFIG = {
     icono: Archive,
     color: 'text-stone-500',
     bg: 'bg-stone-500/10',
-    badge: 'Archivado 📁',
+    badge: 'Archivado ðŸ“',
     vacio: 'No hay nada archivado',
   },
 }
@@ -131,7 +131,7 @@ export function ClientesEstado({ estado }: Props) {
         </button>
       </div>
 
-      {/* Stats rápidos */}
+      {/* Stats rÃ¡pidos */}
       {total > 0 && (
         <div className="grid grid-cols-2 gap-4">
           <div className="card p-4">
@@ -205,7 +205,7 @@ export function ClientesEstado({ estado }: Props) {
           <button onClick={() => setPagina((p) => Math.max(1, p - 1))} disabled={pagina === 1} className="btn-secundario p-2 disabled:opacity-40">
             <ChevronLeft size={16} />
           </button>
-          <span className="text-sm" style={{ color: 'var(--text-secundario)' }}>Página {pagina} de {totalPaginas}</span>
+          <span className="text-sm" style={{ color: 'var(--text-secundario)' }}>PÃ¡gina {pagina} de {totalPaginas}</span>
           <button onClick={() => setPagina((p) => Math.min(totalPaginas, p + 1))} disabled={pagina === totalPaginas} className="btn-secundario p-2 disabled:opacity-40">
             <ChevronRight size={16} />
           </button>

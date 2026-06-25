@@ -66,7 +66,7 @@ export function ExpedienteCliente({ id }: Props) {
         router.push('/clientes')
       }
     } catch {
-      agregar({ tipo: 'error', titulo: 'Error al cargar', mensaje: 'Revisa tu conexión' })
+      agregar({ tipo: 'error', titulo: 'Error al cargar', mensaje: 'Revisa tu conexiÃ³n' })
     } finally {
       setCargando(false)
     }
@@ -90,7 +90,7 @@ export function ExpedienteCliente({ id }: Props) {
       if (data.ok) {
         setEditando(false)
         cargar()
-        agregar({ tipo: 'exito', titulo: 'Guardado ✓', mensaje: '' })
+        agregar({ tipo: 'exito', titulo: 'Guardado âœ“', mensaje: '' })
       }
     } catch {
       agregar({ tipo: 'error', titulo: 'Error al guardar', mensaje: '' })
@@ -124,7 +124,7 @@ export function ExpedienteCliente({ id }: Props) {
       if ((await res.json()).ok) {
         setNuevaNota('')
         cargar()
-        agregar({ tipo: 'exito', titulo: 'Nota agregada ✓', mensaje: '' })
+        agregar({ tipo: 'exito', titulo: 'Nota agregada âœ“', mensaje: '' })
       }
     } finally {
       setEnviandoNota(false)
@@ -163,7 +163,7 @@ export function ExpedienteCliente({ id }: Props) {
     <div className="max-w-3xl mx-auto space-y-4">
       {celebrar && <CelebracionGanado nombre={c.nombre as string} valor={c.valorEstimado as number} />}
 
-      {/* Navegación */}
+      {/* NavegaciÃ³n */}
       <div className="flex items-center justify-between">
         <Link href="/clientes" className="flex items-center gap-2 text-sm hover:opacity-80 transition-opacity" style={{ color: 'var(--text-secundario)' }}>
           <ArrowLeft size={16} />
@@ -175,7 +175,7 @@ export function ExpedienteCliente({ id }: Props) {
               <button onClick={() => setEditando(false)} className="btn-secundario py-1.5 px-3 text-sm">Cancelar</button>
               <button onClick={guardarCambios} disabled={guardando} className="btn-primario py-1.5 px-3 text-sm flex items-center gap-1.5">
                 <Save size={14} />
-                {guardando ? 'Guardando…' : 'Guardar'}
+                {guardando ? 'Guardandoâ€¦' : 'Guardar'}
               </button>
             </>
           ) : (
@@ -206,7 +206,7 @@ export function ExpedienteCliente({ id }: Props) {
 
                 {/* Estado */}
                 <span className={cn('badge', c.estadoCartera === 'GANADO' ? 'text-green-600' : c.estadoCartera === 'PERDIDO' ? 'text-gray-600' : '')}>
-                  {c.estadoCartera === 'ACTIVO' ? '● Activo' : c.estadoCartera === 'GANADO' ? '✅ Completado' : c.estadoCartera === 'PERDIDO' ? '✗ Perdido' : '📁 Archivado'}
+                  {c.estadoCartera === 'ACTIVO' ? 'â— Activo' : c.estadoCartera === 'GANADO' ? 'âœ… Completado' : c.estadoCartera === 'PERDIDO' ? 'âœ— Perdido' : 'ðŸ“ Archivado'}
                 </span>
 
                 {/* Etapa */}
@@ -215,7 +215,7 @@ export function ExpedienteCliente({ id }: Props) {
             </div>
           </div>
 
-          {/* Acciones rápidas */}
+          {/* Acciones rÃ¡pidas */}
           <div className="flex flex-col gap-2 shrink-0">
             {whatsappUrl && (
               <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="btn-primario flex items-center gap-2 py-2 px-3 text-sm">
@@ -235,36 +235,36 @@ export function ExpedienteCliente({ id }: Props) {
 
         {/* Alertas de venta */}
         <div className="mt-4 space-y-2">
-          {/* Último contacto */}
+          {/* Ãšltimo contacto */}
           {diasSinContacto !== null && diasSinContacto > 7 && (
             <div className="flex items-center gap-2 text-sm text-red-500 bg-red-500/10 rounded-xl p-3">
               <AlertTriangle size={14} />
-              <span>Llevas <strong>{diasSinContacto} días</strong> sin contactarlo — ponlo al frente hoy</span>
+              <span>Llevas <strong>{diasSinContacto} dÃ­as</strong> sin contactarlo â€” ponlo al frente hoy</span>
             </div>
           )}
 
-          {/* Próxima acción vencida */}
+          {/* PrÃ³xima acciÃ³n vencida */}
           {c.proximaAccionFecha && new Date(c.proximaAccionFecha as string) < new Date() && (
             <div className="flex items-center gap-2 text-sm text-orange-500 bg-orange-500/10 rounded-xl p-3">
               <Clock size={14} />
-              <span>Acción vencida: <strong>{c.proximaAccion as string}</strong> — {formatearFechaCorta(c.proximaAccionFecha as string)}</span>
+              <span>AcciÃ³n vencida: <strong>{c.proximaAccion as string}</strong> â€” {formatearFechaCorta(c.proximaAccionFecha as string)}</span>
             </div>
           )}
 
-          {/* Objeción */}
+          {/* ObjeciÃ³n */}
           {c.objecionPrincipal && (
             <div className="flex items-center gap-2 text-sm" style={{ color: 'var(--text-secundario)' }}>
               <Target size={14} />
-              <span>Objeción: <strong>{c.objecionPrincipal as string}</strong></span>
+              <span>ObjeciÃ³n: <strong>{c.objecionPrincipal as string}</strong></span>
             </div>
           )}
 
-          {/* Próxima acción */}
+          {/* PrÃ³xima acciÃ³n */}
           {c.proximaAccion && !(c.proximaAccionFecha && new Date(c.proximaAccionFecha as string) < new Date()) && (
             <div className="flex items-center gap-2 text-sm" style={{ color: 'var(--text-secundario)' }}>
               <CheckCircle size={14} />
-              <span>Próxima acción: <strong>{c.proximaAccion as string}</strong>
-                {c.proximaAccionFecha && ` — ${formatearFechaCorta(c.proximaAccionFecha as string)}`}
+              <span>PrÃ³xima acciÃ³n: <strong>{c.proximaAccion as string}</strong>
+                {c.proximaAccionFecha && ` â€” ${formatearFechaCorta(c.proximaAccionFecha as string)}`}
               </span>
             </div>
           )}
@@ -274,14 +274,14 @@ export function ExpedienteCliente({ id }: Props) {
         {c.estadoCartera === 'ACTIVO' && (
           <div className="flex flex-wrap gap-2 mt-4 pt-4 border-t" style={{ borderColor: 'var(--border)' }}>
             <button
-              onClick={() => { if (confirm('¿Marcar como GANADO? Se moverá a Clientes completados.')) cambiarEstado('GANADO') }}
+              onClick={() => { if (confirm('Â¿Marcar como GANADO? Se moverÃ¡ a Clientes completados.')) cambiarEstado('GANADO') }}
               className="btn-secundario flex items-center gap-1.5 text-sm text-green-600 border-green-600/30"
             >
-              <Trophy size={14} /> Marcar como ganado 🎉
+              <Trophy size={14} /> Marcar como ganado ðŸŽ‰
             </button>
             <button
               onClick={() => {
-                const motivo = prompt('¿Por qué se perdió? (precio / competencia / sin presupuesto / no respondió / otro)')
+                const motivo = prompt('Â¿Por quÃ© se perdiÃ³? (precio / competencia / sin presupuesto / no respondiÃ³ / otro)')
                 if (motivo !== null) cambiarEstado('PERDIDO', motivo)
               }}
               className="btn-secundario flex items-center gap-1.5 text-sm"
@@ -289,7 +289,7 @@ export function ExpedienteCliente({ id }: Props) {
               <XCircle size={14} /> Perdido
             </button>
             <button
-              onClick={() => { if (confirm(`¿Archivar a ${c.nombre}? Podrás restaurarlo cuando quieras.`)) cambiarEstado('ARCHIVADO') }}
+              onClick={() => { if (confirm(`Â¿Archivar a ${c.nombre}? PodrÃ¡s restaurarlo cuando quieras.`)) cambiarEstado('ARCHIVADO') }}
               className="btn-secundario flex items-center gap-1.5 text-sm"
             >
               <Archive size={14} /> Archivar
@@ -301,7 +301,7 @@ export function ExpedienteCliente({ id }: Props) {
       {/* Tabs */}
       <div className="flex gap-1 p-1 rounded-xl" style={{ background: 'var(--bg-card)' }}>
         {[
-          { key: 'info', label: 'Información' },
+          { key: 'info', label: 'InformaciÃ³n' },
           { key: 'timeline', label: `Historial (${timeline.length})` },
           { key: 'pagos', label: `Pagos (${pagos.length})` },
           { key: 'archivos', label: `Archivos (${archivos.length})` },
@@ -320,38 +320,38 @@ export function ExpedienteCliente({ id }: Props) {
         ))}
       </div>
 
-      {/* Tab: Información */}
+      {/* Tab: InformaciÃ³n */}
       {tab === 'info' && (
         <div className="space-y-4">
           <div className="card p-5 space-y-4">
             <h3 className="font-semibold">Datos de contacto</h3>
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="text-xs font-medium mb-1 block" style={{ color: 'var(--text-secundario)' }}>Teléfono / WhatsApp</label>
+                <label className="text-xs font-medium mb-1 block" style={{ color: 'var(--text-secundario)' }}>TelÃ©fono / WhatsApp</label>
                 {editando
                   ? <input className="campo w-full" value={form.telefono as string} onChange={(e) => set('telefono', e.target.value)} />
-                  : <p className="font-medium">{c.telefono as string || '—'}</p>
+                  : <p className="font-medium">{c.telefono as string || 'â€”'}</p>
                 }
               </div>
               <div>
                 <label className="text-xs font-medium mb-1 block" style={{ color: 'var(--text-secundario)' }}>Correo</label>
                 {editando
                   ? <input className="campo w-full" type="email" value={form.correo as string} onChange={(e) => set('correo', e.target.value)} />
-                  : <p className="font-medium">{c.correo as string || '—'}</p>
+                  : <p className="font-medium">{c.correo as string || 'â€”'}</p>
                 }
               </div>
               <div>
                 <label className="text-xs font-medium mb-1 block" style={{ color: 'var(--text-secundario)' }}>Empresa</label>
                 {editando
                   ? <input className="campo w-full" value={form.empresa as string} onChange={(e) => set('empresa', e.target.value)} />
-                  : <p className="font-medium">{c.empresa as string || '—'}</p>
+                  : <p className="font-medium">{c.empresa as string || 'â€”'}</p>
                 }
               </div>
               <div>
-                <label className="text-xs font-medium mb-1 block" style={{ color: 'var(--text-secundario)' }}>Zona / Ubicación</label>
+                <label className="text-xs font-medium mb-1 block" style={{ color: 'var(--text-secundario)' }}>Zona / UbicaciÃ³n</label>
                 {editando
                   ? <input className="campo w-full" value={form.zonaUbicacion as string} onChange={(e) => set('zonaUbicacion', e.target.value)} />
-                  : <p className="font-medium">{c.zonaUbicacion as string || '—'}</p>
+                  : <p className="font-medium">{c.zonaUbicacion as string || 'â€”'}</p>
                 }
               </div>
             </div>
@@ -364,28 +364,28 @@ export function ExpedienteCliente({ id }: Props) {
                 <label className="text-xs font-medium mb-1 block" style={{ color: 'var(--text-secundario)' }}>Tipo de obra</label>
                 {editando
                   ? <input className="campo w-full" value={form.tipoObra as string} onChange={(e) => set('tipoObra', e.target.value)} />
-                  : <p className="font-medium">{c.tipoObra as string || '—'}</p>
+                  : <p className="font-medium">{c.tipoObra as string || 'â€”'}</p>
                 }
               </div>
               <div>
                 <label className="text-xs font-medium mb-1 block" style={{ color: 'var(--text-secundario)' }}>Medidas del proyecto</label>
                 {editando
                   ? <input className="campo w-full" value={form.medidasProyecto as string} onChange={(e) => set('medidasProyecto', e.target.value)} />
-                  : <p className="font-medium">{c.medidasProyecto as string || '—'}</p>
+                  : <p className="font-medium">{c.medidasProyecto as string || 'â€”'}</p>
                 }
               </div>
               <div>
                 <label className="text-xs font-medium mb-1 block" style={{ color: 'var(--text-secundario)' }}>Valor estimado (MXN)</label>
                 {editando
                   ? <input className="campo w-full" type="number" value={form.valorEstimado as string} onChange={(e) => set('valorEstimado', e.target.value)} />
-                  : <p className="font-medium">{c.valorEstimado ? `$${(c.valorEstimado as number).toLocaleString('es-MX')}` : '—'}</p>
+                  : <p className="font-medium">{c.valorEstimado ? `$${(c.valorEstimado as number).toLocaleString('es-MX')}` : 'â€”'}</p>
                 }
               </div>
               <div>
-                <label className="text-xs font-medium mb-1 block" style={{ color: 'var(--text-secundario)' }}>Objeción principal</label>
+                <label className="text-xs font-medium mb-1 block" style={{ color: 'var(--text-secundario)' }}>ObjeciÃ³n principal</label>
                 {editando
                   ? <input className="campo w-full" value={form.objecionPrincipal as string} onChange={(e) => set('objecionPrincipal', e.target.value)} />
-                  : <p className="font-medium">{c.objecionPrincipal as string || '—'}</p>
+                  : <p className="font-medium">{c.objecionPrincipal as string || 'â€”'}</p>
                 }
               </div>
             </div>
@@ -409,7 +409,7 @@ export function ExpedienteCliente({ id }: Props) {
             {!editando && (
               <div className="mt-4 flex gap-2">
                 <textarea
-                  placeholder="Agregar nota de interacción…"
+                  placeholder="Agregar nota de interacciÃ³nâ€¦"
                   value={nuevaNota}
                   onChange={(e) => setNuevaNota(e.target.value)}
                   className="campo flex-1 h-20 resize-none text-sm"
@@ -420,7 +420,7 @@ export function ExpedienteCliente({ id }: Props) {
                   disabled={!nuevaNota.trim() || enviandoNota}
                   className="btn-primario self-end disabled:opacity-40 px-4"
                 >
-                  {enviandoNota ? '…' : 'Agregar'}
+                  {enviandoNota ? 'â€¦' : 'Agregar'}
                 </button>
               </div>
             )}
@@ -437,7 +437,7 @@ export function ExpedienteCliente({ id }: Props) {
                 <span className="font-medium">Asistente IA</span>
                 <span className="text-xs badge">Tu copiloto de ventas</span>
               </div>
-              <span className="text-xs" style={{ color: 'var(--text-secundario)' }}>{mostrarIA ? '▲ Cerrar' : '▼ Abrir'}</span>
+              <span className="text-xs" style={{ color: 'var(--text-secundario)' }}>{mostrarIA ? 'â–² Cerrar' : 'â–¼ Abrir'}</span>
             </button>
             {mostrarIA && <AsistenteIACliente clienteId={id} clienteNombre={c.nombre as string} />}
           </div>
@@ -449,7 +449,7 @@ export function ExpedienteCliente({ id }: Props) {
         <div className="card p-5 space-y-4">
           <h3 className="font-semibold">Historial de interacciones</h3>
           {timeline.length === 0 ? (
-            <p className="text-sm text-center py-8" style={{ color: 'var(--text-secundario)' }}>Sin historial aún</p>
+            <p className="text-sm text-center py-8" style={{ color: 'var(--text-secundario)' }}>Sin historial aÃºn</p>
           ) : (
             <div className="space-y-3">
               {timeline.map((evento, i) => (
@@ -459,7 +459,7 @@ export function ExpedienteCliente({ id }: Props) {
                     <p>{evento.descripcion}</p>
                     <p className="text-xs mt-0.5" style={{ color: 'var(--text-secundario)' }}>
                       {formatearFecha(evento.fecha)}
-                      {evento.autor && ` — ${evento.autor}`}
+                      {evento.autor && ` â€” ${evento.autor}`}
                     </p>
                   </div>
                 </div>
@@ -504,12 +504,12 @@ export function ExpedienteCliente({ id }: Props) {
                   <div>
                     <p className="font-semibold">{formatearMonto(pago.monto)}</p>
                     <p className="text-xs" style={{ color: 'var(--text-secundario)' }}>
-                      {pago.metodo} · {pago.concepto ?? 'Sin concepto'}
-                      {pago.fechaPago && ` · ${formatearFechaCorta(pago.fechaPago)}`}
+                      {pago.metodo} Â· {pago.concepto ?? 'Sin concepto'}
+                      {pago.fechaPago && ` Â· ${formatearFechaCorta(pago.fechaPago)}`}
                     </p>
                   </div>
                   <span className={cn('badge text-xs', pago.estatus === 'PAGADO' ? 'text-green-600' : pago.estatus === 'VENCIDO' ? 'text-red-600' : '')}>
-                    {pago.estatus === 'PAGADO' ? '✅ Pagado' : pago.estatus === 'VENCIDO' ? '⚠️ Vencido' : '⏳ Pendiente'}
+                    {pago.estatus === 'PAGADO' ? 'âœ… Pagado' : pago.estatus === 'VENCIDO' ? 'âš ï¸ Vencido' : 'â³ Pendiente'}
                   </span>
                 </div>
               ))}
@@ -531,7 +531,7 @@ export function ExpedienteCliente({ id }: Props) {
                   <div>
                     <p className="font-medium">{a.nombre}</p>
                     <p className="text-xs" style={{ color: 'var(--text-secundario)' }}>
-                      {a.etiqueta} · {formatearFechaCorta(a.creadoEn)} · por {a.subidoPor.nombre}
+                      {a.etiqueta} Â· {formatearFechaCorta(a.creadoEn)} Â· por {a.subidoPor.nombre}
                     </p>
                   </div>
                   {a.tieneArchivo && (
@@ -579,13 +579,13 @@ function SubidaArchivos({ clienteId, onSubido }: { clienteId: string; onSubido: 
       setProgreso(90)
       const data = await res.json()
       if (data.ok) {
-        agregar({ tipo: 'exito', titulo: 'Archivo guardado ✓', mensaje: archivo.name })
+        agregar({ tipo: 'exito', titulo: 'Archivo guardado âœ“', mensaje: archivo.name })
         onSubido()
       } else {
         agregar({ tipo: 'error', titulo: 'Error al subir', mensaje: data.mensaje })
       }
     } catch {
-      agregar({ tipo: 'error', titulo: 'Error de conexión', mensaje: 'No se pudo subir el archivo' })
+      agregar({ tipo: 'error', titulo: 'Error de conexiÃ³n', mensaje: 'No se pudo subir el archivo' })
     } finally {
       setSubiendo(false)
       setProgreso(0)
@@ -599,8 +599,8 @@ function SubidaArchivos({ clienteId, onSubido }: { clienteId: string; onSubido: 
         <select value={etiqueta} onChange={(e) => setEtiqueta(e.target.value)} className="campo text-sm py-1.5">
           <option value="Comprobante">Comprobante</option>
           <option value="Contrato">Contrato</option>
-          <option value="Cotización">Cotización</option>
-          <option value="Identificación">Identificación</option>
+          <option value="CotizaciÃ³n">CotizaciÃ³n</option>
+          <option value="IdentificaciÃ³n">IdentificaciÃ³n</option>
           <option value="Otro">Otro</option>
         </select>
       </div>
@@ -609,8 +609,8 @@ function SubidaArchivos({ clienteId, onSubido }: { clienteId: string; onSubido: 
         subiendo ? 'border-[var(--color-marca)] bg-[var(--color-marca)]/5' : 'border-white/20 hover:border-[var(--color-marca)]/50'
       )}>
         <Upload size={24} className="mb-2 opacity-60" />
-        <p className="text-sm font-medium">{subiendo ? 'Subiendo…' : 'Toca o arrastra un archivo'}</p>
-        <p className="text-xs mt-1" style={{ color: 'var(--text-secundario)' }}>PDF, JPG, PNG — máx. 5MB</p>
+        <p className="text-sm font-medium">{subiendo ? 'Subiendoâ€¦' : 'Toca o arrastra un archivo'}</p>
+        <p className="text-xs mt-1" style={{ color: 'var(--text-secundario)' }}>PDF, JPG, PNG â€” mÃ¡x. 5MB</p>
         {!subiendo && (
           <input type="file" accept=".pdf,.jpg,.jpeg,.png,.webp" className="hidden"
             onChange={(e) => { if (e.target.files?.[0]) subir(e.target.files[0]) }} />

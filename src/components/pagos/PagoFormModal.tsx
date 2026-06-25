@@ -42,7 +42,7 @@ export function PagoFormModal({ clienteId, onCerrar, onGuardado }: Props) {
       return
     }
     if (isNaN(Number(form.monto)) || Number(form.monto) <= 0) {
-      agregar({ tipo: 'error', titulo: 'Monto inválido', mensaje: 'Escribe un número mayor a 0' })
+      agregar({ tipo: 'error', titulo: 'Monto invÃ¡lido', mensaje: 'Escribe un nÃºmero mayor a 0' })
       return
     }
     setGuardando(true)
@@ -58,13 +58,13 @@ export function PagoFormModal({ clienteId, onCerrar, onGuardado }: Props) {
       })
       const data = await res.json()
       if (data.ok) {
-        agregar({ tipo: 'exito', titulo: 'Pago registrado ✓', mensaje: `$${Number(form.monto).toLocaleString('es-MX')}` })
+        agregar({ tipo: 'exito', titulo: 'Pago registrado âœ“', mensaje: `$${Number(form.monto).toLocaleString('es-MX')}` })
         onGuardado()
       } else {
         agregar({ tipo: 'error', titulo: data.mensaje || 'Error al guardar', mensaje: '' })
       }
     } catch {
-      agregar({ tipo: 'error', titulo: 'Error de conexión', mensaje: '' })
+      agregar({ tipo: 'error', titulo: 'Error de conexiÃ³n', mensaje: '' })
     } finally {
       setGuardando(false)
     }
@@ -111,11 +111,11 @@ export function PagoFormModal({ clienteId, onCerrar, onGuardado }: Props) {
             </div>
           </div>
 
-          {/* Método */}
+          {/* MÃ©todo */}
           <div>
-            <label className="text-sm font-medium block mb-1">Método de pago</label>
+            <label className="text-sm font-medium block mb-1">MÃ©todo de pago</label>
             <div className="grid grid-cols-2 gap-2">
-              {['Transferencia', 'Tarjeta', 'Efectivo', 'Depósito'].map(m => (
+              {['Transferencia', 'Tarjeta', 'Efectivo', 'DepÃ³sito'].map(m => (
                 <button
                   key={m}
                   onClick={() => set('metodo', m)}
@@ -136,9 +136,9 @@ export function PagoFormModal({ clienteId, onCerrar, onGuardado }: Props) {
             <label className="text-sm font-medium block mb-1">Estatus</label>
             <div className="grid grid-cols-3 gap-2">
               {[
-                { val: 'PAGADO', label: '✅ Pagado' },
-                { val: 'PENDIENTE', label: '⏳ Pendiente' },
-                { val: 'VENCIDO', label: '⚠️ Vencido' },
+                { val: 'PAGADO', label: 'âœ… Pagado' },
+                { val: 'PENDIENTE', label: 'â³ Pendiente' },
+                { val: 'VENCIDO', label: 'âš ï¸ Vencido' },
               ].map(s => (
                 <button
                   key={s.val}
@@ -184,7 +184,7 @@ export function PagoFormModal({ clienteId, onCerrar, onGuardado }: Props) {
         <div className="flex gap-3 pt-2">
           <button onClick={onCerrar} className="btn-secundario flex-1">Cancelar</button>
           <button onClick={guardar} disabled={guardando} className="btn-primario flex-1">
-            {guardando ? 'Guardando…' : 'Registrar pago'}
+            {guardando ? 'Guardandoâ€¦' : 'Registrar pago'}
           </button>
         </div>
       </div>
