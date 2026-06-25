@@ -18,7 +18,7 @@ const CitaSchema = z.object({
 export async function GET(request: NextRequest) {
   try {
     const session = await requireAuth('ver_cita')
-    const esAdmin = session.user.rol === 'ADMIN'
+    const esAdmin = session.rol === 'ADMIN'
     const { searchParams } = new URL(request.url)
 
     const desde = searchParams.get('desde')
@@ -30,7 +30,7 @@ export async function GET(request: NextRequest) {
     }
 
     if (!esAdmin) {
-      where.vendedorId = session.user.id
+      where.vendedorId = session.id
     } else if (vendedorId) {
       where.vendedorId = vendedorId
     }
@@ -71,13 +71,13 @@ export async function POST(request: NextRequest) {
     if (!cliente) {
       return NextResponse.json({ ok: false, mensaje: 'Cliente no encontrado' }, { status: 404 })
     }
-    if (session.user.rol !== 'ADMIN' && cliente.vendedorId !== session.user.id) {
+    if (session.rol !== 'ADMIN' && cliente.vendedorId !== session.id) {
       return NextResponse.json({ ok: false, mensaje: 'Sin acceso' }, { status: 403 })
     }
 
-    const vendedorId = session.user.rol === 'ADMIN' && datos.vendedorId
+    const vendedorId = session.rol === 'ADMIN' && datos.vendedorId
       ? datos.vendedorId
-      : session.user.id
+      : session.id
 
     const fechaInicio = new Date(datos.fechaInicio)
     const fechaFin = datos.fechaFin
@@ -129,7 +129,7 @@ export async function POST(request: NextRequest) {
       }
 
       await registrarAuditoria(tx, {
-        usuarioId: session.user.id,
+        usuarioId: session.id,
         accion: ACCIONES.CREAR,
         entidad: 'Cita',
         entidadId: nueva.id,
@@ -157,7 +157,7 @@ export async function PATCH(request: NextRequest) {
       where: { id, eliminadoEn: null },
     })
     if (!cita) return NextResponse.json({ ok: false, mensaje: 'No encontrada' }, { status: 404 })
-    if (session.user.rol !== 'ADMIN' && cita.vendedorId !== session.user.id) {
+    if (session.rol !== 'ADMIN' && cita.vendedorId !== session.id) {
       return NextResponse.json({ ok: false, mensaje: 'Sin acceso' }, { status: 403 })
     }
 
@@ -185,7 +185,7 @@ export async function DELETE(request: NextRequest) {
 
     const cita = await prisma.cita.findFirst({ where: { id, eliminadoEn: null } })
     if (!cita) return NextResponse.json({ ok: false, mensaje: 'No encontrada' }, { status: 404 })
-    if (session.user.rol !== 'ADMIN' && cita.vendedorId !== session.user.id) {
+    if (session.rol !== 'ADMIN' && cita.vendedorId !== session.id) {
       return NextResponse.json({ ok: false, mensaje: 'Sin acceso' }, { status: 403 })
     }
 
