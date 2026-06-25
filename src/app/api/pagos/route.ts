@@ -77,7 +77,7 @@ export async function POST(request: NextRequest) {
           monto: datos.monto,
           metodo: datos.metodo as any,
           estado: datos.estado as any,
-          concepto: datos.concepto,
+          concepto: datos.concepto ?? '',
           fechaPago: datos.fechaPago ? new Date(datos.fechaPago) : null,
           fechaVencimiento: datos.fechaVencimiento ? new Date(datos.fechaVencimiento) : null,
           notas: datos.notas,
