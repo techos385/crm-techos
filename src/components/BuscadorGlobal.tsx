@@ -32,7 +32,7 @@ function guardarBusquedaReciente(termino: string) {
     const recientes: string[] = JSON.parse(localStorage.getItem(BUSQUEDAS_RECIENTES_KEY) ?? '[]')
     const nuevas = [termino, ...recientes.filter(r => r !== termino)].slice(0, 5)
     localStorage.setItem(BUSQUEDAS_RECIENTES_KEY, JSON.stringify(nuevas))
-  } catch { /* no crÃ­tico */ }
+  } catch { /* no crÃƒÂ­tico */ }
 }
 
 function obtenerBusquedasRecientes(): string[] {
@@ -57,7 +57,7 @@ export function BuscadorGlobal({
   const [recientes, setRecientes] = useState<string[]>([])
   const [error, setError] = useState<string | null>(null)
 
-  // Foco automÃ¡tico al abrir
+  // Foco automÃƒÂ¡tico al abrir
   useEffect(() => {
     if (abierto) {
       setTimeout(() => inputRef.current?.focus(), 50)
@@ -70,7 +70,7 @@ export function BuscadorGlobal({
     }
   }, [abierto])
 
-  // BÃºsqueda con debounce
+  // BÃƒÂºsqueda con debounce
   const buscar = useCallback(
     debounce(async (q: any) => {
       if (q.length < 2) {
@@ -89,7 +89,7 @@ export function BuscadorGlobal({
         setResultados(data.data ?? [])
         setSeleccionado(0)
       } catch {
-        setError('No se pudo conectar. Revisa tu conexiÃ³n.')
+        setError('No se pudo conectar. Revisa tu conexiÃƒÂ³n.')
         setResultados([])
       } finally {
         setCargando(false)
@@ -108,7 +108,7 @@ export function BuscadorGlobal({
     }
   }, [termino, buscar])
 
-  // NavegaciÃ³n por teclado
+  // NavegaciÃƒÂ³n por teclado
   useEffect(() => {
     if (!abierto) return
 
@@ -182,7 +182,7 @@ export function BuscadorGlobal({
                   type="text"
                   value={termino}
                   onChange={e => setTermino(e.target.value)}
-                  placeholder="Buscar clientes, telÃ©fonos, correos, notasâ€¦"
+                  placeholder="Buscar clientes, telÃƒÂ©fonos, correos, notasÃ¢â‚¬Â¦"
                   className="flex-1 bg-transparent text-slate-900 dark:text-slate-100 placeholder-slate-400 text-base outline-none"
                   aria-label="Buscador global"
                   aria-autocomplete="list"
@@ -207,10 +207,10 @@ export function BuscadorGlobal({
                 {!error && !cargando && termino.length >= 2 && !tieneResultados && (
                   <div className="px-4 py-8 text-center">
                     <p className="text-slate-500 dark:text-slate-400 text-sm">
-                      No encontrÃ© nada con &quot;{termino}&quot;.
+                      No encontrÃƒÂ© nada con &quot;{termino}&quot;.
                     </p>
                     <p className="text-slate-400 dark:text-slate-500 text-xs mt-1">
-                      Revisa cÃ³mo lo escribiste o crea un cliente nuevo.
+                      Revisa cÃƒÂ³mo lo escribiste o crea un cliente nuevo.
                     </p>
                     <a
                       href="/clientes/nuevo"
@@ -224,7 +224,7 @@ export function BuscadorGlobal({
 
                 {!termino && recientes.length > 0 && (
                   <div className="px-4 py-3">
-                    <p className="text-xs text-slate-400 mb-2 font-medium uppercase tracking-wide">BÃºsquedas recientes</p>
+                    <p className="text-xs text-slate-400 mb-2 font-medium uppercase tracking-wide">BÃƒÂºsquedas recientes</p>
                     {recientes.map(r => (
                       <button
                         key={r}
@@ -288,8 +288,8 @@ export function BuscadorGlobal({
 
                 {/* Footer con atajos */}
                 <div className="px-4 py-2 border-t border-slate-100 dark:border-slate-700 flex items-center gap-4 text-xs text-slate-400">
-                  <span><kbd className="px-1 py-0.5 bg-slate-100 dark:bg-slate-700 rounded">â†‘â†“</kbd> navegar</span>
-                  <span><kbd className="px-1 py-0.5 bg-slate-100 dark:bg-slate-700 rounded">â†µ</kbd> abrir</span>
+                  <span><kbd className="px-1 py-0.5 bg-slate-100 dark:bg-slate-700 rounded">Ã¢â€ â€˜Ã¢â€ â€œ</kbd> navegar</span>
+                  <span><kbd className="px-1 py-0.5 bg-slate-100 dark:bg-slate-700 rounded">Ã¢â€ Âµ</kbd> abrir</span>
                   <span><kbd className="px-1 py-0.5 bg-slate-100 dark:bg-slate-700 rounded">Esc</kbd> cerrar</span>
                 </div>
               </div>

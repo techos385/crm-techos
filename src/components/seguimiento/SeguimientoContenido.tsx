@@ -1,6 +1,6 @@
 'use client'
 // src/components/seguimiento/SeguimientoContenido.tsx
-// "Hoy te toca" + acciones vencidas + leads frÃ­os + recordatorios
+// "Hoy te toca" + acciones vencidas + leads frÃƒÂ­os + recordatorios
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
@@ -62,7 +62,7 @@ export function SeguimientoContenido() {
   const completarRecordatorio = async (id: string) => {
     await fetch(`/api/seguimiento?recordatorioId=${id}`, { method: 'PATCH' })
     cargar()
-    agregar({ tipo: 'exito', titulo: 'Recordatorio completado âœ“', mensaje: '' })
+    agregar({ tipo: 'exito', titulo: 'Recordatorio completado Ã¢Å“â€œ', mensaje: '' })
   }
 
   if (cargando) {
@@ -78,7 +78,7 @@ export function SeguimientoContenido() {
   const TABS = [
     { key: 'hoy', label: 'Hoy te toca', count: datos.hoyToca.length, icon: Flame, color: 'text-orange-500' },
     { key: 'vencidos', label: 'Vencidos', count: datos.vencidos.length, icon: AlertTriangle, color: 'text-red-500' },
-    { key: 'frios', label: 'Leads frÃ­os', count: datos.leadsFrios.length, icon: Snowflake, color: 'text-blue-400' },
+    { key: 'frios', label: 'Leads frÃƒÂ­os', count: datos.leadsFrios.length, icon: Snowflake, color: 'text-blue-400' },
     { key: 'recordatorios', label: 'Recordatorios', count: datos.recordatorios.length, icon: Bell, color: '' },
   ] as const
 
@@ -96,7 +96,7 @@ export function SeguimientoContenido() {
         </div>
         <div className="card p-4 text-center">
           <p className="text-3xl font-bold text-blue-400">{datos.leadsFrios.length}</p>
-          <p className="text-xs mt-1" style={{ color: 'var(--text-secundario)' }}>Leads frÃ­os</p>
+          <p className="text-xs mt-1" style={{ color: 'var(--text-secundario)' }}>Leads frÃƒÂ­os</p>
         </div>
         <div className="card p-4 text-center">
           <p className="text-3xl font-bold text-orange-500">{datos.enRiesgo}</p>
@@ -104,11 +104,11 @@ export function SeguimientoContenido() {
         </div>
       </div>
 
-      {/* Alerta sin acciÃ³n */}
+      {/* Alerta sin acciÃƒÂ³n */}
       {datos.sinAccion > 0 && (
         <div className="flex items-center gap-3 p-3 rounded-xl text-sm bg-orange-500/10 text-orange-600">
           <AlertTriangle size={16} />
-          <span><strong>{datos.sinAccion} clientes activos</strong> no tienen prÃ³xima acciÃ³n â€” ponles una para que no se enfrÃ­en.</span>
+          <span><strong>{datos.sinAccion} clientes activos</strong> no tienen prÃƒÂ³xima acciÃƒÂ³n Ã¢â‚¬â€ ponles una para que no se enfrÃƒÂ­en.</span>
         </div>
       )}
 
@@ -144,7 +144,7 @@ export function SeguimientoContenido() {
           {datos.hoyToca.length === 0 ? (
             <div className="card p-8 text-center">
               <CheckCircle size={32} className="mx-auto mb-3 text-green-500" />
-              <p className="font-semibold">Â¡Hoy no tienes pendientes! ðŸŽ‰</p>
+              <p className="font-semibold">Ã‚Â¡Hoy no tienes pendientes! Ã°Å¸Å½â€°</p>
               <p className="text-sm mt-1" style={{ color: 'var(--text-secundario)' }}>Excelente trabajo de seguimiento.</p>
             </div>
           ) : (
@@ -156,7 +156,7 @@ export function SeguimientoContenido() {
       {tab === 'vencidos' && (
         <div className="space-y-2">
           {datos.vencidos.length === 0 ? (
-            <EmptyState mensaje="Sin acciones vencidas" sub="Â¡Vas al dÃ­a!" />
+            <EmptyState mensaje="Sin acciones vencidas" sub="Ã‚Â¡Vas al dÃƒÂ­a!" />
           ) : (
             datos.vencidos.map(c => <TarjetaSeguimiento key={c.id} cliente={c} vencido />)
           )}
@@ -166,7 +166,7 @@ export function SeguimientoContenido() {
       {tab === 'frios' && (
         <div className="space-y-2">
           {datos.leadsFrios.length === 0 ? (
-            <EmptyState mensaje="Sin leads frÃ­os" sub="Todos tus prospectos estÃ¡n activos." />
+            <EmptyState mensaje="Sin leads frÃƒÂ­os" sub="Todos tus prospectos estÃƒÂ¡n activos." />
           ) : (
             datos.leadsFrios.map(c => <TarjetaSeguimiento key={c.id} cliente={c} frio />)
           )}
@@ -176,7 +176,7 @@ export function SeguimientoContenido() {
       {tab === 'recordatorios' && (
         <div className="space-y-2">
           {datos.recordatorios.length === 0 ? (
-            <EmptyState mensaje="Sin recordatorios" sub="Cuando agregues recordatorios a tus clientes aparecerÃ¡n aquÃ­." />
+            <EmptyState mensaje="Sin recordatorios" sub="Cuando agregues recordatorios a tus clientes aparecerÃƒÂ¡n aquÃƒÂ­." />
           ) : (
             datos.recordatorios.map(r => (
               <div key={r.id} className="card p-4 flex items-center justify-between gap-3">
@@ -193,7 +193,7 @@ export function SeguimientoContenido() {
                   onClick={() => completarRecordatorio(r.id)}
                   className="btn-secundario text-xs py-1.5 px-3 whitespace-nowrap"
                 >
-                  âœ“ Hecho
+                  Ã¢Å“â€œ Hecho
                 </button>
               </div>
             ))
@@ -227,7 +227,7 @@ function TarjetaSeguimiento({
           <span className="text-xs">{temp?.emoji}</span>
           {c.esNuevo && c.horasDesdeCreacion && c.horasDesdeCreacion > 24 && (
             <span className="text-xs text-red-500 bg-red-500/10 px-2 py-0.5 rounded-full flex items-center gap-1">
-              <AlertTriangle size={10} /> Lead frÃ­o por demora
+              <AlertTriangle size={10} /> Lead frÃƒÂ­o por demora
             </span>
           )}
         </div>
@@ -235,7 +235,7 @@ function TarjetaSeguimiento({
           {vencido && <span className="text-red-500 font-medium">Vencida: </span>}
           {frio && <span className="text-blue-400 font-medium">Sin contacto {c.diasSinContacto}d: </span>}
           {c.proximaAccion || c.etapaEmbudo}
-          {c.proximaAccionFecha && ` Â· ${formatearFechaCorta(c.proximaAccionFecha)}`}
+          {c.proximaAccionFecha && ` Ã‚Â· ${formatearFechaCorta(c.proximaAccionFecha)}`}
         </p>
         {c.valorEstimado && (
           <p className="text-xs mt-0.5" style={{ color: 'var(--color-marca)' }}>{formatearMonto(c.valorEstimado)}</p>

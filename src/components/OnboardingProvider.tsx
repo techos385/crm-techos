@@ -1,7 +1,7 @@
 'use client'
 
 // src/components/OnboardingProvider.tsx
-// Tour de bienvenida por usuario â€” adaptado al rol
+// Tour de bienvenida por usuario Ã¢â‚¬â€ adaptado al rol
 
 import { createContext, useContext, useState, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -20,66 +20,66 @@ interface Paso {
 
 const PASOS_ADMIN: Paso[] = [
   {
-    titulo: 'ðŸ‘‹ Bienvenido a tu CRM de ventas',
-    descripcion: 'Este sistema tiene un solo objetivo: que cierres mÃ¡s ventas y no se te caiga ningÃºn cliente. Te mostramos lo esencial en 6 pasos rÃ¡pidos.',
+    titulo: 'Ã°Å¸â€˜â€¹ Bienvenido a tu CRM de ventas',
+    descripcion: 'Este sistema tiene un solo objetivo: que cierres mÃƒÂ¡s ventas y no se te caiga ningÃƒÂºn cliente. Te mostramos lo esencial en 6 pasos rÃƒÂ¡pidos.',
   },
   {
-    titulo: 'ðŸ“‹ Tu menÃº â€” aquÃ­ estÃ¡ todo',
-    descripcion: 'En la barra de la izquierda (o abajo en celular) tienes acceso a todo: clientes, embudo, citas, pagos, tareas y mÃ¡s. Cada secciÃ³n tiene su propio color para que sepas de un vistazo dÃ³nde estÃ¡s.',
+    titulo: 'Ã°Å¸â€œâ€¹ Tu menÃƒÂº Ã¢â‚¬â€ aquÃƒÂ­ estÃƒÂ¡ todo',
+    descripcion: 'En la barra de la izquierda (o abajo en celular) tienes acceso a todo: clientes, embudo, citas, pagos, tareas y mÃƒÂ¡s. Cada secciÃƒÂ³n tiene su propio color para que sepas de un vistazo dÃƒÂ³nde estÃƒÂ¡s.',
     elemento: '[data-tour="nav"]',
   },
   {
-    titulo: 'ðŸ”¥ "Hoy te toca" â€” Ã¡brelo cada maÃ±ana',
-    descripcion: 'Esta es la pantalla mÃ¡s importante del dÃ­a. Te lista a quiÃ©n contactar hoy, ordenado por los mÃ¡s calientes primero. Si abres esto cada maÃ±ana y haces un seguimiento, las ventas llegan.',
+    titulo: 'Ã°Å¸â€Â¥ "Hoy te toca" Ã¢â‚¬â€ ÃƒÂ¡brelo cada maÃƒÂ±ana',
+    descripcion: 'Esta es la pantalla mÃƒÂ¡s importante del dÃƒÂ­a. Te lista a quiÃƒÂ©n contactar hoy, ordenado por los mÃƒÂ¡s calientes primero. Si abres esto cada maÃƒÂ±ana y haces un seguimiento, las ventas llegan.',
     elemento: '[data-tour="seguimiento"]',
   },
   {
-    titulo: 'ðŸ” El buscador â€” encuentra cualquier cliente al instante',
-    descripcion: 'Presiona "/" o Ctrl+K desde cualquier pantalla para buscar por nombre, telÃ©fono, correo, nota o empresa. Lo que buscas, lo encuentra.',
+    titulo: 'Ã°Å¸â€Â El buscador Ã¢â‚¬â€ encuentra cualquier cliente al instante',
+    descripcion: 'Presiona "/" o Ctrl+K desde cualquier pantalla para buscar por nombre, telÃƒÂ©fono, correo, nota o empresa. Lo que buscas, lo encuentra.',
     elemento: '[data-tour="buscador"]',
   },
   {
-    titulo: 'âž• "+ Nuevo" â€” agrega un cliente en segundos',
-    descripcion: 'Este botÃ³n siempre estÃ¡ a la mano. Crea un cliente, una cita o un pago sin ir a buscar en el menÃº.',
+    titulo: 'Ã¢Å¾â€¢ "+ Nuevo" Ã¢â‚¬â€ agrega un cliente en segundos',
+    descripcion: 'Este botÃƒÂ³n siempre estÃƒÂ¡ a la mano. Crea un cliente, una cita o un pago sin ir a buscar en el menÃƒÂº.',
     elemento: '[data-tour="nuevo"]',
   },
   {
-    titulo: 'ðŸ“ Expediente completo al hacer clic en el nombre',
-    descripcion: 'En cualquier lista, al hacer clic en el nombre de un cliente abres su expediente completo: historial, pagos, citas, archivos y mÃ¡s. Â¡Todo en un solo lugar!',
+    titulo: 'Ã°Å¸â€œÂ Expediente completo al hacer clic en el nombre',
+    descripcion: 'En cualquier lista, al hacer clic en el nombre de un cliente abres su expediente completo: historial, pagos, citas, archivos y mÃƒÂ¡s. Ã‚Â¡Todo en un solo lugar!',
   },
   {
-    titulo: 'ðŸŽ‰ Â¡Listo para vender!',
-    descripcion: 'Ya tienes todo lo que necesitas. Puedes volver a ver este tutorial en cualquier momento desde el botÃ³n "Ayuda" en la parte de arriba. Â¡A cerrar ventas! ðŸš€',
+    titulo: 'Ã°Å¸Å½â€° Ã‚Â¡Listo para vender!',
+    descripcion: 'Ya tienes todo lo que necesitas. Puedes volver a ver este tutorial en cualquier momento desde el botÃƒÂ³n "Ayuda" en la parte de arriba. Ã‚Â¡A cerrar ventas! Ã°Å¸Å¡â‚¬',
   },
 ]
 
 const PASOS_VENDEDOR: Paso[] = [
   {
-    titulo: 'ðŸ‘‹ Bienvenido a Techos y Cubiertas CRM',
-    descripcion: 'Este sistema tiene un solo objetivo: que cierres mÃ¡s ventas. Te mostramos lo esencial en 5 pasos.',
+    titulo: 'Ã°Å¸â€˜â€¹ Bienvenido a Techos y Cubiertas CRM',
+    descripcion: 'Este sistema tiene un solo objetivo: que cierres mÃƒÂ¡s ventas. Te mostramos lo esencial en 5 pasos.',
   },
   {
-    titulo: 'ðŸ”¥ "Hoy te toca" â€” tu rutina diaria',
-    descripcion: 'Cada maÃ±ana empieza aquÃ­: te dice exactamente a quiÃ©n contactar hoy, ordenado por los mÃ¡s calientes (ðŸ”¥) primero. Empieza siempre por los calientes.',
+    titulo: 'Ã°Å¸â€Â¥ "Hoy te toca" Ã¢â‚¬â€ tu rutina diaria',
+    descripcion: 'Cada maÃƒÂ±ana empieza aquÃƒÂ­: te dice exactamente a quiÃƒÂ©n contactar hoy, ordenado por los mÃƒÂ¡s calientes (Ã°Å¸â€Â¥) primero. Empieza siempre por los calientes.',
     elemento: '[data-tour="seguimiento"]',
   },
   {
-    titulo: 'ðŸ” Busca cualquier cliente al instante',
-    descripcion: 'Presiona "/" o Ctrl+K para buscar por nombre, telÃ©fono, empresa o nota. Nunca mÃ¡s buscando en listas largas.',
+    titulo: 'Ã°Å¸â€Â Busca cualquier cliente al instante',
+    descripcion: 'Presiona "/" o Ctrl+K para buscar por nombre, telÃƒÂ©fono, empresa o nota. Nunca mÃƒÂ¡s buscando en listas largas.',
     elemento: '[data-tour="buscador"]',
   },
   {
-    titulo: 'âž• Agrega clientes y citas rÃ¡pido',
-    descripcion: 'Con este botÃ³n creas clientes, citas o pagos en segundos. Siempre estÃ¡ visible.',
+    titulo: 'Ã¢Å¾â€¢ Agrega clientes y citas rÃƒÂ¡pido',
+    descripcion: 'Con este botÃƒÂ³n creas clientes, citas o pagos en segundos. Siempre estÃƒÂ¡ visible.',
     elemento: '[data-tour="nuevo"]',
   },
   {
-    titulo: 'ðŸ“± Los botones de WhatsApp y correo',
-    descripcion: 'Dentro de cada expediente hay botones para mandar WhatsApp y correo con el mensaje ya armado segÃºn la etapa del cliente. Un clic y listo.',
+    titulo: 'Ã°Å¸â€œÂ± Los botones de WhatsApp y correo',
+    descripcion: 'Dentro de cada expediente hay botones para mandar WhatsApp y correo con el mensaje ya armado segÃƒÂºn la etapa del cliente. Un clic y listo.',
   },
   {
-    titulo: 'ðŸŽ¯ Â¡A vender!',
-    descripcion: 'Ya sabes lo esencial. El botÃ³n "Ayuda" en la parte de arriba te trae de vuelta a este tutorial cuando quieras. Â¡Mucho Ã©xito! ðŸš€',
+    titulo: 'Ã°Å¸Å½Â¯ Ã‚Â¡A vender!',
+    descripcion: 'Ya sabes lo esencial. El botÃƒÂ³n "Ayuda" en la parte de arriba te trae de vuelta a este tutorial cuando quieras. Ã‚Â¡Mucho ÃƒÂ©xito! Ã°Å¸Å¡â‚¬',
   },
 ]
 
@@ -108,7 +108,7 @@ export function OnboardingProvider({ children }: { children: React.ReactNode }) 
   const esAdmin = session?.user?.rol === 'ADMIN'
   const pasos = esAdmin ? PASOS_ADMIN : PASOS_VENDEDOR
 
-  // Verificar si el usuario ya completÃ³ el onboarding
+  // Verificar si el usuario ya completÃƒÂ³ el onboarding
   useEffect(() => {
     if (status !== 'authenticated' || !session?.user?.id) return
     
@@ -127,11 +127,11 @@ export function OnboardingProvider({ children }: { children: React.ReactNode }) 
     const key = `onboarding_${session.user.id}`
     localStorage.setItem(key, 'true')
     
-    // TambiÃ©n guardar en la base
+    // TambiÃƒÂ©n guardar en la base
     try {
       await fetch('/api/usuarios/onboarding', { method: 'POST' })
     } catch {
-      // No crÃ­tico si falla
+      // No crÃƒÂ­tico si falla
     }
   }, [session?.user?.id])
 
@@ -218,7 +218,7 @@ export function OnboardingProvider({ children }: { children: React.ReactNode }) 
                   {paso.descripcion}
                 </p>
 
-                {/* NavegaciÃ³n */}
+                {/* NavegaciÃƒÂ³n */}
                 <div className="flex items-center justify-between mt-6 gap-3">
                   <button
                     onClick={ocultarTour}
@@ -234,7 +234,7 @@ export function OnboardingProvider({ children }: { children: React.ReactNode }) 
                         className="btn-secundario py-2 px-4 text-sm"
                       >
                         <ChevronLeft className="w-4 h-4" />
-                        AtrÃ¡s
+                        AtrÃƒÂ¡s
                       </button>
                     )}
                     <button
@@ -247,7 +247,7 @@ export function OnboardingProvider({ children }: { children: React.ReactNode }) 
                           <ChevronRight className="w-4 h-4" />
                         </>
                       ) : (
-                        'Â¡Listo! ðŸš€'
+                        'Ã‚Â¡Listo! Ã°Å¸Å¡â‚¬'
                       )}
                     </button>
                   </div>

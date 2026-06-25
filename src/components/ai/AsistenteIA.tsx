@@ -1,6 +1,6 @@
 'use client'
 // src/components/ai/AsistenteIA.tsx
-// PÃ¡gina completa del asistente IA con chat y funciones rÃ¡pidas
+// PÃƒÂ¡gina completa del asistente IA con chat y funciones rÃƒÂ¡pidas
 
 import { useState, useRef, useEffect } from 'react'
 import { Sparkles, Send, Loader2, MessageCircle, Thermometer, CheckSquare, FileText, Shield, RefreshCw } from 'lucide-react'
@@ -13,19 +13,19 @@ interface Mensaje {
 }
 
 const ACCIONES_RAPIDAS = [
-  { label: 'Â¿CÃ³mo vencer "estÃ¡ caro"?', icon: Shield },
-  { label: 'Â¿CÃ³mo seguir a un cliente que no responde?', icon: MessageCircle },
-  { label: 'Â¿CÃ³mo cerrar esta semana?', icon: CheckSquare },
-  { label: 'Â¿CÃ³mo pedir referidos a un cliente ganado?', icon: Sparkles },
-  { label: 'Â¿CÃ³mo manejar "lo voy a pensar"?', icon: FileText },
-  { label: 'Â¿CÃ³mo reactivar un lead frÃ­o?', icon: Thermometer },
+  { label: 'Ã‚Â¿CÃƒÂ³mo vencer "estÃƒÂ¡ caro"?', icon: Shield },
+  { label: 'Ã‚Â¿CÃƒÂ³mo seguir a un cliente que no responde?', icon: MessageCircle },
+  { label: 'Ã‚Â¿CÃƒÂ³mo cerrar esta semana?', icon: CheckSquare },
+  { label: 'Ã‚Â¿CÃƒÂ³mo pedir referidos a un cliente ganado?', icon: Sparkles },
+  { label: 'Ã‚Â¿CÃƒÂ³mo manejar "lo voy a pensar"?', icon: FileText },
+  { label: 'Ã‚Â¿CÃƒÂ³mo reactivar un lead frÃƒÂ­o?', icon: Thermometer },
 ]
 
 export function AsistenteIA() {
   const [mensajes, setMensajes] = useState<Mensaje[]>([
     {
       rol: 'asistente',
-      contenido: 'Â¡Hola! Soy tu copiloto de ventas para Techos y Cubiertas. Puedo ayudarte a redactar mensajes, manejar objeciones, planear tu semana de ventas o resolver cualquier duda comercial. Â¿En quÃ© te ayudo hoy?',
+      contenido: 'Ã‚Â¡Hola! Soy tu copiloto de ventas para Techos y Cubiertas. Puedo ayudarte a redactar mensajes, manejar objeciones, planear tu semana de ventas o resolver cualquier duda comercial. Ã‚Â¿En quÃƒÂ© te ayudo hoy?',
       timestamp: new Date(),
     },
   ])
@@ -63,7 +63,7 @@ export function AsistenteIA() {
     } catch {
       setMensajes(prev => [...prev, {
         rol: 'asistente',
-        contenido: 'Error de conexiÃ³n. Verifica tu internet e intenta de nuevo.',
+        contenido: 'Error de conexiÃƒÂ³n. Verifica tu internet e intenta de nuevo.',
         timestamp: new Date(),
       }])
     } finally {
@@ -74,7 +74,7 @@ export function AsistenteIA() {
   const reiniciar = () => {
     setMensajes([{
       rol: 'asistente',
-      contenido: 'Â¡Hola de nuevo! Â¿En quÃ© te ayudo?',
+      contenido: 'Ã‚Â¡Hola de nuevo! Ã‚Â¿En quÃƒÂ© te ayudo?',
       timestamp: new Date(),
     }])
   }
@@ -89,10 +89,10 @@ export function AsistenteIA() {
           </div>
           <div>
             <h2 className="font-semibold">Asistente de ventas IA</h2>
-            <p className="text-xs" style={{ color: 'var(--text-secundario)' }}>Tu copiloto para vender mÃ¡s</p>
+            <p className="text-xs" style={{ color: 'var(--text-secundario)' }}>Tu copiloto para vender mÃƒÂ¡s</p>
           </div>
         </div>
-        <button onClick={reiniciar} title="Nueva conversaciÃ³n" className="p-2 rounded-lg hover:opacity-70 transition-opacity">
+        <button onClick={reiniciar} title="Nueva conversaciÃƒÂ³n" className="p-2 rounded-lg hover:opacity-70 transition-opacity">
           <RefreshCw size={16} style={{ color: 'var(--text-secundario)' }} />
         </button>
       </div>
@@ -100,12 +100,12 @@ export function AsistenteIA() {
       {/* Aviso sin llave */}
       {sinLlave && (
         <div className="mb-3 p-3 rounded-xl text-sm" style={{ background: 'var(--bg-hover)' }}>
-          <span className="font-medium">ðŸ’¡ Modo plantillas:</span>
-          <span style={{ color: 'var(--text-secundario)' }}> Activa el asistente IA real poniendo tu <code>ANTHROPIC_API_KEY</code> en Vercel para respuestas mÃ¡s personalizadas.</span>
+          <span className="font-medium">Ã°Å¸â€™Â¡ Modo plantillas:</span>
+          <span style={{ color: 'var(--text-secundario)' }}> Activa el asistente IA real poniendo tu <code>ANTHROPIC_API_KEY</code> en Vercel para respuestas mÃƒÂ¡s personalizadas.</span>
         </div>
       )}
 
-      {/* Acciones rÃ¡pidas (solo si hay 1 mensaje) */}
+      {/* Acciones rÃƒÂ¡pidas (solo si hay 1 mensaje) */}
       {mensajes.length === 1 && (
         <div className="grid grid-cols-2 gap-2 mb-4">
           {ACCIONES_RAPIDAS.map((a) => {
@@ -150,7 +150,7 @@ export function AsistenteIA() {
           <div className="flex justify-start">
             <div className="card px-4 py-3 flex items-center gap-2">
               <Loader2 size={14} className="animate-spin" style={{ color: 'var(--color-marca)' }} />
-              <span className="text-sm" style={{ color: 'var(--text-secundario)' }}>Pensandoâ€¦</span>
+              <span className="text-sm" style={{ color: 'var(--text-secundario)' }}>PensandoÃ¢â‚¬Â¦</span>
             </div>
           </div>
         )}
@@ -164,7 +164,7 @@ export function AsistenteIA() {
           value={entrada}
           onChange={e => setEntrada(e.target.value)}
           onKeyDown={e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); enviar() } }}
-          placeholder="Pregunta algoâ€¦ ej. Â¿CÃ³mo cierro a Juan esta semana?"
+          placeholder="Pregunta algoÃ¢â‚¬Â¦ ej. Ã‚Â¿CÃƒÂ³mo cierro a Juan esta semana?"
           className="campo flex-1 text-sm"
           disabled={cargando}
         />

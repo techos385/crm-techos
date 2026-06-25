@@ -73,7 +73,7 @@ export function FormularioCliente({ clienteInicial, onCerrar, onGuardado }: Prop
 
       onGuardado(data.data)
     } catch {
-      agregar({ tipo: 'error', titulo: 'Sin conexiÃ³n', mensaje: 'Revisa tu internet e intenta de nuevo.' })
+      agregar({ tipo: 'error', titulo: 'Sin conexiÃƒÂ³n', mensaje: 'Revisa tu internet e intenta de nuevo.' })
     } finally {
       setGuardando(false)
     }
@@ -103,7 +103,7 @@ export function FormularioCliente({ clienteInicial, onCerrar, onGuardado }: Prop
         {duplicado && (
           <div className="mx-5 mt-4 p-4 rounded-xl bg-yellow-500/10 border border-yellow-500/30">
             <p className="font-medium text-yellow-600 dark:text-yellow-400">
-              âš ï¸ Ya tienes a {duplicado.nombre} con ese telÃ©fono o correo.
+              Ã¢Å¡Â Ã¯Â¸Â Ya tienes a {duplicado.nombre} con ese telÃƒÂ©fono o correo.
             </p>
             <div className="flex gap-2 mt-2">
               <a href={`/clientes/${duplicado.id}`} className="btn-primario text-sm py-1.5 px-3">
@@ -136,10 +136,10 @@ export function FormularioCliente({ clienteInicial, onCerrar, onGuardado }: Prop
             />
           </div>
 
-          {/* TelÃ©fono y correo */}
+          {/* TelÃƒÂ©fono y correo */}
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block text-sm font-medium mb-1.5">WhatsApp / TelÃ©fono</label>
+              <label className="block text-sm font-medium mb-1.5">WhatsApp / TelÃƒÂ©fono</label>
               <div className="relative">
                 <Phone size={15} className="absolute left-3 top-1/2 -translate-y-1/2" style={{ color: 'var(--text-secundario)' }} />
                 <input
@@ -170,7 +170,7 @@ export function FormularioCliente({ clienteInicial, onCerrar, onGuardado }: Prop
           {/* Empresa y zona */}
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block text-sm font-medium mb-1.5">Empresa / InstituciÃ³n</label>
+              <label className="block text-sm font-medium mb-1.5">Empresa / InstituciÃƒÂ³n</label>
               <div className="relative">
                 <Building2 size={15} className="absolute left-3 top-1/2 -translate-y-1/2" style={{ color: 'var(--text-secundario)' }} />
                 <input
@@ -183,12 +183,12 @@ export function FormularioCliente({ clienteInicial, onCerrar, onGuardado }: Prop
               </div>
             </div>
             <div>
-              <label className="block text-sm font-medium mb-1.5">Zona / UbicaciÃ³n</label>
+              <label className="block text-sm font-medium mb-1.5">Zona / UbicaciÃƒÂ³n</label>
               <div className="relative">
                 <MapPin size={15} className="absolute left-3 top-1/2 -translate-y-1/2" style={{ color: 'var(--text-secundario)' }} />
                 <input
                   type="text"
-                  placeholder="Ecatepec, Estado de MÃ©xico"
+                  placeholder="Ecatepec, Estado de MÃƒÂ©xico"
                   value={form.zonaUbicacion}
                   onChange={(e) => set('zonaUbicacion', e.target.value)}
                   className="campo pl-8 w-full"
@@ -200,21 +200,21 @@ export function FormularioCliente({ clienteInicial, onCerrar, onGuardado }: Prop
           {/* Origen y Temperatura */}
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block text-sm font-medium mb-1.5">Â¿De dÃ³nde llegÃ³?</label>
+              <label className="block text-sm font-medium mb-1.5">Ã‚Â¿De dÃƒÂ³nde llegÃƒÂ³?</label>
               <select value={form.origen} onChange={(e) => set('origen', e.target.value)} className="campo w-full">
-                <option value="">â€” Sin especificar â€”</option>
+                <option value="">Ã¢â‚¬â€ Sin especificar Ã¢â‚¬â€</option>
                 {ORIGENES.map((o) => <option key={o} value={o}>{o}</option>)}
               </select>
             </div>
             <div>
               <label className="block text-sm font-medium mb-1.5">
                 Temperatura
-                <span className="ml-1 text-xs font-normal" style={{ color: 'var(--text-secundario)' }}>Â¿QuÃ© tan cerca estÃ¡ de comprar?</span>
+                <span className="ml-1 text-xs font-normal" style={{ color: 'var(--text-secundario)' }}>Ã‚Â¿QuÃƒÂ© tan cerca estÃƒÂ¡ de comprar?</span>
               </label>
               <select value={form.temperatura} onChange={(e) => set('temperatura', e.target.value)} className="campo w-full">
-                <option value="CALIENTE">ðŸ”¥ Caliente â€” quiere hoy</option>
-                <option value="TIBIO">ðŸŸ¡ Tibio â€” estÃ¡ viendo</option>
-                <option value="FRIO">ðŸ”µ FrÃ­o â€” a futuro</option>
+                <option value="CALIENTE">Ã°Å¸â€Â¥ Caliente Ã¢â‚¬â€ quiere hoy</option>
+                <option value="TIBIO">Ã°Å¸Å¸Â¡ Tibio Ã¢â‚¬â€ estÃƒÂ¡ viendo</option>
+                <option value="FRIO">Ã°Å¸â€Âµ FrÃƒÂ­o Ã¢â‚¬â€ a futuro</option>
               </select>
             </div>
           </div>
@@ -240,26 +240,26 @@ export function FormularioCliente({ clienteInicial, onCerrar, onGuardado }: Prop
             </div>
           </div>
 
-          {/* ObjeciÃ³n */}
+          {/* ObjeciÃƒÂ³n */}
           <div>
             <label className="block text-sm font-medium mb-1.5">
-              ObjeciÃ³n principal
-              <span className="ml-1 text-xs font-normal" style={{ color: 'var(--text-secundario)' }}>Â¿QuÃ© lo frena para comprar?</span>
+              ObjeciÃƒÂ³n principal
+              <span className="ml-1 text-xs font-normal" style={{ color: 'var(--text-secundario)' }}>Ã‚Â¿QuÃƒÂ© lo frena para comprar?</span>
             </label>
             <input
               type="text"
-              placeholder='Ej. "EstÃ¡ caro", "Lo voy a pensar"'
+              placeholder='Ej. "EstÃƒÂ¡ caro", "Lo voy a pensar"'
               value={form.objecionPrincipal}
               onChange={(e) => set('objecionPrincipal', e.target.value)}
               className="campo w-full"
             />
           </div>
 
-          {/* PrÃ³xima acciÃ³n */}
+          {/* PrÃƒÂ³xima acciÃƒÂ³n */}
           <div className="grid grid-cols-2 gap-3">
             <div>
               <label className="block text-sm font-medium mb-1.5">
-                PrÃ³xima acciÃ³n
+                PrÃƒÂ³xima acciÃƒÂ³n
                 <span className="ml-1 text-xs font-normal" style={{ color: 'var(--text-secundario)' }}>No lo dejes sin una</span>
               </label>
               <input
@@ -271,7 +271,7 @@ export function FormularioCliente({ clienteInicial, onCerrar, onGuardado }: Prop
               />
             </div>
             <div>
-              <label className="block text-sm font-medium mb-1.5">Para cuÃ¡ndo</label>
+              <label className="block text-sm font-medium mb-1.5">Para cuÃƒÂ¡ndo</label>
               <input
                 type="datetime-local"
                 value={form.proximaAccionFecha}
@@ -285,7 +285,7 @@ export function FormularioCliente({ clienteInicial, onCerrar, onGuardado }: Prop
           <div>
             <label className="block text-sm font-medium mb-1.5">Notas iniciales</label>
             <textarea
-              placeholder="QuÃ© sabes de este cliente, su proyecto, sus necesidadesâ€¦"
+              placeholder="QuÃƒÂ© sabes de este cliente, su proyecto, sus necesidadesÃ¢â‚¬Â¦"
               value={form.notas}
               onChange={(e) => set('notas', e.target.value)}
               className="campo w-full h-24 resize-none"
@@ -302,7 +302,7 @@ export function FormularioCliente({ clienteInicial, onCerrar, onGuardado }: Prop
             disabled={guardando || !form.nombre}
             className="btn-primario flex-1 disabled:opacity-50"
           >
-            {guardando ? 'Guardandoâ€¦' : 'Agregar cliente'}
+            {guardando ? 'GuardandoÃ¢â‚¬Â¦' : 'Agregar cliente'}
           </button>
         </div>
       </div>

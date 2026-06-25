@@ -1,7 +1,7 @@
 'use client'
 
 // src/components/dashboard/DashboardContenido.tsx
-// Tablero del mes: metas, crecimiento, mÃ©tricas clave
+// Tablero del mes: metas, crecimiento, mÃƒÂ©tricas clave
 
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
@@ -186,7 +186,7 @@ export function DashboardContenido() {
       <div className="empty-state">
         <AlertCircle className="w-12 h-12 text-red-400 mb-3" />
         <p className="text-lg font-semibold text-slate-700 dark:text-slate-300">No se pudo cargar el tablero</p>
-        <p className="text-sm text-slate-400 mt-1">Revisa tu conexiÃ³n e intenta recargar la pÃ¡gina.</p>
+        <p className="text-sm text-slate-400 mt-1">Revisa tu conexiÃƒÂ³n e intenta recargar la pÃƒÂ¡gina.</p>
         <button onClick={() => window.location.reload()} className="btn-secundario mt-4">Recargar</button>
       </div>
     )
@@ -198,9 +198,9 @@ export function DashboardContenido() {
       <div className="seccion-header">
         <div>
           <h1 className="seccion-titulo flex items-center gap-2">
-            <span className="text-marca-300">ðŸ“Š</span> Tablero
+            <span className="text-marca-300">Ã°Å¸â€œÅ </span> Tablero
           </h1>
-          <p className="seccion-subtitulo">Â¿Vas a cerrar el mes?</p>
+          <p className="seccion-subtitulo">Ã‚Â¿Vas a cerrar el mes?</p>
         </div>
       </div>
 
@@ -224,20 +224,20 @@ export function DashboardContenido() {
             tipo={data.meta.tipo}
           />
 
-          {/* PronÃ³stico */}
+          {/* PronÃƒÂ³stico */}
           <div className={cn(
             'mt-4 p-3 rounded-xl flex items-center gap-2 text-sm',
             data.pronostico.semaforo === 'verde' ? 'bg-green-50 dark:bg-green-950/30 text-green-700 dark:text-green-400' :
             data.pronostico.semaforo === 'amarillo' ? 'bg-amber-50 dark:bg-amber-950/30 text-amber-700 dark:text-amber-400' :
             'bg-red-50 dark:bg-red-950/30 text-red-700 dark:text-red-400'
           )}>
-            <span className="text-lg">{data.pronostico.semaforo === 'verde' ? 'ðŸŸ¢' : data.pronostico.semaforo === 'amarillo' ? 'ðŸŸ¡' : 'ðŸ”´'}</span>
+            <span className="text-lg">{data.pronostico.semaforo === 'verde' ? 'Ã°Å¸Å¸Â¢' : data.pronostico.semaforo === 'amarillo' ? 'Ã°Å¸Å¸Â¡' : 'Ã°Å¸â€Â´'}</span>
             <p className="font-medium">{data.pronostico.frase}</p>
           </div>
         </motion.div>
       )}
 
-      {/* MÃ©tricas del mes */}
+      {/* MÃƒÂ©tricas del mes */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {cargando ? (
           Array.from({length: 8}).map((_, i) => <Skeleton key={i} className="h-32" />)
@@ -248,18 +248,18 @@ export function DashboardContenido() {
             <MetricaCard titulo="Clientes ganados" valor={data.mes.clientesGanados} icono={Trophy} acento="text-green-500" />
             <MetricaCard titulo="Tasa de cierre" valor={data.mes.tasaCierre} icono={Target} acento="text-marca-400" formato="porcentaje" />
             <MetricaCard titulo="Ingresos cobrados" valor={data.mes.ingresosCobrados} icono={Wallet} acento="text-amber-400" comparacion={data.comparaciones.ingresosVsAnterior} formato="dinero" />
-            <MetricaCard titulo="Valor del embudo" valor={data.mes.valorEmbudo} icono={TrendingUp} acento="text-violet-400" formato="dinero" subtitulo="Dinero vivo en negociaciÃ³n" />
+            <MetricaCard titulo="Valor del embudo" valor={data.mes.valorEmbudo} icono={TrendingUp} acento="text-violet-400" formato="dinero" subtitulo="Dinero vivo en negociaciÃƒÂ³n" />
             <MetricaCard titulo="Pagos pendientes" valor={data.mes.pagosPendientes} icono={Clock} acento="text-slate-400" formato="dinero" />
-            <MetricaCard titulo="Pagos VENCIDOS" valor={data.mes.pagosVencidos} icono={AlertCircle} acento="text-red-500" formato="dinero" subtitulo="Requieren atenciÃ³n urgente" />
+            <MetricaCard titulo="Pagos VENCIDOS" valor={data.mes.pagosVencidos} icono={AlertCircle} acento="text-red-500" formato="dinero" subtitulo="Requieren atenciÃƒÂ³n urgente" />
           </>
         )}
       </div>
 
-      {/* GrÃ¡fica de crecimiento 6 meses */}
+      {/* GrÃƒÂ¡fica de crecimiento 6 meses */}
       <div className="card p-6">
         <div className="flex items-center gap-2 mb-5">
           <TrendingUp className="w-5 h-5 text-marca-300" />
-          <h2 className="text-lg font-bold text-slate-900 dark:text-slate-100">Crecimiento â€” Ãºltimos 6 meses</h2>
+          <h2 className="text-lg font-bold text-slate-900 dark:text-slate-100">Crecimiento Ã¢â‚¬â€ ÃƒÂºltimos 6 meses</h2>
         </div>
 
         {cargando ? (
@@ -267,8 +267,8 @@ export function DashboardContenido() {
         ) : !data || data.crecimiento.length === 0 ? (
           <div className="h-48 flex items-center justify-center text-center">
             <div>
-              <p className="text-slate-400 text-sm">AÃºn juntando historial,</p>
-              <p className="text-slate-400 text-sm">esto se llena solo con el tiempo ðŸ“ˆ</p>
+              <p className="text-slate-400 text-sm">AÃƒÂºn juntando historial,</p>
+              <p className="text-slate-400 text-sm">esto se llena solo con el tiempo Ã°Å¸â€œË†</p>
             </div>
           </div>
         ) : (
@@ -293,15 +293,15 @@ export function DashboardContenido() {
         )}
       </div>
 
-      {/* Dos columnas: Origenes + PÃ©rdidas */}
+      {/* Dos columnas: Origenes + PÃƒÂ©rdidas */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Origenes */}
         <div className="card p-6">
           <h2 className="text-base font-bold text-slate-900 dark:text-slate-100 mb-4">
-            ðŸ“ De dÃ³nde llegan los clientes
+            Ã°Å¸â€œÂ De dÃƒÂ³nde llegan los clientes
           </h2>
           {cargando ? <Skeleton className="h-40" /> : !data?.origenes.length ? (
-            <p className="text-sm text-slate-400 py-4 text-center">AÃºn sin datos de origen suficientes</p>
+            <p className="text-sm text-slate-400 py-4 text-center">AÃƒÂºn sin datos de origen suficientes</p>
           ) : (
             <div className="space-y-3">
               {data.origenes.slice(0, 5).map(o => (
@@ -325,15 +325,15 @@ export function DashboardContenido() {
           )}
         </div>
 
-        {/* Por quÃ© perdemos */}
+        {/* Por quÃƒÂ© perdemos */}
         <div className="card p-6">
           <h2 className="text-base font-bold text-slate-900 dark:text-slate-100 mb-4">
-            âŒ Por quÃ© perdemos ventas
+            Ã¢ÂÅ’ Por quÃƒÂ© perdemos ventas
           </h2>
           {cargando ? <Skeleton className="h-40" /> : !data?.perdidas.length ? (
             <div className="py-4 text-center">
               <p className="text-sm text-slate-400">Sin ventas perdidas registradas este mes</p>
-              <p className="text-xs text-slate-300 dark:text-slate-500 mt-1">Â¡Sigue asÃ­! ðŸŽ‰</p>
+              <p className="text-xs text-slate-300 dark:text-slate-500 mt-1">Ã‚Â¡Sigue asÃƒÂ­! Ã°Å¸Å½â€°</p>
             </div>
           ) : (
             <div className="space-y-2.5">
@@ -362,16 +362,16 @@ export function DashboardContenido() {
         ) : (
           <div className="space-y-3">
             {data.vendedores.map((v, i) => {
-              const medallas = ['ðŸ¥‡', 'ðŸ¥ˆ', 'ðŸ¥‰']
+              const medallas = ['Ã°Å¸Â¥â€¡', 'Ã°Å¸Â¥Ë†', 'Ã°Å¸Â¥â€°']
               return (
                 <div key={v.nombre} className="flex items-center gap-4 p-3 rounded-xl bg-slate-50 dark:bg-slate-800/50">
                   <span className="text-xl w-8">{medallas[i] || `${i+1}.`}</span>
                   <div className="flex-1 min-w-0">
                     <p className="text-sm font-semibold text-slate-900 dark:text-slate-100">{v.nombre}</p>
                     <div className="flex items-center gap-3 mt-0.5">
-                      <p className="text-xs text-slate-500">{v.cierres} cierres Â· {formatearMonto(v.ingresos)}</p>
+                      <p className="text-xs text-slate-500">{v.cierres} cierres Ã‚Â· {formatearMonto(v.ingresos)}</p>
                       {v.clientesEnRiesgo > 0 && (
-                        <span className="text-xs text-amber-500">âš ï¸ {v.clientesEnRiesgo} en riesgo</span>
+                        <span className="text-xs text-amber-500">Ã¢Å¡Â Ã¯Â¸Â {v.clientesEnRiesgo} en riesgo</span>
                       )}
                     </div>
                   </div>

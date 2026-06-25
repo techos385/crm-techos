@@ -87,7 +87,7 @@ function Columna({
           ))}
         </SortableContext>
         {clientes.length === 0 && (
-          <p className="text-xs text-center py-4 opacity-40">Arrastra aquÃ­</p>
+          <p className="text-xs text-center py-4 opacity-40">Arrastra aquÃƒÂ­</p>
         )}
       </div>
     </div>
@@ -237,7 +237,7 @@ export function EmbudoKanban() {
         body: JSON.stringify({ etapaEmbudo: nuevaEtapa }),
       })
       if (!(await res.json()).ok) throw new Error()
-      agregar({ tipo: 'exito', titulo: `Movido a ${nuevaEtapa} âœ“`, mensaje: '' })
+      agregar({ tipo: 'exito', titulo: `Movido a ${nuevaEtapa} Ã¢Å“â€œ`, mensaje: '' })
     } catch {
       agregar({ tipo: 'error', titulo: 'Error al mover cliente', mensaje: '' })
       cargar() // revertir
@@ -257,7 +257,7 @@ export function EmbudoKanban() {
 
   // Solo etapas activas (no ganado/perdido)
   const ETAPAS_ACTIVAS = ETAPAS_EMBUDO.filter(e =>
-    !['Proyecto Ganado', 'Perdido', 'Precio alto', 'CancelÃ³ proyecto', 'EligiÃ³ a la competencia', 'Sin presupuesto', 'No respondiÃ³'].includes(e)
+    !['Proyecto Ganado', 'Perdido', 'Precio alto', 'CancelÃƒÂ³ proyecto', 'EligiÃƒÂ³ a la competencia', 'Sin presupuesto', 'No respondiÃƒÂ³'].includes(e)
   )
 
   if (cargando) {
@@ -290,7 +290,7 @@ export function EmbudoKanban() {
         <div className="card px-4 py-2.5 flex items-center gap-2 text-sm">
           <Flame size={16} style={{ color: 'var(--color-marca)' }} />
           <span>Total activos: <strong>{clientes.length}</strong></span>
-          <span style={{ color: 'var(--text-secundario)' }}>Â·</span>
+          <span style={{ color: 'var(--text-secundario)' }}>Ã‚Â·</span>
           <span style={{ color: 'var(--color-marca)' }}>{formatearMonto(clientes.reduce((s, c) => s + (c.valorEstimado || 0), 0))}</span>
         </div>
       </div>

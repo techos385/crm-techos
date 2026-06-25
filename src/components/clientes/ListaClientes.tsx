@@ -1,6 +1,6 @@
 'use client'
 // src/components/clientes/ListaClientes.tsx
-// Lista completa de clientes con filtros, orden, paginaciÃ³n y acciones
+// Lista completa de clientes con filtros, orden, paginaciÃƒÂ³n y acciones
 
 import { useState, useEffect, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
@@ -57,7 +57,7 @@ export function ListaClientes() {
   // Modal nuevo cliente
   const [mostrarFormulario, setMostrarFormulario] = useState(false)
 
-  // SelecciÃ³n mÃºltiple
+  // SelecciÃƒÂ³n mÃƒÂºltiple
   const [seleccionados, setSeleccionados] = useState<string[]>([])
 
   const cargarClientes = useCallback(async () => {
@@ -80,7 +80,7 @@ export function ListaClientes() {
         setTotalPaginas(data.data.totalPaginas)
       }
     } catch {
-      agregar({ tipo: 'error', titulo: 'Error al cargar clientes', mensaje: 'Revisa tu conexiÃ³n e intenta de nuevo.' })
+      agregar({ tipo: 'error', titulo: 'Error al cargar clientes', mensaje: 'Revisa tu conexiÃƒÂ³n e intenta de nuevo.' })
     } finally {
       setCargando(false)
     }
@@ -135,7 +135,7 @@ export function ListaClientes() {
         </button>
       </div>
 
-      {/* Barra de bÃºsqueda y filtros */}
+      {/* Barra de bÃƒÂºsqueda y filtros */}
       <div className="card p-4 space-y-3">
         <div className="flex gap-3 flex-wrap">
           {/* Buscador */}
@@ -143,14 +143,14 @@ export function ListaClientes() {
             <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2" style={{ color: 'var(--text-secundario)' }} />
             <input
               type="text"
-              placeholder="Buscar por nombre, telÃ©fono, correoâ€¦"
+              placeholder="Buscar por nombre, telÃƒÂ©fono, correoÃ¢â‚¬Â¦"
               value={buscar}
               onChange={(e) => { setBuscar(e.target.value); setPagina(1) }}
               className="campo pl-9 w-full"
             />
           </div>
 
-          {/* Filtros rÃ¡pidos */}
+          {/* Filtros rÃƒÂ¡pidos */}
           <select
             value={estado}
             onChange={(e) => { setEstado(e.target.value); setPagina(1) }}
@@ -179,10 +179,10 @@ export function ListaClientes() {
             onChange={(e) => setOrdenar(e.target.value)}
             className="campo"
           >
-            <option value="reciente">MÃ¡s reciente</option>
+            <option value="reciente">MÃƒÂ¡s reciente</option>
             <option value="nombre">Nombre A-Z</option>
             <option value="valor">Mayor valor</option>
-            <option value="proxima">PrÃ³xima acciÃ³n</option>
+            <option value="proxima">PrÃƒÂ³xima acciÃƒÂ³n</option>
           </select>
         </div>
 
@@ -206,9 +206,9 @@ export function ListaClientes() {
               className="campo"
             >
               <option value="">Toda temperatura</option>
-              <option value="CALIENTE">ðŸ”¥ Caliente</option>
-              <option value="TIBIO">ðŸŸ¡ Tibio</option>
-              <option value="FRIO">ðŸ”µ FrÃ­o</option>
+              <option value="CALIENTE">Ã°Å¸â€Â¥ Caliente</option>
+              <option value="TIBIO">Ã°Å¸Å¸Â¡ Tibio</option>
+              <option value="FRIO">Ã°Å¸â€Âµ FrÃƒÂ­o</option>
             </select>
 
             <button
@@ -241,13 +241,13 @@ export function ListaClientes() {
             )}
             {temperatura && (
               <span className="badge flex items-center gap-1">
-                {temperatura === 'CALIENTE' ? 'ðŸ”¥' : temperatura === 'TIBIO' ? 'ðŸŸ¡' : 'ðŸ”µ'} {temperatura}
+                {temperatura === 'CALIENTE' ? 'Ã°Å¸â€Â¥' : temperatura === 'TIBIO' ? 'Ã°Å¸Å¸Â¡' : 'Ã°Å¸â€Âµ'} {temperatura}
                 <button onClick={() => setTemperatura('')}><X size={12} /></button>
               </span>
             )}
             {favoritos && (
               <span className="badge flex items-center gap-1">
-                â­ Favoritos
+                Ã¢Â­Â Favoritos
                 <button onClick={() => setFavoritos(false)}><X size={12} /></button>
               </span>
             )}
@@ -258,7 +258,7 @@ export function ListaClientes() {
       {/* Contador */}
       <div className="flex items-center justify-between">
         <p className="text-sm" style={{ color: 'var(--text-secundario)' }}>
-          {cargando ? 'Cargandoâ€¦' : `Mostrando ${clientes.length} de ${total} cliente${total !== 1 ? 's' : ''}`}
+          {cargando ? 'CargandoÃ¢â‚¬Â¦' : `Mostrando ${clientes.length} de ${total} cliente${total !== 1 ? 's' : ''}`}
         </p>
         <button onClick={cargarClientes} className="p-1.5 rounded-lg hover:bg-white/10 transition-colors">
           <RefreshCw size={15} className={cargando ? 'animate-spin' : ''} style={{ color: 'var(--text-secundario)' }} />
@@ -277,12 +277,12 @@ export function ListaClientes() {
           <Users size={48} className="mx-auto mb-4 opacity-30" />
           <p className="text-lg font-medium mb-2">
             {buscar || filtrosActivos.length > 0
-              ? `No encontrÃ© nada con "${buscar || 'estos filtros'}"`
-              : 'AÃºn no tienes clientes'}
+              ? `No encontrÃƒÂ© nada con "${buscar || 'estos filtros'}"`
+              : 'AÃƒÂºn no tienes clientes'}
           </p>
           <p className="text-sm mb-4" style={{ color: 'var(--text-secundario)' }}>
             {buscar || filtrosActivos.length > 0
-              ? 'Prueba quitar algÃºn filtro o revisa cÃ³mo lo escribiste.'
+              ? 'Prueba quitar algÃƒÂºn filtro o revisa cÃƒÂ³mo lo escribiste.'
               : 'Agrega tu primer cliente y empieza a vender.'}
           </p>
           {!buscar && filtrosActivos.length === 0 && (
@@ -355,7 +355,7 @@ export function ListaClientes() {
                       </div>
                     </div>
 
-                    {/* Etapa y telÃ©fono */}
+                    {/* Etapa y telÃƒÂ©fono */}
                     <div className="flex flex-wrap items-center gap-2 mt-1.5">
                       {cliente.etapaEmbudo && (
                         <span className="badge text-xs">{cliente.etapaEmbudo}</span>
@@ -367,21 +367,21 @@ export function ListaClientes() {
                       )}
                     </div>
 
-                    {/* PrÃ³xima acciÃ³n */}
+                    {/* PrÃƒÂ³xima acciÃƒÂ³n */}
                     {cliente.proximaAccion && (
                       <p className={cn('text-xs mt-1.5 flex items-center gap-1', accionVencida ? 'text-red-500 font-medium' : '')} style={!accionVencida ? { color: 'var(--text-secundario)' } : {}}>
-                        {accionVencida && 'âš ï¸ '}
+                        {accionVencida && 'Ã¢Å¡Â Ã¯Â¸Â '}
                         {cliente.proximaAccion}
                         {cliente.proximaAccionFecha && (
-                          <span>â€” {formatearFechaCorta(cliente.proximaAccionFecha)}</span>
+                          <span>Ã¢â‚¬â€ {formatearFechaCorta(cliente.proximaAccionFecha)}</span>
                         )}
                       </p>
                     )}
 
-                    {/* Sin prÃ³xima acciÃ³n */}
+                    {/* Sin prÃƒÂ³xima acciÃƒÂ³n */}
                     {!cliente.proximaAccion && cliente.estadoCartera === 'ACTIVO' && (
                       <p className="text-xs mt-1.5 text-orange-500">
-                        ðŸŸ  Sin seguimiento â€” defÃ­nele una acciÃ³n
+                        Ã°Å¸Å¸Â  Sin seguimiento Ã¢â‚¬â€ defÃƒÂ­nele una acciÃƒÂ³n
                       </p>
                     )}
                   </div>
@@ -392,7 +392,7 @@ export function ListaClientes() {
         </div>
       )}
 
-      {/* PaginaciÃ³n */}
+      {/* PaginaciÃƒÂ³n */}
       {totalPaginas > 1 && (
         <div className="flex items-center justify-center gap-2">
           <button
@@ -403,7 +403,7 @@ export function ListaClientes() {
             <ChevronLeft size={16} />
           </button>
           <span className="text-sm" style={{ color: 'var(--text-secundario)' }}>
-            PÃ¡gina {pagina} de {totalPaginas}
+            PÃƒÂ¡gina {pagina} de {totalPaginas}
           </span>
           <button
             onClick={() => setPagina((p) => Math.min(totalPaginas, p + 1))}
@@ -422,7 +422,7 @@ export function ListaClientes() {
           onGuardado={() => {
             setMostrarFormulario(false)
             cargarClientes()
-            agregar({ tipo: 'exito', titulo: 'Â¡Cliente agregado!', mensaje: 'Ya aparece en tu lista.' })
+            agregar({ tipo: 'exito', titulo: 'Ã‚Â¡Cliente agregado!', mensaje: 'Ya aparece en tu lista.' })
           }}
         />
       )}

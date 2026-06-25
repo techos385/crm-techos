@@ -1,5 +1,5 @@
 // src/components/layout/AppLayout.tsx
-// Layout principal del CRM: sidebar en desktop, barra inferior en mÃ³vil
+// Layout principal del CRM: sidebar en desktop, barra inferior en mÃƒÂ³vil
 
 'use client'
 
@@ -99,7 +99,7 @@ function TemaSelector() {
             {[
               { valor: 'claro', label: 'Claro', icon: Sun },
               { valor: 'oscuro', label: 'Oscuro', icon: Moon },
-              { valor: 'auto', label: 'AutomÃ¡tico', icon: Monitor },
+              { valor: 'auto', label: 'AutomÃƒÂ¡tico', icon: Monitor },
             ].map(({ valor, label, icon: Icon }) => (
               <button
                 key={valor}
@@ -111,7 +111,7 @@ function TemaSelector() {
               >
                 <Icon className="w-4 h-4" />
                 {label}
-                {tema === valor && <span className="ml-auto text-marca-500">âœ“</span>}
+                {tema === valor && <span className="ml-auto text-marca-500">Ã¢Å“â€œ</span>}
               </button>
             ))}
           </motion.div>
@@ -187,7 +187,7 @@ function AvatarMenu({ nombre, correo, rol }: { nombre: string; correo: string; r
                   <Users className="w-4 h-4" /> Mi perfil
                 </Link>
                 <Link href="/configuracion" className="flex items-center gap-2.5 px-4 py-2.5 text-sm hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 transition-colors" onClick={() => setAbierto(false)}>
-                  <ShieldCheck className="w-4 h-4" /> ConfiguraciÃ³n
+                  <ShieldCheck className="w-4 h-4" /> ConfiguraciÃƒÂ³n
                 </Link>
               </div>
 
@@ -196,7 +196,7 @@ function AvatarMenu({ nombre, correo, rol }: { nombre: string; correo: string; r
                   onClick={() => signOut({ callbackUrl: '/login' })}
                   className="w-full flex items-center gap-2.5 px-4 py-2.5 text-sm hover:bg-red-50 dark:hover:bg-red-900/20 text-red-500 transition-colors"
                 >
-                  <LogOut className="w-4 h-4" /> Cerrar sesiÃ³n
+                  <LogOut className="w-4 h-4" /> Cerrar sesiÃƒÂ³n
                 </button>
               </div>
             </motion.div>
@@ -233,7 +233,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex">
-      {/* â”€â”€ SIDEBAR DESKTOP â”€â”€ */}
+      {/* Ã¢â€â‚¬Ã¢â€â‚¬ SIDEBAR DESKTOP Ã¢â€â‚¬Ã¢â€â‚¬ */}
       <aside className="hidden lg:flex flex-col w-64 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 fixed h-full z-30">
         {/* Logo */}
         <div className="p-4 border-b border-slate-100 dark:border-slate-800">
@@ -249,7 +249,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
           </Link>
         </div>
 
-        {/* NavegaciÃ³n principal */}
+        {/* NavegaciÃƒÂ³n principal */}
         <nav className="flex-1 overflow-y-auto p-3 space-y-0.5">
           {NAV_PRINCIPAL.map(item => <NavLink key={item.href} item={item} />)}
 
@@ -261,13 +261,13 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
           }
         </nav>
 
-        {/* PÃ¡ginas de agenda */}
+        {/* PÃƒÂ¡ginas de agenda */}
         <div className="p-3 border-t border-slate-100 dark:border-slate-800">
           <NavLink item={{ href: '/agenda-publica', label: 'Mis ligas de citas', icon: CalendarPlus, acento: 'text-teal-400' }} />
         </div>
       </aside>
 
-      {/* â”€â”€ SIDEBAR MÃ“VIL (overlay) â”€â”€ */}
+      {/* Ã¢â€â‚¬Ã¢â€â‚¬ SIDEBAR MÃƒâ€œVIL (overlay) Ã¢â€â‚¬Ã¢â€â‚¬ */}
       <AnimatePresence>
         {sidebarAbierta && (
           <>
@@ -311,15 +311,15 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
         )}
       </AnimatePresence>
 
-      {/* â”€â”€ CONTENIDO PRINCIPAL â”€â”€ */}
+      {/* Ã¢â€â‚¬Ã¢â€â‚¬ CONTENIDO PRINCIPAL Ã¢â€â‚¬Ã¢â€â‚¬ */}
       <div className="flex-1 lg:ml-64 flex flex-col min-h-screen">
         {/* Header superior */}
         <header className="sticky top-0 z-20 bg-white/80 dark:bg-slate-900/80 backdrop-blur-glass border-b border-slate-200 dark:border-slate-800 px-4 h-14 flex items-center gap-3">
-          {/* Hamburger mÃ³vil */}
+          {/* Hamburger mÃƒÂ³vil */}
           <button
             onClick={() => setSidebarAbierta(true)}
             className="lg:hidden p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-500"
-            aria-label="Abrir menÃº"
+            aria-label="Abrir menÃƒÂº"
           >
             <Menu className="w-5 h-5" />
           </button>
@@ -332,18 +332,18 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
             aria-label="Buscar (Ctrl+K)"
           >
             <Search className="w-4 h-4 flex-shrink-0" />
-            <span className="hidden sm:inline">Buscar clientes, pagos, notasâ€¦</span>
-            <span className="sm:hidden">Buscarâ€¦</span>
+            <span className="hidden sm:inline">Buscar clientes, pagos, notasÃ¢â‚¬Â¦</span>
+            <span className="sm:hidden">BuscarÃ¢â‚¬Â¦</span>
             <kbd className="ml-auto hidden sm:inline-flex items-center gap-0.5 px-1.5 py-0.5 text-xs bg-white dark:bg-slate-700 rounded border border-slate-200 dark:border-slate-600 text-slate-400">
               /
             </kbd>
           </button>
 
           <div className="flex items-center gap-1.5">
-            {/* BotÃ³n de campana */}
+            {/* BotÃƒÂ³n de campana */}
             <button className="relative p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-500 dark:text-slate-400 transition-colors toque-seguro flex items-center justify-center" aria-label="Recordatorios">
               <Bell className="w-5 h-5" />
-              {/* Badge de notificaciones - se actualizarÃ¡ dinÃ¡micamente */}
+              {/* Badge de notificaciones - se actualizarÃƒÂ¡ dinÃƒÂ¡micamente */}
               <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full animate-pulse-dot" aria-label="Tienes recordatorios pendientes" />
             </button>
 
@@ -370,13 +370,13 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
           </div>
         </header>
 
-        {/* Contenido de pÃ¡gina */}
+        {/* Contenido de pÃƒÂ¡gina */}
         <main className="flex-1 p-4 lg:p-6 pb-20 lg:pb-6">
           {children}
         </main>
       </div>
 
-      {/* â”€â”€ BARRA INFERIOR MÃ“VIL â”€â”€ */}
+      {/* Ã¢â€â‚¬Ã¢â€â‚¬ BARRA INFERIOR MÃƒâ€œVIL Ã¢â€â‚¬Ã¢â€â‚¬ */}
       <nav
         data-tour="nav"
         className="lg:hidden fixed bottom-0 left-0 right-0 z-30 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 flex items-center"
@@ -403,7 +403,7 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
           )
         })}
 
-        {/* BotÃ³n "+" */}
+        {/* BotÃƒÂ³n "+" */}
         <div className="flex-1 flex items-center justify-center">
           <Link
             href="/clientes/nuevo"
