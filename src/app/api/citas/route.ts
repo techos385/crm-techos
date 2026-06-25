@@ -128,13 +128,7 @@ export async function POST(request: NextRequest) {
         })
       }
 
-      await registrarAuditoria(tx, {
-        usuarioId: session.id,
-        accion: ACCIONES.CREAR,
-        entidad: 'Cita',
-        entidadId: nueva.id,
-        descripcion: `Agendó cita con ${cliente.nombre} para ${inicio.toLocaleDateString('es-MX')}`,
-      })
+     
 
       return nueva
     })
