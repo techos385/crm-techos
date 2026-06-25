@@ -86,6 +86,6 @@ export async function GET(request: NextRequest) {
       data: { clientes, citas, pagos },
     })
   } catch (error) {
-    return apiError(error)
+    return NextResponse.json({ ok: false, mensaje: "Error interno" }, { status: 500 })
   }
 }
