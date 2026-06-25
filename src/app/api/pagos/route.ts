@@ -18,7 +18,7 @@ const PagoSchema = z.object({
 
 export async function GET(request: NextRequest) {
   try {
-    const session = await requireAuth()
+    const session = await requireAuth('ver_cliente')
     const esAdmin = session.rol === 'ADMIN'
     const { searchParams } = new URL(request.url)
 
@@ -56,7 +56,7 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   try {
-    const session = await requireAuth()
+    const session = await requireAuth('ver_cliente')
     const body = await request.json()
     const datos = PagoSchema.parse(body)
 
@@ -89,7 +89,7 @@ export async function POST(request: NextRequest) {
         accion: ACCIONES.CREAR,
         entidad: 'Pago',
         entidadId: nuevo.id,
-        descripcion: `Registró pago de $${datos.monto} para ${cliente.nombre}`,
+        descripcion: `RegistrÃ³ pago de $${datos.monto} para ${cliente.nombre}`,
       })
 
       return nuevo
@@ -103,7 +103,7 @@ export async function POST(request: NextRequest) {
 
 export async function PATCH(request: NextRequest) {
   try {
-    const session = await requireAuth()
+    const session = await requireAuth('ver_cliente')
     const body = await request.json()
     const { id, ...datos } = body
 
@@ -135,7 +135,7 @@ export async function PATCH(request: NextRequest) {
 
 export async function DELETE(request: NextRequest) {
   try {
-    const session = await requireAuth()
+    const session = await requireAuth('ver_cliente')
     const { searchParams } = new URL(request.url)
     const id = searchParams.get('id')
     if (!id) return NextResponse.json({ ok: false, mensaje: 'Falta el ID' }, { status: 400 })

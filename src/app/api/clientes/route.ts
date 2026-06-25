@@ -1,5 +1,5 @@
 // src/app/api/clientes/route.ts
-// GET: lista con filtros/paginación | POST: crear cliente
+// GET: lista con filtros/paginaciÃ³n | POST: crear cliente
 
 import { NextRequest, NextResponse } from 'next/server'
 import { requireAuth, puede, apiError } from '@/lib/permisos'
@@ -7,11 +7,11 @@ import { prisma } from '@/lib/prisma'
 import { z } from 'zod'
 import { registrarAuditoria, ACCIONES } from '@/lib/auditoria'
 
-// Schema de validación para crear cliente
+// Schema de validaciÃ³n para crear cliente
 const ClienteSchema = z.object({
   nombre: z.string().min(2, 'El nombre debe tener al menos 2 caracteres').max(100),
   telefono: z.string().min(8).max(20).optional().nullable(),
-  correo: z.string().email('Correo inválido').optional().nullable().or(z.literal('')),
+  correo: z.string().email('Correo invÃ¡lido').optional().nullable().or(z.literal('')),
   origen: z.string().optional().nullable(),
   etapa: z.string().default('Nuevo Prospecto'),
   valorEstimado: z.number().min(0).optional().nullable(),
@@ -182,7 +182,7 @@ export async function POST(request: NextRequest) {
           ok: false,
           duplicado: true,
           clienteExistente: existente,
-          mensaje: `Ya existe un cliente con ese teléfono o correo: ${existente.nombre}`,
+          mensaje: `Ya existe un cliente con ese telÃ©fono o correo: ${existente.nombre}`,
         }, { status: 409 })
       }
     }
@@ -246,7 +246,7 @@ export async function POST(request: NextRequest) {
         accion: ACCIONES.CREAR,
         entidad: 'Cliente',
         entidadId: nuevo.id,
-        descripcion: `Creó al cliente ${nuevo.nombre}`,
+        descripcion: `CreÃ³ al cliente ${nuevo.nombre}`,
       })
 
       return nuevo

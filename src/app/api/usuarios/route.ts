@@ -9,7 +9,7 @@ import { registrarAuditoria, ACCIONES } from '@/lib/auditoria'
 const UsuarioSchema = z.object({
   nombre: z.string().min(2).max(100),
   correo: z.string().email(),
-  contrasena: z.string().min(8, 'Mínimo 8 caracteres'),
+  contrasena: z.string().min(8, 'MÃ­nimo 8 caracteres'),
   rol: z.enum(['ADMIN', 'VENDEDOR', 'SOLO_LECTURA']).default('VENDEDOR'),
   metaMensual: z.number().optional().nullable(),
   comision: z.number().min(0).max(100).optional().nullable(),
@@ -17,7 +17,7 @@ const UsuarioSchema = z.object({
 
 export async function GET(_req: NextRequest) {
   try {
-    const session = await requireAuth()
+    const session = await requireAuth('ver_cliente')
     if (session.rol !== 'ADMIN') {
       return NextResponse.json({ ok: false, mensaje: 'Solo administradores' }, { status: 403 })
     }
@@ -50,7 +50,7 @@ export async function GET(_req: NextRequest) {
 
 export async function POST(request: NextRequest) {
   try {
-    const session = await requireAuth()
+    const session = await requireAuth('ver_cliente')
     if (session.rol !== 'ADMIN') {
       return NextResponse.json({ ok: false, mensaje: 'Solo administradores' }, { status: 403 })
     }
@@ -58,7 +58,7 @@ export async function POST(request: NextRequest) {
     const body = await request.json()
     const datos = UsuarioSchema.parse(body)
 
-    // Verificar correo único
+    // Verificar correo Ãºnico
     const existe = await prisma.usuario.findFirst({ where: { correo: datos.correo, eliminadoEn: null } })
     if (existe) {
       return NextResponse.json({ ok: false, mensaje: 'Ya existe un usuario con ese correo' }, { status: 409 })
@@ -89,7 +89,7 @@ export async function POST(request: NextRequest) {
         accion: ACCIONES.CREAR,
         entidad: 'Usuario',
         entidadId: nuevo.id,
-        descripcion: `Creó al usuario ${nuevo.nombre} con rol ${nuevo.rol}`,
+        descripcion: `CreÃ³ al usuario ${nuevo.nombre} con rol ${nuevo.rol}`,
       })
 
       return nuevo
@@ -103,7 +103,7 @@ export async function POST(request: NextRequest) {
 
 export async function PATCH(request: NextRequest) {
   try {
-    const session = await requireAuth()
+    const session = await requireAuth('ver_cliente')
     const body = await request.json()
     const { id, contrasena, activo, rol, metaMensual, comision, nombre } = body
 
@@ -125,7 +125,7 @@ export async function PATCH(request: NextRequest) {
     if (comision !== undefined) datos.comision = comision
     if (contrasena) {
       if (contrasena.length < 8) {
-        return NextResponse.json({ ok: false, mensaje: 'La contraseña debe tener al menos 8 caracteres' }, { status: 400 })
+        return NextResponse.json({ ok: false, mensaje: 'La contraseÃ±a debe tener al menos 8 caracteres' }, { status: 400 })
       }
       datos.contrasena = await bcrypt.hash(contrasena, 12)
     }

@@ -120,8 +120,8 @@ export async function POST(request: NextRequest) {
         },
       })
 
-      // Actualizar etapa del cliente si está en etapas iniciales
-      if (['Nuevo Prospecto', 'Contactado', 'Información Recibida'].includes(cliente.etapa ?? '')) {
+      // Actualizar etapa del cliente si estÃ¡ en etapas iniciales
+      if (['Nuevo Prospecto', 'Contactado', 'InformaciÃ³n Recibida'].includes(cliente.etapa ?? '')) {
         await tx.cliente.update({
           where: { id: datos.clienteId },
           data: { etapa: 'CITA_AGENDADA' },

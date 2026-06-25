@@ -1,5 +1,5 @@
 // src/app/api/exportar/route.ts
-// Exportación y respaldo — solo admin
+// ExportaciÃ³n y respaldo â€” solo admin
 
 import { NextRequest, NextResponse } from 'next/server'
 import { requireAuth, apiError } from '@/lib/permisos'
@@ -8,7 +8,7 @@ import { registrarAuditoria, ACCIONES } from '@/lib/auditoria'
 
 export async function GET(request: NextRequest) {
   try {
-    const session = await requireAuth()
+    const session = await requireAuth('ver_cliente')
     if (session.rol !== 'ADMIN') {
       return NextResponse.json({ ok: false, mensaje: 'Solo administradores pueden exportar' }, { status: 403 })
     }
@@ -25,7 +25,7 @@ export async function GET(request: NextRequest) {
       accion: ACCIONES.EXPORTAR,
       entidad: 'Sistema',
       entidadId: 'exportacion',
-      descripcion: `Exportó datos en formato ${tipo}`,
+      descripcion: `ExportÃ³ datos en formato ${tipo}`,
     })
 
     if (tipo === 'json') {
@@ -81,7 +81,7 @@ export async function GET(request: NextRequest) {
         orderBy: { creadoEn: 'desc' },
       })
 
-      const encabezados = ['Nombre', 'Teléfono', 'Correo', 'Empresa', 'Origen', 'Etapa', 'Estado', 'Temperatura', 'Valor Estimado', 'Objeción', 'Vendedor', 'Próxima Acción', 'Fecha Creación']
+      const encabezados = ['Nombre', 'TelÃ©fono', 'Correo', 'Empresa', 'Origen', 'Etapa', 'Estado', 'Temperatura', 'Valor Estimado', 'ObjeciÃ³n', 'Vendedor', 'PrÃ³xima AcciÃ³n', 'Fecha CreaciÃ³n']
       const filas = clientes.map((c) => [
         c.nombre,
         c.telefono ?? '',
@@ -119,7 +119,7 @@ export async function GET(request: NextRequest) {
         orderBy: { creadoEn: 'desc' },
       })
 
-      const encabezados = ['Cliente', 'Monto', 'Método', 'Estatus', 'Concepto', 'Fecha Pago', 'Fecha Vencimiento', 'Fecha Registro']
+      const encabezados = ['Cliente', 'Monto', 'MÃ©todo', 'Estatus', 'Concepto', 'Fecha Pago', 'Fecha Vencimiento', 'Fecha Registro']
       const filas = pagos.map((p) => [
         p.cliente.nombre,
         p.monto,
@@ -143,7 +143,7 @@ export async function GET(request: NextRequest) {
       })
     }
 
-    return NextResponse.json({ ok: false, mensaje: 'Tipo de exportación no válido' }, { status: 400 })
+    return NextResponse.json({ ok: false, mensaje: 'Tipo de exportaciÃ³n no vÃ¡lido' }, { status: 400 })
   } catch (error) {
     return NextResponse.json({ ok: false, mensaje: "Error interno" }, { status: 500 })
   }

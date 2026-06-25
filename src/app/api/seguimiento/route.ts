@@ -29,7 +29,7 @@ export async function GET(request: NextRequest) {
     const hoyFin = endOfDay(ahora)
 
     if (vista === 'hoy') {
-      // "Hoy te toca" — clientes con próxima acción hoy o vencida
+      // "Hoy te toca" â€” clientes con prÃ³xima acciÃ³n hoy o vencida
       const clientesHoy = await prisma.cliente.findMany({
         where: {
           ...filtroVendedor,
@@ -78,7 +78,7 @@ export async function GET(request: NextRequest) {
         orderBy: { fechaVencimiento: 'asc' },
       })
 
-      // Leads fríos (más de 24h en Nuevo Prospecto sin contacto)
+      // Leads frÃ­os (mÃ¡s de 24h en Nuevo Prospecto sin contacto)
       const hace24h = new Date(ahora.getTime() - 24 * 60 * 60 * 1000)
       const leadsFrios = await prisma.cliente.findMany({
         where: {
@@ -92,7 +92,7 @@ export async function GET(request: NextRequest) {
         select: { id: true, nombre: true, creadoEn: true, telefono: true },
       })
 
-      // Sin próxima acción
+      // Sin prÃ³xima acciÃ³n
       const sinSeguimiento = await prisma.cliente.count({
         where: {
           ...filtroVendedor,
@@ -102,7 +102,7 @@ export async function GET(request: NextRequest) {
         },
       })
 
-      // Configuración del negocio para meta
+      // ConfiguraciÃ³n del negocio para meta
       const config = await prisma.configNegocio.findFirst()
       const usuario = await prisma.usuario.findUnique({
         where: { id: session.id },
@@ -144,7 +144,7 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ ok: true, data: recordatorios })
     }
 
-    return NextResponse.json({ ok: false, mensaje: 'Vista no válida' }, { status: 400 })
+    return NextResponse.json({ ok: false, mensaje: 'Vista no vÃ¡lida' }, { status: 400 })
   } catch (error) {
     return NextResponse.json({ ok: false, mensaje: "Error interno" }, { status: 500 })
   }

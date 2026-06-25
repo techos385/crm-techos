@@ -8,7 +8,7 @@ import { startOfMonth, endOfMonth, subMonths, startOfDay, endOfDay } from 'date-
 
 export async function GET() {
   try {
-    const session = await requireAuth()
+    const session = await requireAuth('ver_cliente')
     const esAdmin = session.rol === 'ADMIN'
     const vendedorId = esAdmin ? undefined : session.id
 
@@ -120,7 +120,7 @@ export async function GET() {
       },
     })
 
-    // Gráfica últimos 6 meses
+    // GrÃ¡fica Ãºltimos 6 meses
     const meses6 = Array.from({ length: 6 }, (_, i) => {
       const fecha = subMonths(ahora, 5 - i)
       return {
@@ -157,7 +157,7 @@ export async function GET() {
       })
     )
 
-    // Mes anterior para comparación
+    // Mes anterior para comparaciÃ³n
     const inicioMesAnterior = startOfMonth(subMonths(ahora, 1))
     const finMesAnterior = endOfMonth(subMonths(ahora, 1))
 
@@ -191,7 +191,7 @@ export async function GET() {
       _count: true,
     })
 
-    // Motivos de pérdida
+    // Motivos de pÃ©rdida
     const motivosPerdida = await prisma.cliente.groupBy({
       by: ['motivoPerdida'],
       where: {
@@ -247,7 +247,7 @@ export async function GET() {
     const config = await prisma.configNegocio.findFirst()
     const metaMes = config?.metaMensual ?? 5
 
-    // Clientes sin próxima acción
+    // Clientes sin prÃ³xima acciÃ³n
     const sinSeguimiento = await prisma.cliente.count({
       where: {
         ...filtroActivoVendedor,
