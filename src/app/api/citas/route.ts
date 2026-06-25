@@ -49,7 +49,7 @@ export async function GET(request: NextRequest) {
         cliente: { select: { id: true, nombre: true, telefono: true } },
         vendedor: { select: { id: true, nombre: true } },
       },
-      orderBy: { fechaInicio: 'asc' },
+      orderBy: { inicio: 'asc' },
     })
 
     return NextResponse.json({ ok: true, data: citas })
