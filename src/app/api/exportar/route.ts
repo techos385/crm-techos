@@ -23,7 +23,7 @@ export async function GET(request: NextRequest) {
     await registrarAuditoria({
       usuarioId: session.id,
       accion: ACCIONES.CLIENTE_CREADO,
-      entidad: 'Sistema',
+      
       entidadId: 'exportacion',
       descripcion: `ExportÃ³ datos en formato ${tipo}`,
     })
