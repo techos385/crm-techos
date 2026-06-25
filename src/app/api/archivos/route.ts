@@ -114,7 +114,7 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ ok: false, mensaje: 'Archivo sin datos' }, { status: 404 })
     }
 
-    return new NextResponse(archivo.datos as Buffer, {
+    return new NextResponse(archivo.datos as unknown as BodyInit, {
       headers: {
         'Content-Type': archivo.tipo,
         'Content-Disposition': `attachment; filename="${archivo.nombre}"`,
