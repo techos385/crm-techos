@@ -19,7 +19,7 @@ const PagoSchema = z.object({
 export async function GET(request: NextRequest) {
   try {
     const session = await requireAuth()
-    const esAdmin = session.user.rol === 'ADMIN'
+    const esAdmin = session.rol === 'ADMIN'
     const { searchParams } = new URL(request.url)
 
     const clienteId = searchParams.get('clienteId')
@@ -28,7 +28,7 @@ export async function GET(request: NextRequest) {
     const porPagina = parseInt(searchParams.get('porPagina') ?? '25')
 
     const where: Record<string, unknown> = { eliminadoEn: null }
-    if (!esAdmin) where.vendedorId = session.user.id
+    if (!esAdmin) where.vendedorId = session.id
     if (clienteId) where.clienteId = clienteId
     if (estatus) where.estatus = estatus
 
@@ -65,7 +65,7 @@ export async function POST(request: NextRequest) {
       where: { id: datos.clienteId, eliminadoEn: null },
     })
     if (!cliente) return NextResponse.json({ ok: false, mensaje: 'Cliente no encontrado' }, { status: 404 })
-    if (session.user.rol !== 'ADMIN' && cliente.vendedorId !== session.user.id) {
+    if (session.rol !== 'ADMIN' && cliente.vendedorId !== session.id) {
       return NextResponse.json({ ok: false, mensaje: 'Sin acceso' }, { status: 403 })
     }
 
@@ -73,7 +73,7 @@ export async function POST(request: NextRequest) {
       const nuevo = await tx.pago.create({
         data: {
           clienteId: datos.clienteId,
-          vendedorId: cliente.vendedorId ?? session.user.id,
+          vendedorId: cliente.vendedorId ?? session.id,
           monto: datos.monto,
           metodo: datos.metodo as 'TRANSFERENCIA' | 'TARJETA' | 'EFECTIVO' | 'DEPOSITO',
           estatus: datos.estatus as 'PENDIENTE' | 'PAGADO' | 'VENCIDO',
@@ -85,7 +85,7 @@ export async function POST(request: NextRequest) {
       })
 
       await registrarAuditoria(tx, {
-        usuarioId: session.user.id,
+        usuarioId: session.id,
         accion: ACCIONES.CREAR,
         entidad: 'Pago',
         entidadId: nuevo.id,
@@ -114,7 +114,7 @@ export async function PATCH(request: NextRequest) {
 
     // Verificar acceso
     const cliente = await prisma.cliente.findFirst({ where: { id: pago.clienteId } })
-    if (session.user.rol !== 'ADMIN' && cliente?.vendedorId !== session.user.id) {
+    if (session.rol !== 'ADMIN' && cliente?.vendedorId !== session.id) {
       return NextResponse.json({ ok: false, mensaje: 'Sin acceso' }, { status: 403 })
     }
 
@@ -144,7 +144,7 @@ export async function DELETE(request: NextRequest) {
     if (!pago) return NextResponse.json({ ok: false, mensaje: 'No encontrado' }, { status: 404 })
 
     const cliente = await prisma.cliente.findFirst({ where: { id: pago.clienteId } })
-    if (session.user.rol !== 'ADMIN' && cliente?.vendedorId !== session.user.id) {
+    if (session.rol !== 'ADMIN' && cliente?.vendedorId !== session.id) {
       return NextResponse.json({ ok: false, mensaje: 'Sin acceso' }, { status: 403 })
     }
 

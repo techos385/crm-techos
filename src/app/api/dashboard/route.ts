@@ -9,8 +9,8 @@ import { startOfMonth, endOfMonth, subMonths, startOfDay, endOfDay } from 'date-
 export async function GET() {
   try {
     const session = await requireAuth()
-    const esAdmin = session.user.rol === 'ADMIN'
-    const vendedorId = esAdmin ? undefined : session.user.id
+    const esAdmin = session.rol === 'ADMIN'
+    const vendedorId = esAdmin ? undefined : session.id
 
     const ahora = new Date()
     const inicioMes = startOfMonth(ahora)
@@ -114,7 +114,7 @@ export async function GET() {
       where: {
         ...filtroVendedor,
         eliminadoEn: null,
-        etapaEmbudo: 'Nuevo Prospecto',
+        etapa: 'Nuevo Prospecto',
         creadoEn: { lt: hace24h },
         ultimoContacto: null,
       },

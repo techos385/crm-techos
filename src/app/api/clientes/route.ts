@@ -13,7 +13,7 @@ const ClienteSchema = z.object({
   telefono: z.string().min(8).max(20).optional().nullable(),
   correo: z.string().email('Correo inválido').optional().nullable().or(z.literal('')),
   origen: z.string().optional().nullable(),
-  etapaEmbudo: z.string().default('Nuevo Prospecto'),
+  etapa: z.string().default('Nuevo Prospecto'),
   valorEstimado: z.number().min(0).optional().nullable(),
   temperatura: z.enum(['CALIENTE', 'TIBIO', 'FRIO']).default('TIBIO'),
   objecionPrincipal: z.string().optional().nullable(),
@@ -47,7 +47,7 @@ const ClienteSchema = z.object({
 export async function GET(request: NextRequest) {
   try {
     const session = await requireAuth()
-    const esAdmin = session.user.rol === 'ADMIN'
+    const esAdmin = session.rol === 'ADMIN'
     const { searchParams } = new URL(request.url)
 
     const pagina = parseInt(searchParams.get('pagina') ?? '1')
@@ -70,12 +70,12 @@ export async function GET(request: NextRequest) {
 
     // Si no es admin, solo ve sus propios clientes
     if (!esAdmin) {
-      filtroBase.vendedorId = session.user.id
+      filtroBase.vendedorId = session.id
     } else if (vendedorId) {
       filtroBase.vendedorId = vendedorId
     }
 
-    if (etapa) filtroBase.etapaEmbudo = etapa
+    if (etapa) filtroBase.etapa = etapa
     if (temperatura) filtroBase.temperatura = temperatura
     if (estado) filtroBase.estadoCartera = estado
     if (origen) filtroBase.origen = origen
@@ -103,7 +103,7 @@ export async function GET(request: NextRequest) {
     // Filtro de favoritos
     const incluyeFavoritos = favoritos ? {
       favoritosDe: {
-        some: { usuarioId: session.user.id },
+        some: { usuarioId: session.id },
       },
     } : {}
 
@@ -131,7 +131,7 @@ export async function GET(request: NextRequest) {
             include: { etiqueta: true },
           },
           favoritosDe: {
-            where: { usuarioId: session.user.id },
+            where: { usuarioId: session.id },
             select: { usuarioId: true },
           },
           _count: {
@@ -188,9 +188,9 @@ export async function POST(request: NextRequest) {
     }
 
     // Asignar vendedor
-    const vendedorId = session.user.rol === 'ADMIN' && datos.vendedorId
+    const vendedorId = session.rol === 'ADMIN' && datos.vendedorId
       ? datos.vendedorId
-      : session.user.id
+      : session.id
 
     const cliente = await prisma.$transaction(async (tx) => {
       const nuevo = await tx.cliente.create({
@@ -199,7 +199,7 @@ export async function POST(request: NextRequest) {
           telefono: datos.telefono,
           correo: datos.correo || null,
           origen: datos.origen,
-          etapaEmbudo: datos.etapaEmbudo,
+          etapa: datos.etapa,
           valorEstimado: datos.valorEstimado,
           temperatura: datos.temperatura as 'CALIENTE' | 'TIBIO' | 'FRIO',
           objecionPrincipal: datos.objecionPrincipal,
@@ -235,14 +235,14 @@ export async function POST(request: NextRequest) {
         await tx.nota.create({
           data: {
             clienteId: nuevo.id,
-            autorId: session.user.id,
+            autorId: session.id,
             contenido: `Nota inicial: ${datos.notas}`,
           },
         })
       }
 
       await registrarAuditoria(tx, {
-        usuarioId: session.user.id,
+        usuarioId: session.id,
         accion: ACCIONES.CREAR,
         entidad: 'Cliente',
         entidadId: nuevo.id,

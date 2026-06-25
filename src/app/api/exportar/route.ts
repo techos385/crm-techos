@@ -9,7 +9,7 @@ import { registrarAuditoria, ACCIONES } from '@/lib/auditoria'
 export async function GET(request: NextRequest) {
   try {
     const session = await requireAuth()
-    if (session.user.rol !== 'ADMIN') {
+    if (session.rol !== 'ADMIN') {
       return NextResponse.json({ ok: false, mensaje: 'Solo administradores pueden exportar' }, { status: 403 })
     }
 
@@ -21,7 +21,7 @@ export async function GET(request: NextRequest) {
     if (filtroVendedorId) filtroBase.vendedorId = filtroVendedorId
 
     await registrarAuditoria(prisma, {
-      usuarioId: session.user.id,
+      usuarioId: session.id,
       accion: ACCIONES.EXPORTAR,
       entidad: 'Sistema',
       entidadId: 'exportacion',
@@ -88,7 +88,7 @@ export async function GET(request: NextRequest) {
         c.correo ?? '',
         c.empresa ?? c.empresaNombre ?? '',
         c.origen ?? '',
-        c.etapaEmbudo ?? '',
+        c.etapa ?? '',
         c.estadoCartera,
         c.temperatura,
         c.valorEstimado ?? '',

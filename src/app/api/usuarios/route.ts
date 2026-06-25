@@ -18,7 +18,7 @@ const UsuarioSchema = z.object({
 export async function GET(_req: NextRequest) {
   try {
     const session = await requireAuth()
-    if (session.user.rol !== 'ADMIN') {
+    if (session.rol !== 'ADMIN') {
       return NextResponse.json({ ok: false, mensaje: 'Solo administradores' }, { status: 403 })
     }
 
@@ -51,7 +51,7 @@ export async function GET(_req: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     const session = await requireAuth()
-    if (session.user.rol !== 'ADMIN') {
+    if (session.rol !== 'ADMIN') {
       return NextResponse.json({ ok: false, mensaje: 'Solo administradores' }, { status: 403 })
     }
 
@@ -85,7 +85,7 @@ export async function POST(request: NextRequest) {
       })
 
       await registrarAuditoria(tx, {
-        usuarioId: session.user.id,
+        usuarioId: session.id,
         accion: ACCIONES.CREAR,
         entidad: 'Usuario',
         entidadId: nuevo.id,
@@ -108,12 +108,12 @@ export async function PATCH(request: NextRequest) {
     const { id, contrasena, activo, rol, metaMensual, comision, nombre } = body
 
     // Solo admin puede editar otros usuarios
-    if (id !== session.user.id && session.user.rol !== 'ADMIN') {
+    if (id !== session.id && session.rol !== 'ADMIN') {
       return NextResponse.json({ ok: false, mensaje: 'Sin acceso' }, { status: 403 })
     }
 
     // Solo admin puede cambiar rol y activo
-    if ((rol !== undefined || activo !== undefined) && session.user.rol !== 'ADMIN') {
+    if ((rol !== undefined || activo !== undefined) && session.rol !== 'ADMIN') {
       return NextResponse.json({ ok: false, mensaje: 'Solo administradores pueden cambiar el rol' }, { status: 403 })
     }
 
