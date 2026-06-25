@@ -20,7 +20,7 @@ export async function GET(request: NextRequest) {
     const filtroBase: Record<string, unknown> = { eliminadoEn: null }
     if (filtroVendedorId) filtroBase.vendedorId = filtroVendedorId
 
-    await registrarAuditoria(prisma, {
+    await registrarAuditoria({
       usuarioId: session.id,
       accion: ACCIONES.EXPORTAR,
       entidad: 'Sistema',
