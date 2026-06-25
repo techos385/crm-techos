@@ -72,7 +72,7 @@ export async function GET() {
       where: {
         ...filtroVendedor,
         eliminadoEn: null,
-        fechaInicio: {
+        inicio: {
           gte: startOfDay(ahora),
           lte: endOfDay(ahora),
         },
