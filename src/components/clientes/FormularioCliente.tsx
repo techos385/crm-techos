@@ -224,7 +224,7 @@ export function FormularioCliente({ clienteInicial, onCerrar, onGuardado }: Prop
             <div>
               <label className="block text-sm font-medium mb-1.5">Etapa del embudo</label>
               <select value={form.etapaEmbudo} onChange={(e) => set('etapaEmbudo', e.target.value)} className="campo w-full">
-                {ETAPAS_EMBUDO.map((e) => <option key={e} value={e}>{e}</option>)}
+                {ETAPAS_EMBUDO.map((e) => <option key={e.label} value={e.label}>{e.label}</option>)}
               </select>
             </div>
             <div>
