@@ -203,7 +203,7 @@ export function FormularioCliente({ clienteInicial, onCerrar, onGuardado }: Prop
               <label className="block text-sm font-medium mb-1.5">Ã‚Â¿De dÃƒÂ³nde llegÃƒÂ³?</label>
               <select value={form.origen} onChange={(e) => set('origen', e.target.value)} className="campo w-full">
                 <option value="">Ã¢â‚¬â€ Sin especificar Ã¢â‚¬â€</option>
-                {ORIGENES.map((o) => <option key={String(o)} value={o}>{o}</option>)}
+                {ORIGENES.map((o) => <option key={o.utm} value={o.label}>{o.label}</option>)}
               </select>
             </div>
             <div>
